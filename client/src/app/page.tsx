@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'motion/react';
 import { MOCK_EVENTS } from '@/data/mockEvents';
 import { WebHeader } from '@/components/layout/WebHeader';
 import { MobileHeader } from '@/components/layout/MobileHeader';
@@ -91,9 +92,7 @@ export default function HomePage() {
           </div>
 
           {/* Featured Hero Mobile Card */}
-          <Link href={`/event/${heroMobileEvent.id}`}>
-            <EventCardMobile event={heroMobileEvent} variant="hero" />
-          </Link>
+          <EventCardMobile event={heroMobileEvent} variant="hero" />
 
           {/* Section: This Weekend */}
           <section className="flex flex-col gap-3">
@@ -107,11 +106,14 @@ export default function HomePage() {
             </div>
 
             {/* Horizontal Scroll Cards */}
-            <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2">
+            <motion.div
+              layoutScroll
+              className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2"
+            >
               {weekendEvents.map((event) => (
                 <EventCardMobile key={event.id} event={event} variant="horizontal" />
               ))}
-            </div>
+            </motion.div>
           </section>
 
           {/* Category Filter Pills */}

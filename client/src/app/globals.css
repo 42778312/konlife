@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: #080809;
+    --foreground: #F4F4F5;
+    --card: #141417;
+    --card-foreground: #FAFAFA;
+    --card-border: #242429;
+    --neon-yellow: #CCFF00;
+    --neon-yellow-hover: #b8e600;
+    --neon-yellow-alpha: rgba(204, 255, 0, 0.15);
+    --muted: #27272A;
+    --muted-foreground: #A1A1AA;
+    --accent: #CCFF00;
+    --accent-pink: #FF2D55;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom Typography Utility */
+.font-display {
+  font-family: var(--font-bebas), 'Oswald', 'Impact', sans-serif;
+  letter-spacing: 0.05em;
+}
+
+/* Neon Glow Utility */
+.glow-neon {
+  box-shadow: 0 0 15px rgba(204, 255, 0, 0.3);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080809;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #CCFF00;
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

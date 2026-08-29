@@ -1,0 +1,171 @@
+# Implementation Plan - KONSTANZ Event Finder App (Mobile & Web Frontend)
+
+Build the exact pixel-perfect frontend UI for **KONSTANZ**, a modern event & nightlife discovery application. The implementation will mirror the design screenshots provided in `client/assests/mobile-view` and `client/assests/browser-view` using **Next.js (App Router)**, **Tailwind CSS**, **shadcn/ui**, **Lucide Icons**, and custom typography.
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **Responsive & Dual-View Switcher:**
+> The design has distinct layouts for mobile devices (with bottom navigation bar and compact vertical stacks) and desktop web browsers (with top navigation bar, multi-column grid, and desktop sidebar action panels).
+> We will implement a responsive structure that automatically adapts based on screen size, and include a floating **View Toggle (Mobile View / Web View)** so you can preview both exact designs on any screen size.
+
+> [!NOTE]
+> **Animations:**
+> Per instructions, animations are explicitly excluded for this initial phase, focusing purely on exact visual layouts, typography, sizes, colors, and mock data accuracy.
+
+---
+
+## Proposed Architecture & Design System
+
+### 1. Design Tokens & Styling
+- **Theme**: Dark Nightlife / Neon Night theme.
+- **Background**: `#070708` / `#0D0D0E` / `#121214`
+- **Cards & Containers**: `#18181C` / `#1E1E24` with subtle borders (`#27272A`).
+- **Primary Accent**: Neon Yellow / Lime (`#CCFF00` / `hsl(72, 100%, 50%)`).
+- **Typography**:
+  - **Logo & Display Headers**: Bold Condensed Font (`Bebas Neue` / `Oswald` / `Syne`).
+  - **Body & Controls**: Clean modern sans-serif (`Inter` / `Geist`).
+- **Icons**: `lucide-react` (MapPin, Calendar, Clock, Ticket, Heart, Bookmark, Compass, Share, ExternalLink, Search, Filter, Cap, PartyPopper, Globe, Utensils, Music).
+
+---
+
+## Component & Screen Breakdown
+
+### 1. Header & Navigation Components
+- `HeaderWeb`: Top navigation bar with logo "KONSTANZ", center nav links (`Home`, `Discover`, `Weekend`, `Saved`), right search icon and user profile avatar with dropdown.
+- `HeaderMobile`: Top bar with logo "KONSTANZ" in neon yellow, location selector ("Konstanz"), search button, profile avatar.
+- `BottomNavMobile`: Fixed bottom tab bar with 4 tabs (`Home`, `Discover`, `Weekend`, `Saved`) featuring active neon yellow pill indicators.
+
+### 2. Screen Views (Supported in both Mobile & Web variants)
+
+#### A. Home Screen (`/`)
+- **Web**:
+  - Subtitle: "TONIGHT · FRIDAY" (Yellow uppercase).
+  - Wide Hero Banner: "Techno Friday" at Blechnerei with "€8" neon tag and "Save" button.
+  - Section "THIS WEEKEND": 3-column card grid (Student Night, Hip-Hop Party, Live Music Night).
+  - Section "POPULAR": 4-column compact cards (House Saturday, Sommerfest, R&B Late Night, Open Deck).
+  - Category Filter Pills: `Student` (active yellow fill), `Party`, `Club`, `Bar`, `Live Music`, `Culture`.
+- **Mobile**:
+  - Day selector pills (`Today`, `Tomorrow`, `Fri`, `Sat`, `Sun`).
+  - Featured event card overlay with disco ball artwork ("Student Night" €5).
+  - Section "This Weekend" (horizontal scroll view).
+  - Category filter pills at bottom.
+
+#### B. Discover Screen (`/discover`)
+- **Search & Filter Bar**: Input field + View Mode segmented toggle (List / Map).
+- **Filter Chips**: Dropdown filters (`Date ⌵`, `Category ⌵`, `Music ⌵`, `Price ⌵`, `Distance ⌵`). Active pills turn neon yellow with close `✕` buttons.
+- **Card Grid / List**:
+  - Web: 3-column layout of event cards with high-res thumbnails, price tags, category tags, and bookmark/like buttons.
+  - Mobile: Vertical stack with landscape thumbnails on the left and event info + tags on the right.
+- **Interactive Dark Map Section**: Dark map styled container with green neon pin markers and floating venue preview overlay card ("Blechnerei - Popular · 3 upcoming events").
+
+#### C. Weekend Planner Screen (`/weekend`)
+- **Header**: "My Weekend - Plan your nights out".
+- **Day Selector Tabs**: `Today`, `Tomorrow`, `Fri`, `Sat` (active), `Sun`.
+- **Timeline Schedule Block**: Vertical timeline line with glowing green node markers, showing scheduled events by hour (`22:00`, `23:30`, `01:00`).
+- **Summary Metrics Bar (Web)**: 3-stat box (`3 events`, `€15 total`, `1 free`).
+- **Sunday Reminder Banner**: "Nothing saved for Sunday yet" card with "Find something" neon button.
+
+#### D. Event Detail Screen (`/event/[id]`)
+- **Hero Image Banner**: Full-bleed nightclub background image with title "Student Night", venue "Club XYZ", and category tags (`Hip-Hop`, `R&B`).
+- **Metadata Card Grid (4 columns)**: Date ("Saturday, August 29"), Time ("22:00"), Price ("€5"), Ticket Type ("Student").
+- **Description Box**: Summary text + "View original event" link with external icon.
+- **Venue & Map Card**: "Club XYZ - Konstanz" with map preview & "Open map" link.
+- **Action Panel**: Prominent neon yellow "Save" button and "Share" outline button.
+- **"MORE THIS WEEKEND" Section**: Related events recommendation row.
+
+---
+
+## Mock Data Structure (`src/data/mockEvents.ts`)
+
+```typescript
+export interface EventItem {
+  id: string;
+  title: string;
+  venue: string;
+  city: string;
+  date: string;
+  time: string;
+  price: string;
+  isFree?: boolean;
+  category: 'Student' | 'Party' | 'Club' | 'Bar' | 'Live Music' | 'Culture';
+  tags: string[];
+  image: string;
+  description: string;
+  isSaved?: boolean;
+  isPopular?: boolean;
+  isFeatured?: boolean;
+  lat?: number;
+  lng?: number;
+}
+```
+
+Sample Dataset includes all events from screenshots:
+- `Student Night` (Club XYZ, €5, Hip-Hop / R&B)
+- `Techno Friday` (Blechnerei, €8, Techno / Industrial)
+- `Live Music Night` (Bar Central, Free, Indie / Rock)
+- `House Saturday` (Kulturhaus, €5, House / Disco)
+- `Hip-Hop Party` (Hafenbar, €5, Hip-Hop)
+- `Summer Opening` (Club XYZ, €10, EDM / Pop)
+- `Sommerfest` (Student Club, 20:00)
+- `R&B Late Night` (Bar Central, €5, R&B)
+- `Open Deck` (K9 Konstanz, Free, Techno)
+- `Afterparty` (Bar Central, Free)
+- `House Sundays` (Kulturhaus, €5)
+
+---
+
+## Proposed Changes & File Structure
+
+We will initialize and construct the application inside `/Users/moa/Documents/nextjs/party/client`:
+
+```
+party/client/
+├── public/
+│   └── images/          # Event & UI static images
+├── src/
+│   ├── app/
+│   │   ├── layout.tsx   # Root layout with fonts, theme, & viewport switcher
+│   │   ├── page.tsx     # Home Page
+│   │   ├── discover/
+│   │   │   └── page.tsx # Discover Page
+│   │   ├── weekend/
+│   │   │   └── page.tsx # Weekend Planner Page
+│   │   ├── event/
+│   │   │   └── [id]/
+│   │   │       └── page.tsx # Event Detail Page
+│   │   └── globals.css  # Dark theme tokens, neon yellow variables, custom scrollbars
+│   ├── components/
+│   │   ├── ui/          # shadcn/ui components (Button, Card, Badge, Input, etc.)
+│   │   ├── layout/
+│   │   │   ├── WebHeader.tsx
+│   │   │   ├── MobileHeader.tsx
+│   │   │   ├── MobileBottomNav.tsx
+│   │   │   └── ViewportSwitcher.tsx
+│   │   ├── events/
+│   │   │   ├── EventCardWeb.tsx
+│   │   │   ├── EventCardMobile.tsx
+│   │   │   ├── MapWidget.tsx
+│   │   │   └── CategoryFilterBar.tsx
+│   ├── data/
+│   │   └── mockEvents.ts
+│   └── lib/
+│       └── utils.ts
+├── package.json
+└── tailwind.config.js
+```
+
+---
+
+## Verification Plan
+
+### Automated & Dev Server Verification
+- Build and start local dev server (`npm run dev`).
+- Verify Next.js page compilation and route navigation without runtime or syntax errors.
+
+### Visual & Pixel Match Verification
+- Test Home, Discover, Weekend, and Event Detail pages against the design mockups in `client/assests/mobile-view` and `client/assests/browser-view`.
+- Use the built-in Viewport Switcher to toggle between Mobile layout and Web layout.
+- Check layout responsiveness, font sizes, colors, icons, badge styling, dark background contrast, and image scaling.

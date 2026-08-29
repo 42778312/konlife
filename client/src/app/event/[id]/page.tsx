@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { MOCK_EVENTS } from '@/data/mockEvents';
 import { WebHeader } from '@/components/layout/WebHeader';
-import { ViewportSwitcher } from '@/components/layout/ViewportSwitcher';
 import { EventCardWeb } from '@/components/events/EventCardWeb';
 import { MapWidget } from '@/components/events/MapWidget';
 import {
@@ -23,7 +22,6 @@ import {
 
 export default function EventDetailPage() {
   const params = useParams();
-  const [viewMode, setViewMode] = useState<'auto' | 'mobile' | 'web'>('auto');
   const [isSaved, setIsSaved] = useState(false);
 
   const eventId = params?.id as string;
@@ -32,10 +30,8 @@ export default function EventDetailPage() {
 
   return (
     <div className="min-h-screen bg-[#080809] text-zinc-100 flex flex-col pb-20 md:pb-0">
-      <ViewportSwitcher viewMode={viewMode} setViewMode={setViewMode} />
-
       {/* WEB DESKTOP VIEW */}
-      <div className={`${viewMode === 'mobile' ? 'hidden' : viewMode === 'web' ? 'block' : 'hidden md:block'}`}>
+      <div className="hidden md:block">
         <WebHeader />
 
         <main className="max-w-7xl mx-auto px-8 py-8 flex flex-col gap-8">
@@ -178,7 +174,7 @@ export default function EventDetailPage() {
       </div>
 
       {/* MOBILE PHONE VIEW */}
-      <div className={`${viewMode === 'web' ? 'hidden' : viewMode === 'mobile' ? 'block' : 'block md:hidden'} max-w-md mx-auto w-full`}>
+      <div className="block md:hidden max-w-md mx-auto w-full">
         {/* Mobile Header Bar */}
         <div className="p-4 flex items-center justify-between border-b border-zinc-900 sticky top-0 bg-[#080809] z-40">
           <Link href="/" className="p-2 bg-zinc-900 border border-zinc-800 rounded-full text-white">

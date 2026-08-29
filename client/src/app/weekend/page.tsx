@@ -4,21 +4,17 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { WebHeader } from '@/components/layout/WebHeader';
 import { MobileBottomNav } from '@/components/layout/MobileBottomNav';
-import { ViewportSwitcher } from '@/components/layout/ViewportSwitcher';
 import { Calendar, Wallet, Ticket, Heart, ChevronRight } from 'lucide-react';
 
 export default function WeekendPage() {
-  const [viewMode, setViewMode] = useState<'auto' | 'mobile' | 'web'>('auto');
   const [selectedDay, setSelectedDay] = useState<'Today' | 'Tomorrow' | 'Fri' | 'Sat' | 'Sun'>('Sat');
 
   const days: ('Today' | 'Tomorrow' | 'Fri' | 'Sat' | 'Sun')[] = ['Today', 'Tomorrow', 'Fri', 'Sat', 'Sun'];
 
   return (
     <div className="min-h-screen bg-[#080809] text-zinc-100 flex flex-col pb-20 md:pb-0">
-      <ViewportSwitcher viewMode={viewMode} setViewMode={setViewMode} />
-
       {/* WEB DESKTOP VIEW */}
-      <div className={`${viewMode === 'mobile' ? 'hidden' : viewMode === 'web' ? 'block' : 'hidden md:block'}`}>
+      <div className="hidden md:block">
         <WebHeader />
 
         <main className="max-w-7xl mx-auto px-8 py-8 flex flex-col gap-8">
@@ -176,7 +172,7 @@ export default function WeekendPage() {
       </div>
 
       {/* MOBILE PHONE VIEW */}
-      <div className={`${viewMode === 'web' ? 'hidden' : viewMode === 'mobile' ? 'block' : 'block md:hidden'} max-w-md mx-auto w-full`}>
+      <div className="block md:hidden max-w-md mx-auto w-full">
         <div className="p-4 border-b border-zinc-900 sticky top-0 bg-[#080809] z-40">
           <h1 className="font-display text-4xl font-black text-white tracking-wide">
             My Weekend

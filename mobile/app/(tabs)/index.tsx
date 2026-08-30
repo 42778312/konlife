@@ -6,8 +6,18 @@ import { colors, fonts } from '@/constants/theme';
 import { Screen } from '@/components/layout/Screen';
 import { MobileHeader } from '@/components/layout/MobileHeader';
 import { EventCard } from '@/components/events/EventCard';
+import { HeroSlideshow } from '@/components/events/HeroSlideshow';
 import { CategoryFilterBar } from '@/components/events/CategoryFilterBar';
 import { DayPills } from '@/components/ui/DayPills';
+
+const WEEKEND_DAYS = new Set(['Fri', 'Sat', 'Sun']);
+
+function weekendHighlights() {
+  const weekend = MOCK_EVENTS.filter((e) => WEEKEND_DAYS.has(e.dayOfWeek));
+  const featured = weekend.filter((e) => e.isFeatured);
+  const rest = weekend.filter((e) => !e.isFeatured && e.isPopular);
+  return [...featured, ...rest].slice(0, 5);
+}
 
 export default function HomeScreen() {
   const router = useRouter();
@@ -15,7 +25,7 @@ export default function HomeScreen() {
   const [selectedCategory, setSelectedCategory] = useState('Student');
   const [refreshing, setRefreshing] = useState(false);
 
-  const heroMobileEvent = MOCK_EVENTS.find((e) => e.id === 'student-night') || MOCK_EVENTS[0];
+  const heroEvents = weekendHighlights();
   const weekendEvents = MOCK_EVENTS.filter((e) => e.dayOfWeek === 'Sat' || e.dayOfWeek === 'Fri').slice(0, 3);
 
   const onRefresh = useCallback(() => {
@@ -32,7 +42,7 @@ export default function HomeScreen() {
       <View style={styles.stack}>
         <DayPills selected={selectedDay} onSelect={setSelectedDay} />
 
-        <EventCard event={heroMobileEvent} variant="hero" />
+        <HeroSlideshow events={heroEvents} />
 
         <View style={styles.sectionHead}>
           <Text style={styles.sectionTitle}>This Weekend</Text>

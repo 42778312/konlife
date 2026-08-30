@@ -1,0 +1,39 @@
+{
+  "title": "Choose the home composition",
+  "question": "Door Clipboard is locked. Which first-viewport composition should we build? The sheet list is the decision-round north star; the other two vary topology and hierarchy inside the same world.",
+  "options": [
+    {
+      "id": "sheet-list",
+      "label": "The sheet",
+      "kicker": "DECISION COMP",
+      "thesis": "Tonight is one paper guest list: time, title, venue, door, highlighter on I'm going.",
+      "palette": ["#F6F5F1", "#1B1D1F", "#E4F04A", "#1A365D"],
+      "materials": ["laser-print paper", "clipboard clip", "hairline rules", "highlighter"],
+      "viewport": "Full-width paper sheet under a clip. Rows. First row larger. Find on the masthead.",
+      "risk": "Can flatten into a table if the paper and clip are not built as material.",
+      "comp": ".impeccable/mocks/decision/assigned.webp"
+    },
+    {
+      "id": "split-gather",
+      "label": "List and plan",
+      "thesis": "Tonight's list and My Weekend sit as two sheets on the same clipboard.",
+      "palette": ["#F6F5F1", "#1B1D1F", "#E4F04A", "#1A365D"],
+      "materials": ["two paper sheets", "hairline rules", "highlighter gather"],
+      "viewport": "Left: tonight's rows. Right: My Weekend gathered by Fri/Sat/Sun from highlighted names.",
+      "risk": "Desktop-only; the second sheet must collapse on the phone, not shrink.",
+      "comp": ".impeccable/mocks/decision/assigned-b.webp"
+    },
+    {
+      "id": "time-spine",
+      "label": "Time rail",
+      "thesis": "Hours are the spine; nights hang off 21:00 / 22:00 / 23:00 on the same paper.",
+      "palette": ["#F6F5F1", "#1B1D1F", "#E4F04A", "#1A365D"],
+      "materials": ["paper sheet", "display-size times", "hairline rules"],
+      "viewport": "Clipboard masthead, then a vertical time rail with nights to the right of each hour.",
+      "risk": "Over-indexes when and underplays venue photos on home.",
+      "comp": ".impeccable/mocks/decision/assigned-c.webp"
+    }
+  ],
+  "steer": true,
+  "buildPath": { "value": "comp", "toggle": false }
+}

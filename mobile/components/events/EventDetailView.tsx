@@ -3,7 +3,8 @@ import { Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'r
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, ExternalLink, MapPin, Share2 } from 'lucide-react-native';
-import { EventItem, MOCK_EVENTS } from '@/data/mockEvents';
+import { EventItem } from '@/data/mockEvents';
+import { useEvents } from '@/context/EventsProvider';
 import { colors, fonts, radius, space, type, webCursor } from '@/constants/theme';
 import { successTick } from '@/lib/haptics';
 import { useSavedEvents } from '@/context/SavedEventsProvider';
@@ -22,8 +23,12 @@ type EventDetailViewProps = {
 export function EventDetailView({ event, onClose }: EventDetailViewProps) {
   const insets = useSafeAreaInsets();
   const { isSaved, toggleSaved } = useSavedEvents();
+  const { events } = useEvents();
   const saved = isSaved(event.id);
-  const related = MOCK_EVENTS.filter((e) => e.venue === event.venue && e.id !== event.id).slice(0, 3);
+  const related = events
+    .filter((e) => e.venue === event.venue && e.id !== event.id && e.title !== event.title)
+    .slice(0, 3);
+  const moreUrl = event.sourceUrl || event.website;
 
   const onShare = async () => {
     try {
@@ -82,8 +87,8 @@ export function EventDetailView({ event, onClose }: EventDetailViewProps) {
 
           <View style={styles.facts}>
             <Fact label="Time" value={event.time} />
-            <Fact label="Door" value={event.price} />
-            <Fact label="Vibe" value={event.category} />
+            {event.price ? <Fact label="Door" value={event.price} /> : <Fact label="Place" value={event.venue} />}
+            <Fact label="Venue" value={event.venue} />
           </View>
 
           <View style={styles.tags}>
@@ -98,21 +103,26 @@ export function EventDetailView({ event, onClose }: EventDetailViewProps) {
             <MapPin size={16} color={colors.highlighter} strokeWidth={2} />
             <View style={{ flex: 1 }}>
               <Text style={type.title}>{event.venue}</Text>
-              <Text style={type.meta}>{event.city}</Text>
+              <Text style={type.meta}>
+                {[event.venueAddress, event.venueZip, event.city].filter(Boolean).join(', ')}
+              </Text>
             </View>
           </View>
           <View style={styles.map}>
             <MapWidget venueName={event.venue} cityName={event.city} interactive={false} compact />
           </View>
 
-          <Pressable
-            onPress={() => Linking.openURL('https://www.konstanz.de')}
-            style={[styles.linkRow, webCursor]}
-            accessibilityRole="link"
-          >
-            <Text style={styles.linkText}>City of Konstanz</Text>
-            <ExternalLink size={14} color={colors.highlighter} strokeWidth={2.2} />
-          </Pressable>
+          {moreUrl ? (
+            <Pressable
+              onPress={() => Linking.openURL(moreUrl)}
+              style={[styles.linkRow, webCursor]}
+              accessibilityRole="link"
+              accessibilityLabel="Open event listing"
+            >
+              <Text style={styles.linkText}>More info</Text>
+              <ExternalLink size={14} color={colors.highlighter} strokeWidth={2.2} />
+            </Pressable>
+          ) : null}
 
           {related.length > 0 ? (
             <View style={styles.related}>

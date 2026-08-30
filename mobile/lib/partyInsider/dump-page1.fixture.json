@@ -1,0 +1,1036 @@
+{
+  "events": [
+    {
+      "id": 14442,
+      "title": "AYØ Sunset Edition &#8211; US-MEX Terraza Kreuzlingen",
+      "venue": {
+        "id": 1355,
+        "venue": "US-MEX Terraza Kreuzlingen",
+        "city": "Kreuzlingen",
+        "country": "Switzerland",
+        "zip": "8280",
+        "slug": "us-mex-terraza-kreuzlingen",
+        "address": "Seestrasse 11B.2 / Seeufer West"
+      },
+      "categories": [
+        {
+          "name": "US-MEX Terraza Kreuzlingen",
+          "slug": "us-mex-terraza-kreuzlingen",
+          "term_group": 0,
+          "term_taxonomy_id": 46,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 95,
+          "filter": "raw",
+          "id": 46,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/46",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 18:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837.jpeg",
+        "id": 14443,
+        "extension": "jpeg",
+        "width": 2048,
+        "height": 1072,
+        "filesize": 245534,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 157,
+            "mime-type": "image/jpeg",
+            "filesize": 15451,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-300x157.jpeg"
+          },
+          "large": {
+            "width": 1024,
+            "height": 536,
+            "mime-type": "image/jpeg",
+            "filesize": 68322,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-1024x536.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 12797,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-150x150.jpeg"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 402,
+            "mime-type": "image/jpeg",
+            "filesize": 46010,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-768x402.jpeg"
+          },
+          "1536x1536": {
+            "width": 1536,
+            "height": 804,
+            "mime-type": "image/jpeg",
+            "filesize": 122431,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-1536x804.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 8662,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-75x75.jpeg"
+          },
+          "neve-blog": {
+            "width": 930,
+            "height": 620,
+            "mime-type": "image/jpeg",
+            "filesize": 76653,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9837-930x620.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/ayo-sunset-edition-us-mex-terraza-kreuzlingen/",
+      "website": "https://www.2bevents.ch/eventkalender",
+      "description": "<p>☀️ AYØ SUNSET EDITION ☀️</p>\n<p>Der Sommer ist noch nicht vorbei – und AYØ bringt die Vibes zurück nach Kreuzlingen. 🌅🔥</p>\n<p>Freu dich auf einen Abend voller:<br />\n🔥 Reggaeton<br />\n🔥 Afrobeats<br />\n🔥 Amapiano<br />\n🔥 Hip Hop</p>\n<p>🌅 Sunset Vibes<br />\n🍹 Ice Cold Drinks<br />\n🎶 Good Music<br />\n❤️ Good People</p>\n<p>🎧 DJs:<br />\nL-Dee<br />\nMATCHLAZ<br />\nTamino Primo</p>\n<p>📍 US-MEX Terraza, Kreuzlingen<br />\n📅 Freitag, 28.08.2026<br />\n🕕 18:00 – 22:00 Uhr<br />\n🎟️ GRATIS EINTRITT</p>\n<p>☀️ Nur bei guter Witterung.</p>\n<p>Bring deine Freunde mit, geniesst den Sonnenuntergang und erlebt mit uns einen weiteren unvergesslichen Sommerabend direkt am See. Wir freuen uns auf euch! 😈🔥</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": "CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "18",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 16:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14663,
+      "title": "SALSARITMO &#8211; DIE KULT SALSA PARTY &#8211; Dance Inn Münchwilen",
+      "venue": {
+        "id": 2115,
+        "venue": "DanceInn Schlosshof Münchwilen",
+        "city": "Münchwilen",
+        "country": "Switzerland",
+        "zip": "9542",
+        "slug": "danceinn-schlosshof-muenchwilen",
+        "address": "Murgtalstrasse 20"
+      },
+      "categories": [
+        {
+          "name": "DanceInn - Schlosshof",
+          "slug": "danceinnschlosshof",
+          "term_group": 0,
+          "term_taxonomy_id": 52,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 57,
+          "filter": "raw",
+          "id": 52,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/52",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 20:30:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262.jpeg",
+        "id": 14664,
+        "extension": "jpeg",
+        "width": 1206,
+        "height": 1665,
+        "filesize": 462525,
+        "sizes": {
+          "medium": {
+            "width": 217,
+            "height": 300,
+            "mime-type": "image/jpeg",
+            "filesize": 24034,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-217x300.jpeg"
+          },
+          "large": {
+            "width": 742,
+            "height": 1024,
+            "mime-type": "image/jpeg",
+            "filesize": 150245,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-742x1024.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 10692,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-150x150.jpeg"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 1060,
+            "mime-type": "image/jpeg",
+            "filesize": 157685,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-768x1060.jpeg"
+          },
+          "1536x1536": {
+            "width": 1113,
+            "height": 1536,
+            "mime-type": "image/jpeg",
+            "filesize": 260813,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-1113x1536.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 4069,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-75x75.jpeg"
+          },
+          "neve-blog": {
+            "width": 930,
+            "height": 620,
+            "mime-type": "image/jpeg",
+            "filesize": 114159,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0262-930x620.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/salsaritmo-dance-inn-muenchwilen-3/",
+      "website": "",
+      "description": "<p><strong>SALSARITMO – die beliebte Salsa &amp; Bachata Party der Ostschweiz!</strong><br />\nIm wunderschönen <em>Dance Inn</em> wird getanzt, gefeiert und genossen.</p>\n<p><strong>Programm:</strong></p>\n<p>🔸 <strong>20:30 Uhr:</strong> Kostenloser Salsa Workshop by Beni &amp; Veri (Fuego Y Pasion) 💃<br />\n🔸 <strong>ab 21:30 Uhr:</strong> Party <em>open end</em> – tanzen, bis die Schuhe glühen!<br />\n🔸 <strong>23.30 Uhr:</strong> Show by FyP Ladies Team &amp; Esencia Swiss Dance Project 🕺</p>\n<p>Für den perfekten Sound sorgt <strong>DJ Galante 🎧</strong></p>\n<p>Kommt vorbei – es lohnt sich! 🥳</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "20",
+        "minutes": "30",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 18:30:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14728,
+      "title": "Salsa, Bachata, Kizomba Party &#8211; Kulturzentrum K9 Konstanz",
+      "venue": {
+        "id": 2644,
+        "venue": "K9 Konstanz",
+        "city": "Konstanz",
+        "country": "Switzerland",
+        "zip": "78462",
+        "slug": "k9-konstanz",
+        "address": "Hieronymusgasse 3"
+      },
+      "categories": [
+        {
+          "name": "K9",
+          "slug": "k9",
+          "term_group": 0,
+          "term_taxonomy_id": 55,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 50,
+          "filter": "raw",
+          "id": 55,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/55",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 21:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2025/05/IMG_0320.jpeg",
+        "id": 14726,
+        "extension": "jpeg",
+        "width": 474,
+        "height": 671,
+        "filesize": 84228,
+        "sizes": {
+          "medium": {
+            "width": 212,
+            "height": 300,
+            "mime-type": "image/jpeg",
+            "filesize": 30852,
+            "url": "https://www.party-insider.com/wp-content/uploads/2025/05/IMG_0320-212x300.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 19670,
+            "url": "https://www.party-insider.com/wp-content/uploads/2025/05/IMG_0320-150x150.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 14880,
+            "url": "https://www.party-insider.com/wp-content/uploads/2025/05/IMG_0320-75x75.jpeg"
+          },
+          "neve-blog": {
+            "width": 474,
+            "height": 620,
+            "mime-type": "image/jpeg",
+            "filesize": 79828,
+            "url": "https://www.party-insider.com/wp-content/uploads/2025/05/IMG_0320-474x620.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/die-k9-disco-im-kulturzentrum-k9-konstanz-38/",
+      "website": "https://www.k9-kulturzentrum.de",
+      "description": "<p><b>Salsa, Bachata, Kizomba</b> 3 Rhythmen eine Tanzfläche!</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "21",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 19:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14685,
+      "title": "Thirtylicious &#8211; Tanzen ab 30 &#8211; Salzhaus Winterthur",
+      "venue": {
+        "id": 6617,
+        "venue": "Salzhaus Winterthur",
+        "city": "Winterthur",
+        "country": "Switzerland",
+        "zip": "8400",
+        "slug": "salzhaus-winterthur",
+        "address": "Untere Vogelsangstrasse 6"
+      },
+      "categories": [
+        {
+          "name": "Salzhaus",
+          "slug": "salzhaus",
+          "term_group": 0,
+          "term_taxonomy_id": 82,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 26,
+          "filter": "raw",
+          "id": 82,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/82",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 21:30:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270.webp",
+        "id": 14687,
+        "extension": "webp",
+        "width": 1280,
+        "height": 748,
+        "filesize": 31686,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 175,
+            "mime-type": "image/webp",
+            "filesize": 6202,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270-300x175.webp"
+          },
+          "large": {
+            "width": 1024,
+            "height": 598,
+            "mime-type": "image/webp",
+            "filesize": 26642,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270-1024x598.webp"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 3846,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270-150x150.webp"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 449,
+            "mime-type": "image/webp",
+            "filesize": 18910,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270-768x449.webp"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/webp",
+            "filesize": 1614,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270-75x75.webp"
+          },
+          "neve-blog": {
+            "width": 930,
+            "height": 620,
+            "mime-type": "image/webp",
+            "filesize": 25882,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0270-930x620.webp"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/thirtylicious-tanzen-ab-30-salzhaus-winterthur-9/",
+      "website": "https://www.salzhaus.ch",
+      "description": "<p>Die Thirtylicious blickt auf eine über 20-jährige Erfolgsgeschichte zurück: Für viele ist die Thirtylicious eine Konstante imLeben. Der letzte Freitag im Monat. Immer dick im Kalender eingetragen. Über 200 Partys in 20 Jahren!</p>\n<p>Auf die Früheintreffenden wartet ein offeriertes Cüpli. 🥂</p>\n<p><a href=\"https://www.seetickets.com/ch/event/thirtylicious/salzhaus/3697634\" target=\"_blank\" rel=\"noopener\">&gt;&gt;&gt; Tickets &lt;&lt;&lt;</a></p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "21",
+        "minutes": "30",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 19:30:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14645,
+      "title": "LADIES NIGHT &#8211; Grey Konstanz",
+      "venue": {
+        "id": 360,
+        "venue": "Grey Konstanz",
+        "city": "Konstanz",
+        "country": "Germany",
+        "zip": "78467",
+        "slug": "grey-konstanz",
+        "address": "Max-Stromeyerstr. 33"
+      },
+      "categories": [
+        {
+          "name": "Grey",
+          "slug": "grey",
+          "term_group": 0,
+          "term_taxonomy_id": 25,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 196,
+          "filter": "raw",
+          "id": 25,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/25",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 22:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419.jpeg",
+        "id": 10512,
+        "extension": "jpeg",
+        "width": 1920,
+        "height": 1005,
+        "filesize": 220653,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 157,
+            "mime-type": "image/jpeg",
+            "filesize": 26230,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-300x157.jpeg"
+          },
+          "large": {
+            "width": 1024,
+            "height": 536,
+            "mime-type": "image/jpeg",
+            "filesize": 89015,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-1024x536.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 21917,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-150x150.jpeg"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 402,
+            "mime-type": "image/jpeg",
+            "filesize": 64530,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-768x402.jpeg"
+          },
+          "1536x1536": {
+            "width": 1536,
+            "height": 804,
+            "mime-type": "image/jpeg",
+            "filesize": 138304,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-1536x804.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 15131,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-75x75.jpeg"
+          },
+          "neve-blog": {
+            "width": 930,
+            "height": 620,
+            "mime-type": "image/jpeg",
+            "filesize": 100487,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/03/IMG_4419-930x620.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/ladies-night-grey-konstanz-21/",
+      "website": "https://grey-konstanz.de/index.php/events",
+      "description": "<p class=\"h2 mb-0 font-black\">💄LADIES NIGHT💄</p>\n<p class=\"h4 mb-0\">20 EURO FREIVERZEHR FÜR LADIES!</p>\n<p class=\"text-white font-size-13 mt-3\">❤️ Und sie feiern wieder in ihrem Lieblingsclub ❤️</p>\n<p>🔆 Mädelsabend&#8230;<br />\n🔆 Ladies Night&#8230;<br />\n🔆 Queensclub&#8230;</p>\n<p>❣️Specials:<br />\nLadies erhalten bis 00:00Uhr 20€ Getränkefreiverzehr<br />\n(gültig die ganze Nacht)</p>\n<p>❌❌❌ EINTRITT FREI BIS 23 UHR FÜR ALLE ❌❌❌<br />\ndie Ladies sind heute Abend wieder im größten Club am Bodensee zum feiern unterwegs.<br />\nFeier mit uns DEIN WOCHENENDE auf 🔴 FÜNF MUSIKBEREICHEN 🔴!</p>\n<p># Lounge Reservierung unter:<br />\nhttp://www.greyclub.de</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "22",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 20:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14651,
+      "title": "Singles gone wild &#8211; Top10 Singen",
+      "venue": {
+        "id": 1134,
+        "venue": "TOP10 Singen",
+        "city": "Singen (Hohentwiel)",
+        "country": "Germany",
+        "zip": "78224",
+        "slug": "top-10-singen",
+        "address": "Otto-Hahn-Str. 5"
+      },
+      "categories": [
+        {
+          "name": "Top10",
+          "slug": "top10",
+          "term_group": 0,
+          "term_taxonomy_id": 26,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 203,
+          "filter": "raw",
+          "id": 26,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/26",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 22:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0259.jpeg",
+        "id": 14653,
+        "extension": "jpeg",
+        "width": 850,
+        "height": 478,
+        "filesize": 78548,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 169,
+            "mime-type": "image/jpeg",
+            "filesize": 26176,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0259-300x169.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 18062,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0259-150x150.jpeg"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 432,
+            "mime-type": "image/jpeg",
+            "filesize": 77090,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0259-768x432.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 13442,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0259-75x75.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/singles-gone-wild-top10-singen-4/",
+      "website": "https://www.top10-singen.de/events-listing/",
+      "description": "<p data-start=\"364\" data-end=\"563\">💋 <span style=\"color: #000000;\">TOP10 SINGEN PRESENTS: SINGLES GONE WILD – SOLO BUT YOLO! 💋</span></p>\n<p data-start=\"364\" data-end=\"563\"><br data-start=\"431\" data-end=\"434\" />📅 <span style=\"color: #000000;\">Freitag, 28. August 2026</span><br data-start=\"467\" data-end=\"470\" />🕙 <span style=\"color: #000000;\">Einlass ab 22:00 Uhr | 💸 Eintritt: 10,- €</span><br data-start=\"522\" data-end=\"525\" />🔞 <span style=\"color: #000000;\">Ab 16 Jahren mit U18-Formular</span></p>\n<p data-start=\"565\" data-end=\"842\">Es ist Zeit, das Singleleben zu feiern – laut, wild und hemmungslos!<br data-start=\"637\" data-end=\"640\" />Heute Nacht heißt es: Flirten, Tanzen, Spaß haben &amp; neue Menschen kennenlernen!<br data-start=\"723\" data-end=\"726\" />Spür das Kribbeln, wenn die Beats dich packen, das Licht flackert und vielleicht mehr als nur Funken fliegen… 🔥</p>\n<hr data-start=\"844\" data-end=\"847\" />\n<p data-start=\"849\" data-end=\"876\">💘 DAS ERWARTET DICH:</p>\n<p data-start=\"878\" data-end=\"1033\">🍸 Flirt Drink Specials<br data-start=\"905\" data-end=\"908\" />Unsere Barkeeper mixen euch Drinks, die garantiert für Gesprächsstoff sorgen – und vielleicht auch für ein bisschen mehr 😉</p>\n<p data-start=\"1035\" data-end=\"1317\">💌 It’s a Match!<br data-start=\"1055\" data-end=\"1058\" />Jeder Gast bekommt am Eingang eine Flirtcard mit einem Symbol.<br data-start=\"1124\" data-end=\"1127\" />Finde dein passendes Gegenstück – und gemeinsam holt ihr euch an der Flirt Bar einen Free Drink!<br data-start=\"1227\" data-end=\"1230\" />Wer sich traut und einen Kuss wagt, bekommt eine kleine Überraschung vom Team! 😘</p>\n<p data-start=\"1319\" data-end=\"1453\">👠 Sexy Single Ladies Special<br data-start=\"1352\" data-end=\"1355\" />Alle Ladies haben freien Eintritt bis 22.30 Uhr – also kommt früh und bringt eure Girls mit! 💃</p>\n<p data-start=\"1455\" data-end=\"1636\">🕶️ Flirt Sunglasses<br data-start=\"1479\" data-end=\"1482\" />„Kiss Me“, „Take Me Home“ oder „Just Dance“ – hol dir bis 24 Uhr GRATIS unsere stylischen Flirt-Sonnenbrillen und schreib drauf, was du wirklich willst!</p>\n<p data-start=\"1962\" data-end=\"2090\">SALITOS SPECIAL!<br class=\"html-br\" />Alle 5er Gruppen erhalten ein Salitos Bucket (5 Salitos) bis 22.30 Uhr GRATIS!</p>\n<p data-start=\"2092\" data-end=\"2274\">🎧 DJs on Fire!<br data-start=\"2111\" data-end=\"2114\" />DJ Just Beatz sorgt für den passenden Sound!</p>\n<hr data-start=\"2276\" data-end=\"2279\" />\n<p data-start=\"2281\" data-end=\"2455\">🔥 SINGLES GONE WILD – SOLO BUT YOLO! 🔥<br data-start=\"2325\" data-end=\"2328\" />Ob frisch getrennt, ewig Single oder einfach partyhungrig – heute Nacht zählt nur eins: Spaß, Freiheit &amp; Flirtfieber pur!</p>\n<p data-start=\"2457\" data-end=\"2576\">📍 <span style=\"color: #000000;\">Top10 Singen | Freitag, 28.08.2026 | Einlass ab 22 Uhr | Eintritt 10,- €</span><br data-start=\"2535\" data-end=\"2538\" />🔞 Ab 16 Jahren mit U18-Formular</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " EUR",
+        "currency_code": "EUR",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "22",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 20:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14655,
+      "title": "City Beats &#038; Night Fever &#8211; Bolero Winterthur",
+      "venue": {
+        "id": 1286,
+        "venue": "Bolero Winterthur",
+        "city": "Winterthur",
+        "country": "Switzerland",
+        "zip": "8400",
+        "slug": "bolero-club",
+        "address": "Vogelsangstrasse 10"
+      },
+      "categories": [
+        {
+          "name": "Bolero",
+          "slug": "bolero",
+          "term_group": 0,
+          "term_taxonomy_id": 44,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 170,
+          "filter": "raw",
+          "id": 44,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/44",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-28 23:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0260.jpeg",
+        "id": 14657,
+        "extension": "jpeg",
+        "width": 600,
+        "height": 1067,
+        "filesize": 134851,
+        "sizes": {
+          "medium": {
+            "width": 169,
+            "height": 300,
+            "mime-type": "image/jpeg",
+            "filesize": 24397,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0260-169x300.jpeg"
+          },
+          "large": {
+            "width": 576,
+            "height": 1024,
+            "mime-type": "image/jpeg",
+            "filesize": 126459,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0260-576x1024.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 17822,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0260-150x150.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 11920,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0260-75x75.jpeg"
+          },
+          "neve-blog": {
+            "width": 600,
+            "height": 620,
+            "mime-type": "image/jpeg",
+            "filesize": 107955,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0260-600x620.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/city-beats-night-fever-bolero-winterthur/",
+      "website": "https://www.bolero-club.ch",
+      "description": "<p>Sommeröffnungszeiten: alles ab 23 Uhr / Eintritt Fr. 15.- / Ab 21 Jahren</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "28",
+        "hour": "23",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-28 21:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14962,
+      "title": "MUSIC IS THE REAL LOVE &#8211; US-MEX Terraza Kreuzlingen",
+      "venue": {
+        "id": 1355,
+        "venue": "US-MEX Terraza Kreuzlingen",
+        "city": "Kreuzlingen",
+        "country": "Switzerland",
+        "zip": "8280",
+        "slug": "us-mex-terraza-kreuzlingen",
+        "address": "Seestrasse 11B.2 / Seeufer West"
+      },
+      "categories": [
+        {
+          "name": "US-MEX Terraza Kreuzlingen",
+          "slug": "us-mex-terraza-kreuzlingen",
+          "term_group": 0,
+          "term_taxonomy_id": 46,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 95,
+          "filter": "raw",
+          "id": 46,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/46",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-29 14:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0713.jpeg",
+        "id": 14964,
+        "extension": "jpeg",
+        "width": 910,
+        "height": 476,
+        "filesize": 114563,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 157,
+            "mime-type": "image/jpeg",
+            "filesize": 23337,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0713-300x157.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 16540,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0713-150x150.jpeg"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 402,
+            "mime-type": "image/jpeg",
+            "filesize": 72522,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0713-768x402.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 12236,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/08/IMG_0713-75x75.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/music-is-the-real-love-us-mex-terraza-kreuzlingen-3/",
+      "website": "https://www.2bevents.ch/eventkalender",
+      "description": "<p><strong>2B Dayish X MUSIC IS THE REAL LOVE</strong></p>\n<p>Am Samstag, 29.08.2026 wird die US-MEX Terraza Kreuzlingen zum Treffpunkt für alle, die House Music, Seebrise und Sommerfeeling lieben.</p>\n<p>Bei <strong>2B Dayish X MUSIC IS THE REAL LOVE</strong>erwarten dich von 14.00 Uhr bis 22.00 Uhr feinste Sounds direkt am See. Unser Lineup sorgt mit House, Deep House und Tech House für den perfekten Soundtrack zwischen Daydance, Sundowner und Terraza Vibes.</p>\n<p><strong>Line-up</strong><br />\n14.00 Uhr bis 17.00 Uhr: Cris P.<br />\n17.00 Uhr bis 19.30 Uhr: Rich<br />\n19.30 Uhr bis 22.00 Uhr: Sameblood</p>\n<p>Komm vorbei und geniesse den Tag mit Musik, Sonne und Feriengefühl am Wasser.</p>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": "CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "29",
+        "hour": "14",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-29 12:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14216,
+      "title": "PICNIC OPEN AIR DAYDANCE &#8211; Kantine Konstanz",
+      "venue": {
+        "id": 1236,
+        "venue": "Kantine Konstanz",
+        "city": "Konstanz",
+        "country": "Germany",
+        "zip": "78467",
+        "slug": "kantine-konstanz",
+        "address": "Oberlohnstraße 3"
+      },
+      "categories": [
+        {
+          "name": "Kantine",
+          "slug": "kantine",
+          "term_group": 0,
+          "term_taxonomy_id": 42,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 173,
+          "filter": "raw",
+          "id": 42,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/42",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-29 16:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559.webp",
+        "id": 14218,
+        "extension": "webp",
+        "width": 1880,
+        "height": 940,
+        "filesize": 171492,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 9284,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-300x150.webp"
+          },
+          "large": {
+            "width": 1024,
+            "height": 512,
+            "mime-type": "image/webp",
+            "filesize": 67610,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-1024x512.webp"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/webp",
+            "filesize": 5398,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-150x150.webp"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 384,
+            "mime-type": "image/webp",
+            "filesize": 39404,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-768x384.webp"
+          },
+          "1536x1536": {
+            "width": 1536,
+            "height": 768,
+            "mime-type": "image/webp",
+            "filesize": 135654,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-1536x768.webp"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/webp",
+            "filesize": 2154,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-75x75.webp"
+          },
+          "neve-blog": {
+            "width": 930,
+            "height": 620,
+            "mime-type": "image/webp",
+            "filesize": 74504,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9559-930x620.webp"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/picnic-open-air-daydance-kantine-konstanz-3/",
+      "website": "",
+      "description": "<div class=\"StructuredModuleRenderer-module-scss-module__Qv95HW__structuredContent StructuredModuleRenderer-module-scss-module__Qv95HW__text\" data-testid=\"text-content\">\n<div>\n<p>SAMSTAG 29 AUGUST 2026 · KANTINE HOF KONSTANZ PPPP © 2026 プレイ &#8211; ッジ House · Techno</p>\n</div>\n</div>\n<div class=\"StructuredModuleRenderer-module-scss-module__Qv95HW__structuredContent StructuredModuleRenderer-module-scss-module__Qv95HW__text\" data-testid=\"text-content\">\n<div>\n<p>It’s that time again… ☀️</p>\n<p><strong>PICNIC OPEN AIR DAYDANCE</strong></p>\n<p><strong>Samstag · 29. August · Kantine KN Innenhof 16:00 Uhr</strong></p>\n<p><strong>Music * Drinks * Food * Happening *</strong></p>\n<p><a href=\"https://www.eventbrite.de/e/picnic-open-air-daydance-29august-kantine-kn-hof-tickets-1994408573732?fbclid=PAZnRzaATWki5wZG9mAmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzEyNDAyNDU3NDI4NzQxNAABp3V0JqsOp7yrwcVZrIN-Ow7TqaAIuw1oD3BriSQ8arJ7UMmSa_TLcoQaU_lr_aem_IGdEfcNAk6Qz0DIGFkGpUg\" target=\"_blank\" rel=\"noopener\">&gt;&gt;&gt; Tickets &lt;&lt;&lt;</a></p>\n<p>Lineup:</p>\n<p>COMMING SOON</p>\n<p>included: PLAY Afterparty 23:00 bis 04:00 Uhr</p>\n<p>Sonne im Gesicht, Drink in der Hand, Sound im Herzen.</p>\n<p><strong>Cheapy Bird phase online now</strong></p>\n<p>Einlass ab 16 Jahren bis 23:00 Uhr.</p>\n<p>Secure yours now.</p>\n<p><strong>You’ll want to be there.</strong></p>\n<p>PPPP © 2026 プレイ &#8211; ッジ</p>\n</div>\n</div>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " EUR",
+        "currency_code": "EUR",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "29",
+        "hour": "16",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-29 14:00:00",
+      "featured": false,
+      "tags": []
+    },
+    {
+      "id": 14263,
+      "title": "Summer Beach Party &#8211; SommerZauber Münchwilen",
+      "venue": {
+        "id": 5713,
+        "venue": "Sommerzauber Münchwilen",
+        "city": "Münchwilen",
+        "country": "Switzerland",
+        "zip": "9542",
+        "slug": "seezauber-muenchwilen",
+        "address": "Murgtalstrasse 20"
+      },
+      "categories": [
+        {
+          "name": "Sommerzauber Münchwilen",
+          "slug": "sommerzauber-muenchwilen",
+          "term_group": 0,
+          "term_taxonomy_id": 67,
+          "taxonomy": "tribe_events_cat",
+          "description": "",
+          "parent": 0,
+          "count": 9,
+          "filter": "raw",
+          "id": 67,
+          "urls": {
+            "self": "https://www.party-insider.com/wp-json/tribe/events/v1/categories/67",
+            "collection": "https://www.party-insider.com/wp-json/tribe/events/v1/categories"
+          }
+        }
+      ],
+      "start_date": "2026-08-29 16:00:00",
+      "timezone": "Europe/Zurich",
+      "image": {
+        "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9605.jpeg",
+        "id": 14264,
+        "extension": "jpeg",
+        "width": 1024,
+        "height": 1024,
+        "filesize": 264451,
+        "sizes": {
+          "medium": {
+            "width": 300,
+            "height": 300,
+            "mime-type": "image/jpeg",
+            "filesize": 40222,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9605-300x300.jpeg"
+          },
+          "thumbnail": {
+            "width": 150,
+            "height": 150,
+            "mime-type": "image/jpeg",
+            "filesize": 24786,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9605-150x150.jpeg"
+          },
+          "medium_large": {
+            "width": 768,
+            "height": 768,
+            "mime-type": "image/jpeg",
+            "filesize": 114311,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9605-768x768.jpeg"
+          },
+          "widget-thumbnail": {
+            "width": 75,
+            "height": 75,
+            "mime-type": "image/jpeg",
+            "filesize": 19638,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9605-75x75.jpeg"
+          },
+          "neve-blog": {
+            "width": 930,
+            "height": 620,
+            "mime-type": "image/jpeg",
+            "filesize": 107959,
+            "url": "https://www.party-insider.com/wp-content/uploads/2026/07/IMG_9605-930x620.jpeg"
+          }
+        }
+      },
+      "url": "https://www.party-insider.com/event/summer-beach-party-sommerzauber-muenchwilen-2/",
+      "website": "",
+      "description": "<div class=\"xdj266r x14z9mp xat24cr x1lziwak x1vvkbs\">\n<p data-start=\"132\" data-end=\"332\">Der Sommer neigt sich langsam dem Ende zu – das feiern wir gemeinsam mit der <strong data-start=\"209\" data-end=\"231\">Summer Beach Party</strong> am <strong data-start=\"235\" data-end=\"263\">Samstag, 29. August 2026</strong>, ab <strong data-start=\"268\" data-end=\"281\">16:00 Uhr</strong> auf dem Gelände der <strong data-start=\"302\" data-end=\"331\">Zukunftsfabrik Münchwilen</strong>.</p>\n<p data-start=\"334\" data-end=\"649\">Freut euch auf echtes Beach-Feeling mit sommerlicher Atmosphäre, coolen Drinks, guter Stimmung und den besten Partyhits. Für den perfekten Sound sorgen <strong data-start=\"486\" data-end=\"498\">DJ MousE</strong>, <strong data-start=\"500\" data-end=\"510\">DJ BAM</strong> und <strong data-start=\"515\" data-end=\"526\">DJ C.K.</strong> mit einem abwechslungsreichen Mix aus <strong data-start=\"565\" data-end=\"600\">Hits, Partytunes und Evergreens</strong>, der garantiert für eine volle Tanzfläche sorgt.</p>\n<p data-start=\"651\" data-end=\"800\">🍹 <strong data-start=\"654\" data-end=\"666\">Special:</strong> Die <strong data-start=\"671\" data-end=\"685\">Ustrinkete</strong> – nutzt die Gelegenheit und geniesst die letzten sommerlichen Stunden mit Freunden und feiert den Saisonabschluss.</p>\n<p data-start=\"802\" data-end=\"916\">Kommt vorbei, lasst den Alltag hinter euch und erlebt einen unvergesslichen Sommerabend mit dem <strong data-start=\"898\" data-end=\"915\">FC Münchwilen</strong>.</p>\n</div>\n<div class=\"x14z9mp xat24cr x1lziwak x1vvkbs xtlvy1s\">\n<p>&nbsp;</p>\n</div>",
+      "cost": "",
+      "cost_details": {
+        "currency_symbol": " CHF",
+        "currency_code": "CHF",
+        "currency_position": "suffix",
+        "values": []
+      },
+      "start_date_details": {
+        "year": "2026",
+        "month": "08",
+        "day": "29",
+        "hour": "16",
+        "minutes": "00",
+        "seconds": "00"
+      },
+      "utc_start_date": "2026-08-29 14:00:00",
+      "featured": false,
+      "tags": []
+    }
+  ]
+}

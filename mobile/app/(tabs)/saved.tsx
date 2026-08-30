@@ -2,8 +2,8 @@ import React, { useCallback, useMemo, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Bookmark } from 'lucide-react-native';
 import { useRouter } from 'expo-router';
-import { MOCK_EVENTS } from '@/data/mockEvents';
 import { layout, space, type } from '@/constants/theme';
+import { useEvents } from '@/context/EventsProvider';
 import { useSavedEvents } from '@/context/SavedEventsProvider';
 import { Screen } from '@/components/layout/Screen';
 import { EventCard } from '@/components/events/EventCard';
@@ -11,15 +11,17 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 
 export default function SavedScreen() {
+  const { events, refresh } = useEvents();
   const { isSaved } = useSavedEvents();
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
-  const savedEvents = useMemo(() => MOCK_EVENTS.filter((e) => isSaved(e.id)), [isSaved]);
+  const savedEvents = useMemo(() => events.filter((e) => isSaved(e.id)), [events, isSaved]);
 
-  const onRefresh = useCallback(() => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 700);
-  }, []);
+    await refresh();
+    setRefreshing(false);
+  }, [refresh]);
 
   return (
     <Screen onRefresh={onRefresh} refreshing={refreshing}>

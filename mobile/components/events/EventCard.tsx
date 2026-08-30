@@ -67,7 +67,7 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
             <Text style={styles.featuredTitle}>{event.title}</Text>
             <View style={styles.featuredRow}>
               <Text style={styles.tag}>{event.category}</Text>
-              <Text style={type.heroPrice}>{event.price}</Text>
+            <Text style={type.heroPrice}>{event.price || event.venue}</Text>
             </View>
           </View>
         </PressableScale>
@@ -89,7 +89,7 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
             <Text style={styles.venue} numberOfLines={1}>
               {event.venue}
             </Text>
-            <Text style={styles.price}>{event.price}</Text>
+            {event.price ? <Text style={styles.price}>{event.price}</Text> : null}
           </View>
         </PressableScale>
       </View>
@@ -107,7 +107,7 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
               {event.title}
             </Text>
             <Text style={styles.venue}>{event.venue}</Text>
-            <Text style={styles.price}>{event.price}</Text>
+            {event.price ? <Text style={styles.price}>{event.price}</Text> : null}
           </View>
         </PressableScale>
       </View>
@@ -127,7 +127,6 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
               {event.time} · {event.venue}
             </Text>
           </View>
-          <Text style={styles.price}>{event.price}</Text>
         </PressableScale>
       </View>
     );
@@ -137,16 +136,16 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
     <View ref={ref} collapsable={false} style={[styles.listOuter, covered && styles.covered]}>
       <PressableScale onPress={onOpen} contentStyle={styles.listInner} accessibilityLabel={event.title}>
         <RemoteImage uri={event.image} alt={event.title} containerStyle={styles.listImage} />
-        <View style={styles.listBody}>
-          <Text style={styles.hDate}>{event.date}</Text>
-          <Text style={styles.listTitle} numberOfLines={2}>
-            {event.title}
-          </Text>
-          <Text style={styles.venue} numberOfLines={1}>
-            {event.venue} · {event.category}
-          </Text>
-          <Text style={styles.price}>{event.price}</Text>
-        </View>
+          <View style={styles.listBody}>
+            {event.date ? <Text style={styles.hDate}>{event.date}</Text> : null}
+            <Text style={styles.listTitle} numberOfLines={2}>
+              {event.title}
+            </Text>
+            <Text style={styles.venue} numberOfLines={1}>
+              {event.venue}
+            </Text>
+            {event.price ? <Text style={styles.price}>{event.price}</Text> : null}
+          </View>
         {saveBtn}
       </PressableScale>
     </View>

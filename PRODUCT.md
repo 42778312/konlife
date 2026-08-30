@@ -20,7 +20,7 @@ A city-specific going-out guide for Konstanz nightlife, not a generic ticket mar
 
 ## Operating Context
 
-Expo app (`mobile/`) with expo-router, currently also runnable on iOS and Android. Product priority is a responsive web experience (desktop, laptop, tablet, phone). Native remains a secondary companion, not a second product. Content is mock nightlife events; there is no backend, payments, or live inventory.
+Expo app (`mobile/`) with expo-router, currently also runnable on iOS and Android. Product priority is a responsive web experience (desktop, laptop, tablet, phone). Native remains a secondary companion, not a second product. Listings come from the public Party Insider events API, filtered in-app so only Konstanz venues appear.
 
 ## Capabilities and Constraints
 
@@ -28,9 +28,8 @@ Expo app (`mobile/`) with expo-router, currently also runnable on iOS and Androi
 - Save/bookmark events locally in the client. No accounts, sign-in, or profiles.
 - No payments, ticketing, QR codes, or booking status.
 - No create-event, organizer publishing, or organizer profiles.
-- Do not invent authentication, APIs, or live data fetching.
-- Existing mock catalog, venue names, coordinates, and city (Konstanz) are product truth; expand only with equally local, realistic nightlife content.
-- Undecided: whether Saved persists across sessions (local storage) or stays in-memory mock flags.
+- Live catalog: The Events Calendar REST at party-insider.com. The app paginates the dated list, then keeps only events whose `venue.city` is exactly `Konstanz`. Other cities are never shown.
+- Saved IDs stay in memory for the session (local storage still undecided).
 
 ## Brand Commitments
 
@@ -41,8 +40,9 @@ Expo app (`mobile/`) with expo-router, currently also runnable on iOS and Androi
 
 ## Evidence on Hand
 
-- Mock catalog: `mobile/data/mockEvents.ts` (Student, Party, Club, Bar, Live Music, Culture; venues and lat/lng in Konstanz; Unsplash images).
-- No real customer quotes, press, ticket sales, or first-party photography. Do not fabricate those claims. Synthetic nightlife copy and images must read as local going-out content, labeled synthetic where a visitor could mistake them for live listings.
+- Live catalog from Party Insider (`mobile/lib/partyInsider/`), gated to `venue.city === "Konstanz"`.
+- Mock catalog remains in `mobile/data/mockEvents.ts` as type/shape reference only; screens do not read it as inventory.
+- No first-party photography. Event images are hosted by Party Insider.
 
 ## Product Principles
 

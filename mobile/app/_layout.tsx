@@ -18,6 +18,7 @@ import {
   BarlowCondensed_800ExtraBold,
 } from '@expo-google-fonts/barlow-condensed';
 import { EventExpandProvider } from '@/context/EventExpandProvider';
+import { EventsProvider } from '@/context/EventsProvider';
 import { SavedEventsProvider } from '@/context/SavedEventsProvider';
 import { colors } from '@/constants/theme';
 
@@ -69,30 +70,32 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.bg }}>
       <SafeAreaProvider>
         <ThemeProvider value={AppTheme}>
-          <SavedEventsProvider>
-            <EventExpandProvider>
-              <Stack
-                screenOptions={{
-                  headerShown: false,
-                  contentStyle: { backgroundColor: colors.bg },
-                  animation: 'fade',
-                }}
-              >
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                  name="event/[id]"
-                  options={{
+          <EventsProvider>
+            <SavedEventsProvider>
+              <EventExpandProvider>
+                <Stack
+                  screenOptions={{
                     headerShown: false,
-                    presentation: 'transparentModal',
-                    animation: 'none',
-                    contentStyle: { backgroundColor: 'transparent' },
-                    gestureEnabled: false,
+                    contentStyle: { backgroundColor: colors.bg },
+                    animation: 'fade',
                   }}
-                />
-              </Stack>
-              <StatusBar style="light" />
-            </EventExpandProvider>
-          </SavedEventsProvider>
+                >
+                  <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                  <Stack.Screen
+                    name="event/[id]"
+                    options={{
+                      headerShown: false,
+                      presentation: 'transparentModal',
+                      animation: 'none',
+                      contentStyle: { backgroundColor: 'transparent' },
+                      gestureEnabled: false,
+                    }}
+                  />
+                </Stack>
+                <StatusBar style="light" />
+              </EventExpandProvider>
+            </SavedEventsProvider>
+          </EventsProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

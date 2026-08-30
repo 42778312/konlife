@@ -1,5 +1,4 @@
 import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
-import { MOCK_EVENTS } from '@/data/mockEvents';
 
 type SavedEventsContextValue = {
   savedIds: Set<string>;
@@ -10,9 +9,7 @@ type SavedEventsContextValue = {
 const SavedEventsContext = createContext<SavedEventsContextValue | null>(null);
 
 export function SavedEventsProvider({ children }: { children: React.ReactNode }) {
-  const [savedIds, setSavedIds] = useState<Set<string>>(
-    () => new Set(MOCK_EVENTS.filter((e) => e.isSaved).map((e) => e.id)),
-  );
+  const [savedIds, setSavedIds] = useState<Set<string>>(() => new Set());
 
   const isSaved = useCallback((id: string) => savedIds.has(id), [savedIds]);
 

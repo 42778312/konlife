@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { StyleSheet, View, type StyleProp, type ImageStyle, type ViewStyle } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, type StyleProp, type ImageStyle, type ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
-import { colors } from '@/constants/theme';
+import { colors, fonts } from '@/constants/theme';
 import { Skeleton } from '@/components/ui/Skeleton';
 
 type RemoteImageProps = {
@@ -20,6 +20,21 @@ export function RemoteImage({
   alt,
 }: RemoteImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const mark = (alt ?? '').trim().charAt(0).toUpperCase() || 'K';
+
+  useEffect(() => {
+    setLoaded(false);
+    setFailed(false);
+  }, [uri]);
+
+  if (!uri || failed) {
+    return (
+      <View style={[styles.wrap, styles.fallback, containerStyle]}>
+        <Text style={styles.mark}>{mark}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.wrap, containerStyle]}>
@@ -31,6 +46,7 @@ export function RemoteImage({
         transition={220}
         accessibilityLabel={alt}
         onLoad={() => setLoaded(true)}
+        onError={() => setFailed(true)}
         cachePolicy="memory-disk"
       />
     </View>
@@ -41,5 +57,15 @@ const styles = StyleSheet.create({
   wrap: {
     overflow: 'hidden',
     backgroundColor: colors.zinc900,
+  },
+  fallback: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: colors.cardAlt,
+  },
+  mark: {
+    fontFamily: fonts.displayBlack,
+    fontSize: 28,
+    color: colors.highlighter,
   },
 });

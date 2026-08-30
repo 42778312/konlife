@@ -1,46 +1,59 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { List, Map, Search } from 'lucide-react-native';
-import { CATEGORIES, DAYS, MOCK_EVENTS, type DayKey } from '@/data/mockEvents';
+import { List, Map, Search, WifiOff } from 'lucide-react-native';
+import { DAYS, type DayKey } from '@/data/mockEvents';
+import { groupEventsByDate, matchesDayChip } from '@/lib/partyInsider/dates';
 import { colors, layout, MIN_TOUCH, radius, space, type, webCursor } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
+import { useEvents } from '@/context/EventsProvider';
 import { Screen } from '@/components/layout/Screen';
 import { EventCard } from '@/components/events/EventCard';
 import { MapWidget } from '@/components/events/MapWidget';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { Chip } from '@/components/ui/Chip';
 import { EmptyState } from '@/components/ui/EmptyState';
+import { Button } from '@/components/ui/Button';
+import { Skeleton } from '@/components/ui/Skeleton';
 
 type PriceFilter = 'all' | 'free' | 'paid';
 
 export default function ExploreScreen() {
+  const { events, loading, error, refresh } = useEvents();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'list' | 'map'>('list');
   const [day, setDay] = useState<DayKey | 'All'>('All');
-  const [category, setCategory] = useState<string>('All');
+  const [venue, setVenue] = useState<string>('All');
   const [price, setPrice] = useState<PriceFilter>('all');
   const [refreshing, setRefreshing] = useState(false);
 
-  const events = useMemo(() => {
+  const venues = useMemo(() => {
+    return [...new Set(events.map((event) => event.venue))].sort((a, b) => a.localeCompare(b));
+  }, [events]);
+
+  const filtered = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return MOCK_EVENTS.filter((event) => {
-      if (day !== 'All' && event.dayOfWeek !== day) return false;
-      if (category !== 'All' && event.category !== category) return false;
-      if (price === 'free' && !event.isFree) return false;
-      if (price === 'paid' && event.isFree) return false;
+    return events.filter((event) => {
+      if (!matchesDayChip(event.startDate, day)) return false;
+      if (venue !== 'All' && event.venue !== venue) return false;
+      if (price === 'free' && event.isFree !== true) return false;
+      if (price === 'paid' && event.isFree !== false) return false;
       if (!q) return true;
       return (
         event.title.toLowerCase().includes(q) ||
         event.venue.toLowerCase().includes(q) ||
+        event.category.toLowerCase().includes(q) ||
         event.tags.some((t) => t.toLowerCase().includes(q))
       );
     });
-  }, [searchQuery, day, category, price]);
+  }, [searchQuery, day, venue, price, events]);
 
-  const onRefresh = useCallback(() => {
+  const grouped = useMemo(() => groupEventsByDate(filtered), [filtered]);
+
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    setTimeout(() => setRefreshing(false), 700);
-  }, []);
+    await refresh();
+    setRefreshing(false);
+  }, [refresh]);
 
   return (
     <Screen onRefresh={onRefresh} refreshing={refreshing} keyboard>
@@ -84,9 +97,9 @@ export default function ExploreScreen() {
           ))}
         </View>
         <View style={styles.filters}>
-          <Chip label="All" selected={category === 'All'} onPress={() => setCategory('All')} />
-          {CATEGORIES.map((c) => (
-            <Chip key={c.id} label={c.label} selected={category === c.id} onPress={() => setCategory(c.id)} />
+          <Chip label="All venues" selected={venue === 'All'} onPress={() => setVenue('All')} />
+          {venues.map((name) => (
+            <Chip key={name} label={name} selected={venue === name} onPress={() => setVenue(name)} />
           ))}
         </View>
         <View style={styles.filters}>
@@ -94,12 +107,31 @@ export default function ExploreScreen() {
           <Chip label="Free" selected={price === 'free'} onPress={() => setPrice('free')} />
           <Chip label="Paid" selected={price === 'paid'} onPress={() => setPrice('paid')} />
         </View>
-        {activeView === 'list' ? (
+        {error ? (
+          <View style={styles.fail}>
+            <EmptyState icon={WifiOff} title="Couldn’t load nights" message={error} />
+            <Button label="Try again" onPress={() => void refresh()} />
+          </View>
+        ) : null}
+        {loading && events.length === 0 ? (
           <View style={styles.list}>
-            {events.length === 0 ? (
+            <Skeleton style={styles.sk} />
+            <Skeleton style={styles.sk} />
+            <Skeleton style={styles.sk} />
+          </View>
+        ) : activeView === 'list' ? (
+          <View style={styles.list}>
+            {filtered.length === 0 ? (
               <EmptyState icon={Search} title="No matching nights" message="Clear a filter or try another venue." />
             ) : (
-              events.map((event) => <EventCard key={event.id} event={event} variant="list" instanceId="explore" />)
+              grouped.map((group) => (
+                <View key={group.ymd} style={styles.dayGroup}>
+                  <Text style={styles.dayLabel}>{group.label}</Text>
+                  {group.items.map((event) => (
+                    <EventCard key={`${event.id}-${event.startDate}`} event={event} variant="list" instanceId="explore" />
+                  ))}
+                </View>
+              ))
             )}
           </View>
         ) : (
@@ -137,6 +169,10 @@ const styles = StyleSheet.create({
   },
   toggleOn: { backgroundColor: colors.highlighter },
   filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  list: { gap: 12, marginTop: 8 },
+  list: { gap: 20, marginTop: 8 },
+  dayGroup: { gap: 12 },
+  dayLabel: { ...type.section },
   map: { minHeight: 320, borderRadius: radius.lg, overflow: 'hidden' },
+  fail: { gap: 12 },
+  sk: { height: 88, borderRadius: 12 },
 });

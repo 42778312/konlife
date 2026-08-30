@@ -1,3 +1,7 @@
+export const DAYS = ['Today', 'Tomorrow', 'Fri', 'Sat', 'Sun'] as const;
+export type DayKey = (typeof DAYS)[number];
+export type EventCategory = 'Student' | 'Party' | 'Club' | 'Bar' | 'Live Music' | 'Culture';
+
 export interface EventItem {
   id: string;
   title: string;
@@ -8,16 +12,21 @@ export interface EventItem {
   fullDate?: string;
   price: string;
   isFree?: boolean;
-  category: 'Student' | 'Party' | 'Club' | 'Bar' | 'Live Music' | 'Culture';
+  category: EventCategory | string;
   tags: string[];
   image: string;
   description: string;
   isSaved?: boolean;
   isPopular?: boolean;
   isFeatured?: boolean;
-  dayOfWeek: 'Today' | 'Tomorrow' | 'Fri' | 'Sat' | 'Sun';
+  dayOfWeek: DayKey | string;
   lat?: number;
   lng?: number;
+  sourceUrl?: string;
+  website?: string;
+  venueAddress?: string;
+  venueZip?: string;
+  startDate?: string;
 }
 
 export const MOCK_EVENTS: EventItem[] = [
@@ -268,6 +277,3 @@ export const CATEGORIES = [
   { id: 'Live Music', label: 'Live Music', icon: 'Music' },
   { id: 'Culture', label: 'Culture', icon: 'Globe' },
 ] as const;
-
-export const DAYS = ['Today', 'Tomorrow', 'Fri', 'Sat', 'Sun'] as const;
-export type DayKey = (typeof DAYS)[number];

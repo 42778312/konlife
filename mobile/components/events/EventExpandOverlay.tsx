@@ -9,7 +9,7 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import { MOCK_EVENTS } from '@/data/mockEvents';
+import { useEvents } from '@/context/EventsProvider';
 import { EventDetailView } from '@/components/events/EventDetailView';
 import { colors } from '@/constants/theme';
 import {
@@ -27,7 +27,8 @@ type EventExpandOverlayProps = {
 };
 
 export function EventExpandOverlay({ eventId, rect, onClose }: EventExpandOverlayProps) {
-  const event = MOCK_EVENTS.find((item) => item.id === eventId) || MOCK_EVENTS[0];
+  const { getById } = useEvents();
+  const event = getById(eventId);
   const { width: sw, height: sh } = useWindowDimensions();
   const hasRect = Boolean(rect && rect.width > 0 && rect.height > 0);
 
@@ -112,7 +113,7 @@ export function EventExpandOverlay({ eventId, rect, onClose }: EventExpandOverla
 
       <Animated.View style={panelStyle}>
         <View style={styles.panelFill}>
-          <EventDetailView event={event} onClose={requestClose} embedded />
+          {event ? <EventDetailView event={event} onClose={requestClose} embedded /> : null}
         </View>
         <GestureDetector gesture={pan}>
           <View style={styles.edge} />

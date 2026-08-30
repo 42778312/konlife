@@ -1,57 +1,73 @@
 import React, { useRef } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Bookmark, Heart } from 'lucide-react-native';
+import { Bookmark } from 'lucide-react-native';
 import { EventItem } from '@/data/mockEvents';
-import { colors, fonts, hitSlop, radius } from '@/constants/theme';
+import { colors, fonts, MIN_TOUCH, radius, type, webCursor } from '@/constants/theme';
 import { useCardCovered, useEventExpand } from '@/context/EventExpandContext';
+import { useSavedEvents } from '@/context/SavedEventsProvider';
 import { measureView } from '@/lib/measure';
+import { successTick } from '@/lib/haptics';
 import { PressableScale } from '@/components/ui/PressableScale';
 import { RemoteImage } from '@/components/ui/RemoteImage';
 
 type EventCardProps = {
   event: EventItem;
-  variant?: 'hero' | 'horizontal' | 'list';
+  variant?: 'featured' | 'standard' | 'compact' | 'horizontal' | 'list' | 'recommended';
   instanceId?: string;
 };
 
 export function EventCard({ event, variant = 'list', instanceId: instanceIdProp }: EventCardProps) {
-  const instanceId = instanceIdProp ?? `mobile-${variant}`;
+  const instanceId = instanceIdProp ?? `card-${variant}`;
   const covered = useCardCovered(event.id, instanceId);
   const { openEvent } = useEventExpand();
+  const { isSaved, toggleSaved } = useSavedEvents();
+  const saved = isSaved(event.id);
   const ref = useRef<View>(null);
-  const radiusValue = variant === 'hero' ? 24 : 16;
 
   const onOpen = async () => {
-    const rect = await measureView(ref, radiusValue);
+    const rect = await measureView(ref, radius.lg);
     openEvent(event.id, instanceId, rect);
   };
 
-  if (variant === 'hero') {
+  const saveBtn = (
+    <Pressable
+      onPress={() => {
+        toggleSaved(event.id);
+        successTick();
+      }}
+      style={[styles.saveHit, webCursor]}
+      accessibilityRole="button"
+      accessibilityLabel={saved ? `Unsave ${event.title}` : `Save ${event.title}`}
+    >
+      <Bookmark
+        size={18}
+        color={saved ? colors.accentFg : colors.fg}
+        fill={saved ? colors.highlighter : 'transparent'}
+        strokeWidth={2.2}
+      />
+    </Pressable>
+  );
+
+  if (variant === 'featured') {
     return (
-      <View
-        ref={ref}
-        collapsable={false}
-        style={[styles.heroOuter, covered && styles.covered]}
-      >
-        <PressableScale onPress={onOpen} style={styles.heroPress} contentStyle={styles.heroInner} accessibilityLabel={event.title}>
+      <View ref={ref} collapsable={false} style={[styles.featuredOuter, covered && styles.covered]}>
+        <PressableScale onPress={onOpen} style={styles.featuredPress} contentStyle={styles.featuredInner} accessibilityLabel={event.title}>
           <RemoteImage uri={event.image} alt={event.title} containerStyle={StyleSheet.absoluteFill} />
           <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.95)']}
-            locations={[0.2, 0.55, 1]}
+            colors={['transparent', 'rgba(11,10,13,0.2)', 'rgba(11,10,13,0.92)']}
+            locations={[0.28, 0.55, 1]}
             style={StyleSheet.absoluteFill}
           />
-          <View style={styles.heroMeta}>
-            <Text style={styles.heroTitle} numberOfLines={2}>
-              {event.title}
+          <View style={styles.featuredSave}>{saveBtn}</View>
+          <View style={styles.featuredMeta}>
+            <Text style={styles.featuredWhen}>
+              {event.date} · {event.venue}
             </Text>
-            <Text style={styles.heroVenue}>{event.venue}</Text>
-            <Text style={styles.heroDate}>{event.date}</Text>
-            <View style={styles.heroRow}>
-              <View style={styles.tagPill}>
-                <Text style={styles.tagPillText}>{event.tags.join(' · ')}</Text>
-              </View>
-              <Text style={styles.heroPrice}>{event.price}</Text>
+            <Text style={styles.featuredTitle}>{event.title}</Text>
+            <View style={styles.featuredRow}>
+              <Text style={styles.tag}>{event.category}</Text>
+              <Text style={type.heroPrice}>{event.price}</Text>
             </View>
           </View>
         </PressableScale>
@@ -59,29 +75,59 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
     );
   }
 
-  if (variant === 'horizontal') {
+  if (variant === 'horizontal' || variant === 'recommended') {
     return (
-      <View
-        ref={ref}
-        collapsable={false}
-        style={[styles.hOuter, covered && styles.covered]}
-      >
+      <View ref={ref} collapsable={false} style={[styles.hOuter, covered && styles.covered]}>
         <PressableScale onPress={onOpen} style={styles.hPress} contentStyle={styles.hInner} accessibilityLabel={event.title}>
           <RemoteImage uri={event.image} alt={event.title} containerStyle={styles.hImage} />
+          <View style={styles.hSave}>{saveBtn}</View>
           <View style={styles.hBody}>
-            <View>
-              <Text style={styles.hTitle} numberOfLines={1}>
-                {event.title}
-              </Text>
-              <Text style={styles.hVenue}>{event.venue}</Text>
-            </View>
-            <View style={styles.hRow}>
-              <Text style={styles.hPrice}>{event.price}</Text>
-              <Pressable hitSlop={hitSlop} style={styles.iconBtn} accessibilityLabel="Save event">
-                <Bookmark size={16} color={colors.zinc400} strokeWidth={2} />
-              </Pressable>
-            </View>
+            <Text style={styles.hDate}>{event.date}</Text>
+            <Text style={styles.hTitle} numberOfLines={2}>
+              {event.title}
+            </Text>
+            <Text style={styles.venue} numberOfLines={1}>
+              {event.venue}
+            </Text>
+            <Text style={styles.price}>{event.price}</Text>
           </View>
+        </PressableScale>
+      </View>
+    );
+  }
+
+  if (variant === 'standard') {
+    return (
+      <View ref={ref} collapsable={false} style={[styles.stdOuter, covered && styles.covered]}>
+        <PressableScale onPress={onOpen} contentStyle={styles.stdInner} accessibilityLabel={event.title}>
+          <RemoteImage uri={event.image} alt={event.title} containerStyle={styles.stdImage} />
+          <View style={styles.stdBody}>
+            <Text style={styles.hDate}>{event.date}</Text>
+            <Text style={type.title} numberOfLines={2}>
+              {event.title}
+            </Text>
+            <Text style={styles.venue}>{event.venue}</Text>
+            <Text style={styles.price}>{event.price}</Text>
+          </View>
+        </PressableScale>
+      </View>
+    );
+  }
+
+  if (variant === 'compact') {
+    return (
+      <View ref={ref} collapsable={false} style={[styles.compactOuter, covered && styles.covered]}>
+        <PressableScale onPress={onOpen} contentStyle={styles.compactInner} accessibilityLabel={event.title}>
+          <RemoteImage uri={event.image} alt="" containerStyle={styles.compactImage} />
+          <View style={styles.copy}>
+            <Text style={type.title} numberOfLines={1}>
+              {event.title}
+            </Text>
+            <Text style={styles.venue}>
+              {event.time} · {event.venue}
+            </Text>
+          </View>
+          <Text style={styles.price}>{event.price}</Text>
         </PressableScale>
       </View>
     );
@@ -89,231 +135,109 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
 
   return (
     <View ref={ref} collapsable={false} style={[styles.listOuter, covered && styles.covered]}>
-      <PressableScale onPress={onOpen} style={styles.listPress} contentStyle={styles.listInner} accessibilityLabel={event.title}>
+      <PressableScale onPress={onOpen} contentStyle={styles.listInner} accessibilityLabel={event.title}>
         <RemoteImage uri={event.image} alt={event.title} containerStyle={styles.listImage} />
         <View style={styles.listBody}>
-          <View>
-            <View style={styles.listTitleRow}>
-              <Text style={styles.listTitle} numberOfLines={1}>
-                {event.title}
-              </Text>
-              <Pressable hitSlop={hitSlop} style={styles.iconBtn} accessibilityLabel="Like event">
-                <Heart size={18} color={colors.zinc400} strokeWidth={2} />
-              </Pressable>
-            </View>
-            <Text style={styles.listVenue}>{event.venue}</Text>
-            <Text style={styles.listMeta}>📅 {event.date}</Text>
-            <Text style={styles.listPrice}>🏷️ {event.price}</Text>
-          </View>
-          <View style={styles.listTags}>
-            {event.tags.map((tag) => (
-              <View key={tag} style={styles.listTag}>
-                <Text style={styles.listTagText}>{tag}</Text>
-              </View>
-            ))}
-          </View>
+          <Text style={styles.hDate}>{event.date}</Text>
+          <Text style={styles.listTitle} numberOfLines={2}>
+            {event.title}
+          </Text>
+          <Text style={styles.venue} numberOfLines={1}>
+            {event.venue} · {event.category}
+          </Text>
+          <Text style={styles.price}>{event.price}</Text>
         </View>
+        {saveBtn}
       </PressableScale>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  covered: {
-    opacity: 0,
+  covered: { opacity: 0 },
+  saveHit: {
+    width: MIN_TOUCH,
+    height: MIN_TOUCH,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(11,10,13,0.45)',
+    borderRadius: radius.full,
   },
-  heroOuter: {
-    width: '100%',
-    height: 380,
-  },
-  heroPress: {
-    flex: 1,
+  venue: { ...type.meta },
+  price: { ...type.label, color: colors.highlighter, marginTop: 4 },
+  copy: { flex: 1, minWidth: 0 },
+  featuredOuter: { width: '100%', minHeight: 380 },
+  featuredPress: { flex: 1, minHeight: 380 },
+  featuredInner: {
     minHeight: 380,
-  },
-  heroInner: {
-    flex: 1,
+    borderRadius: radius.xl,
     overflow: 'hidden',
-    borderRadius: 24,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
   },
-  heroMeta: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-    padding: 20,
+  featuredSave: { position: 'absolute', top: 12, right: 12, zIndex: 2 },
+  featuredMeta: { position: 'absolute', left: 0, right: 0, bottom: 0, padding: 20, gap: 6 },
+  featuredWhen: { ...type.overline, color: colors.highlighter },
+  featuredTitle: {
+    fontFamily: fonts.displayBlack,
+    fontSize: 42,
+    lineHeight: 44,
+    color: colors.fg,
   },
-  heroTitle: {
-    fontFamily: fonts.display,
-    fontSize: 36,
-    color: colors.white,
-    letterSpacing: 1.2,
-    marginBottom: 4,
-  },
-  heroVenue: {
-    fontFamily: fonts.semibold,
-    fontSize: 14,
-    color: colors.zinc300,
-    marginBottom: 2,
-  },
-  heroDate: {
-    fontFamily: fonts.regular,
-    fontSize: 12,
-    color: colors.zinc400,
-    marginBottom: 12,
-  },
-  heroRow: {
+  featuredRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginTop: 4,
   },
-  tagPill: {
-    backgroundColor: 'rgba(24, 24, 27, 0.8)',
-    borderWidth: 1,
-    borderColor: colors.zinc700,
-    paddingHorizontal: 12,
+  tag: {
+    ...type.overline,
+    color: colors.fg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'rgba(246,241,234,0.35)',
+    paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: radius.full,
   },
-  tagPillText: {
-    fontFamily: fonts.medium,
-    fontSize: 12,
-    color: colors.zinc300,
-  },
-  heroPrice: {
-    fontFamily: fonts.display,
-    fontSize: 32,
-    color: colors.neon,
-    letterSpacing: 0.8,
-  },
-  hOuter: {
-    width: 170,
-    height: 268,
-  },
-  hPress: {
-    width: 170,
-    minHeight: 268,
-  },
+  hOuter: { width: 220 },
+  hPress: { width: 220 },
   hInner: {
-    flex: 1,
-    height: 268,
     backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: 16,
+    borderRadius: radius.lg,
     overflow: 'hidden',
   },
-  hImage: {
-    height: 176,
-    width: '100%',
+  hImage: { height: 168, width: '100%' },
+  hSave: { position: 'absolute', top: 8, right: 8, zIndex: 2 },
+  hBody: { padding: 12, gap: 2, minHeight: 112 },
+  hDate: { ...type.overline, color: colors.highlighter },
+  hTitle: { ...type.title, marginTop: 2 },
+  stdOuter: { flex: 1, minWidth: 240 },
+  stdInner: {
+    backgroundColor: colors.card,
+    borderRadius: radius.lg,
+    overflow: 'hidden',
   },
-  hBody: {
-    flex: 1,
-    padding: 12,
-    justifyContent: 'space-between',
+  stdImage: { height: 180, width: '100%' },
+  stdBody: { padding: 14, gap: 4 },
+  compactOuter: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: colors.rule,
   },
-  hTitle: {
-    fontFamily: fonts.bold,
-    fontSize: 14,
-    color: colors.white,
-  },
-  hVenue: {
-    fontFamily: fonts.regular,
-    fontSize: 11,
-    color: colors.zinc400,
-    marginTop: 2,
-  },
-  hRow: {
+  compactInner: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: 8,
+    gap: 12,
+    paddingVertical: 10,
   },
-  hPrice: {
-    fontFamily: fonts.bold,
-    fontSize: 12,
-    color: colors.neon,
-  },
-  listOuter: {
-    height: 144,
-  },
-  listPress: {
-    minHeight: 144,
-  },
+  compactImage: { width: 56, height: 56, borderRadius: radius.sm },
+  listOuter: {},
   listInner: {
-    height: 144,
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: 'rgba(39, 39, 42, 0.8)',
-    borderRadius: 16,
-    overflow: 'hidden',
     flexDirection: 'row',
-  },
-  listImage: {
-    width: 144,
-    height: '100%',
-  },
-  listBody: {
-    flex: 1,
-    padding: 12,
-    justifyContent: 'space-between',
-    minWidth: 0,
-  },
-  listTitleRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    gap: 4,
-  },
-  listTitle: {
-    flex: 1,
-    fontFamily: fonts.bold,
-    fontSize: 16,
-    color: colors.white,
-  },
-  listVenue: {
-    fontFamily: fonts.regular,
-    fontSize: 12,
-    color: colors.zinc400,
-    marginTop: 2,
-  },
-  listMeta: {
-    fontFamily: fonts.regular,
-    fontSize: 12,
-    color: colors.zinc400,
-    marginTop: 4,
-  },
-  listPrice: {
-    fontFamily: fonts.bold,
-    fontSize: 12,
-    color: colors.neon,
-    marginTop: 4,
-  },
-  listTags: {
-    flexDirection: 'row',
-    gap: 6,
-    flexWrap: 'wrap',
-  },
-  listTag: {
-    backgroundColor: colors.zinc900,
-    borderWidth: 1,
-    borderColor: 'rgba(204, 255, 0, 0.4)',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: radius.full,
-  },
-  listTagText: {
-    fontFamily: fonts.semibold,
-    fontSize: 10,
-    color: colors.neon,
-  },
-  iconBtn: {
-    width: 32,
-    height: 32,
     alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 2,
-    cursor: 'pointer',
+    backgroundColor: colors.card,
+    borderRadius: radius.lg,
+    overflow: 'hidden',
+    minHeight: 108,
   },
+  listImage: { width: 108, alignSelf: 'stretch', minHeight: 108 },
+  listBody: { flex: 1, padding: 12, minWidth: 0 },
+  listTitle: { ...type.title, marginTop: 2 },
 });

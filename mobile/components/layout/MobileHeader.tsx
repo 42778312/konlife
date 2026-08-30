@@ -1,9 +1,10 @@
 import React from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Search } from 'lucide-react-native';
-import { colors, fonts, hitSlop } from '@/constants/theme';
+import { colors, space, type } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
+import { IconButton } from '@/components/ui/IconButton';
 
 type MobileHeaderProps = {
   onSearchPress?: () => void;
@@ -17,17 +18,15 @@ export function MobileHeader({ onSearchPress }: MobileHeaderProps) {
       <Text style={styles.logo} accessibilityRole="header">
         KONSTANZ
       </Text>
-      <Pressable
+      <IconButton
+        icon={Search}
+        accessibilityLabel="Search"
+        color={colors.subtle}
         onPress={() => {
           selectionTick();
           onSearchPress?.();
         }}
-        hitSlop={hitSlop}
-        style={styles.searchBtn}
-        accessibilityLabel="Search"
-      >
-        <Search size={20} color={colors.zinc300} strokeWidth={2} />
-      </Pressable>
+      />
     </View>
   );
 }
@@ -37,24 +36,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingBottom: 10,
+    paddingHorizontal: space.lg,
+    paddingBottom: 8,
     backgroundColor: colors.bg,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.zinc900,
   },
   logo: {
-    fontFamily: fonts.display,
-    fontSize: 32,
+    ...type.display,
     color: colors.neon,
     letterSpacing: 1.6,
-    lineHeight: 36,
-  },
-  searchBtn: {
-    width: 44,
-    height: 44,
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
   },
 });

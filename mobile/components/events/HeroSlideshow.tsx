@@ -12,7 +12,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { EventItem } from '@/data/mockEvents';
-import { colors, fonts, radius } from '@/constants/theme';
+import { colors, radius, space, type, webCursor } from '@/constants/theme';
 import { useEventExpand } from '@/context/EventExpandContext';
 import { measureView } from '@/lib/measure';
 import { selectionTick } from '@/lib/haptics';
@@ -20,8 +20,8 @@ import { RemoteImage } from '@/components/ui/RemoteImage';
 
 const AUTO_MS = 4800;
 const RESUME_MS = 6000;
-const HERO_HEIGHT = 380;
-const HERO_RADIUS = 24;
+const HERO_HEIGHT = 340;
+const HERO_RADIUS = radius.xl;
 const INSTANCE_ID = 'hero-slideshow';
 const SCREEN_GUTTER = 32;
 
@@ -146,12 +146,12 @@ export function HeroSlideshow({ events }: HeroSlideshowProps) {
             onPress={() => onOpen(event)}
             accessibilityRole="button"
             accessibilityLabel={`${event.title}. What's new this weekend.`}
-            style={[styles.slide, { width: slideWidth }]}
+            style={[styles.slide, { width: slideWidth }, webCursor]}
           >
             <RemoteImage uri={event.image} alt={event.title} containerStyle={StyleSheet.absoluteFill} />
             <LinearGradient
-              colors={['transparent', 'rgba(0,0,0,0.4)', 'rgba(0,0,0,0.95)']}
-              locations={[0.2, 0.55, 1]}
+              colors={['transparent', 'rgba(0,0,0,0.45)', 'rgba(0,0,0,0.92)']}
+              locations={[0.22, 0.58, 1]}
               style={StyleSheet.absoluteFill}
             />
             <View style={styles.meta}>
@@ -164,7 +164,7 @@ export function HeroSlideshow({ events }: HeroSlideshowProps) {
                 <View style={styles.tagPill}>
                   <Text style={styles.tagPillText}>{event.tags.join(' · ')}</Text>
                 </View>
-                <Text style={styles.price}>{event.price}</Text>
+                <Text style={type.heroPrice}>{event.price}</Text>
               </View>
             </View>
           </Pressable>
@@ -174,8 +174,7 @@ export function HeroSlideshow({ events }: HeroSlideshowProps) {
       <View style={styles.chrome}>
         <View style={styles.topRow}>
           <View style={styles.badge}>
-            <Text style={styles.badgeKicker}>WHAT'S NEW</Text>
-            <Text style={styles.badgeTitle}>THIS WEEKEND</Text>
+            <Text style={styles.badgeTitle}>This weekend</Text>
           </View>
           {events.length > 1 ? (
             <View style={styles.dots}>
@@ -217,7 +216,7 @@ function Dot({
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ selected: active }}
-      style={styles.dotHit}
+      style={[styles.dotHit, webCursor]}
     >
       <Animated.View style={[styles.dot, active ? styles.dotActive : styles.dotIdle, style]} />
     </Pressable>
@@ -230,8 +229,6 @@ const styles = StyleSheet.create({
     height: HERO_HEIGHT,
     borderRadius: HERO_RADIUS,
     overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: colors.zinc800,
     backgroundColor: colors.zinc900,
   },
   covered: {
@@ -243,58 +240,45 @@ const styles = StyleSheet.create({
   slide: {
     height: HERO_HEIGHT,
     overflow: 'hidden',
-    cursor: 'pointer',
   },
   meta: {
     position: 'absolute',
     left: 0,
     right: 0,
     bottom: 0,
-    padding: 20,
+    padding: space.xl,
     pointerEvents: 'none',
   },
   title: {
-    fontFamily: fonts.display,
-    fontSize: 36,
+    ...type.display,
     color: colors.white,
-    letterSpacing: 1.2,
-    marginBottom: 4,
+    marginBottom: 2,
   },
   venue: {
-    fontFamily: fonts.semibold,
-    fontSize: 14,
-    color: colors.zinc300,
+    ...type.label,
+    color: colors.subtle,
     marginBottom: 2,
   },
   date: {
-    fontFamily: fonts.regular,
-    fontSize: 12,
-    color: colors.zinc400,
-    marginBottom: 12,
+    ...type.meta,
+    marginBottom: 10,
   },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: 12,
   },
   tagPill: {
-    backgroundColor: 'rgba(24, 24, 27, 0.8)',
-    borderWidth: 1,
-    borderColor: colors.zinc700,
+    backgroundColor: 'rgba(8, 8, 9, 0.55)',
     paddingHorizontal: 12,
-    paddingVertical: 4,
+    paddingVertical: 6,
     borderRadius: radius.full,
+    maxWidth: '62%',
   },
   tagPillText: {
-    fontFamily: fonts.medium,
-    fontSize: 12,
-    color: colors.zinc300,
-  },
-  price: {
-    fontFamily: fonts.display,
-    fontSize: 32,
-    color: colors.neon,
-    letterSpacing: 0.8,
+    ...type.meta,
+    color: colors.subtle,
   },
   chrome: {
     ...StyleSheet.absoluteFill,
@@ -310,39 +294,29 @@ const styles = StyleSheet.create({
   },
   badge: {
     pointerEvents: 'none',
-    backgroundColor: 'rgba(8, 8, 9, 0.72)',
-    borderWidth: 1,
-    borderColor: 'rgba(204, 255, 0, 0.45)',
+    backgroundColor: colors.overlay,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: radius.full,
   },
-  badgeKicker: {
-    fontFamily: fonts.extrabold,
-    fontSize: 9,
-    color: colors.neon,
-    letterSpacing: 1.4,
-  },
   badgeTitle: {
-    fontFamily: fonts.display,
-    fontSize: 16,
+    ...type.label,
     color: colors.white,
-    letterSpacing: 1.1,
-    marginTop: -1,
   },
   dots: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-    backgroundColor: 'rgba(8, 8, 9, 0.55)',
-    paddingHorizontal: 10,
-    paddingVertical: 7,
+    gap: 4,
+    backgroundColor: colors.overlay,
+    paddingHorizontal: 6,
+    paddingVertical: 4,
     borderRadius: radius.full,
   },
   dotHit: {
-    height: 16,
+    width: 28,
+    height: 28,
+    alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
   },
   dot: {
     height: 7,

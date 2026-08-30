@@ -1,9 +1,8 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { BlurView } from 'expo-blur';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Bookmark, Calendar, Compass, Home } from 'lucide-react-native';
-import { colors, fonts } from '@/constants/theme';
+import { colors, fonts, MIN_TOUCH, radius, space, webCursor } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
 
 const ICONS = {
@@ -15,7 +14,7 @@ const ICONS = {
 
 const LABELS = {
   index: 'Home',
-  discover: 'Discover',
+  discover: 'Explore',
   weekend: 'Weekend',
   saved: 'Saved',
 } as const;
@@ -39,7 +38,6 @@ export function MobileBottomNav({ state, navigation }: TabBarProps) {
 
   return (
     <View style={[styles.wrap, { paddingBottom: bottomPad }]}>
-      <BlurView intensity={40} tint="dark" style={StyleSheet.absoluteFill} />
       <View style={styles.row}>
         {state.routes.map((route, index) => {
           const isActive = state.index === index;
@@ -61,19 +59,17 @@ export function MobileBottomNav({ state, navigation }: TabBarProps) {
                   navigation.navigate(route.name);
                 }
               }}
-              style={[styles.item, isActive ? styles.itemActive : styles.itemIdle]}
+              style={[styles.item, isActive && styles.itemActive, webCursor]}
               accessibilityRole="tab"
               accessibilityState={{ selected: isActive }}
               accessibilityLabel={label}
             >
               <Icon
                 size={20}
-                color={isActive ? colors.black : colors.zinc400}
-                strokeWidth={isActive ? 2.5 : 1.8}
+                color={isActive ? colors.accentFg : colors.muted}
+                strokeWidth={isActive ? 2.4 : 1.8}
               />
-              <Text style={[styles.label, isActive ? styles.labelActive : styles.labelIdle]}>
-                {label}
-              </Text>
+              <Text style={[styles.label, isActive ? styles.labelActive : styles.labelIdle]}>{label}</Text>
             </Pressable>
           );
         })}
@@ -84,49 +80,28 @@ export function MobileBottomNav({ state, navigation }: TabBarProps) {
 
 const styles = StyleSheet.create({
   wrap: {
-    backgroundColor: 'rgba(8, 8, 9, 0.92)',
+    backgroundColor: colors.bg,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: 'rgba(39, 39, 42, 0.85)',
+    borderTopColor: colors.rule,
     paddingTop: 8,
-    paddingHorizontal: 12,
-    overflow: 'hidden',
+    paddingHorizontal: space.sm,
   },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-  },
+  row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
   item: {
-    minHeight: 44,
-    minWidth: 56,
+    minHeight: MIN_TOUCH,
+    minWidth: 64,
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
+    flex: 1,
+    gap: 2,
+    paddingVertical: 6,
   },
   itemActive: {
-    backgroundColor: colors.neon,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-    borderRadius: 999,
-    gap: 2,
+    backgroundColor: colors.highlighter,
+    borderRadius: radius.full,
+    marginHorizontal: 4,
   },
-  itemIdle: {
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    gap: 4,
-  },
-  label: {
-    fontSize: 11,
-  },
-  labelActive: {
-    fontFamily: fonts.extrabold,
-    fontSize: 10,
-    color: colors.black,
-    letterSpacing: 0.6,
-    textTransform: 'uppercase',
-  },
-  labelIdle: {
-    fontFamily: fonts.medium,
-    color: colors.zinc400,
-  },
+  label: { fontSize: 11, lineHeight: 14 },
+  labelActive: { fontFamily: fonts.bold, color: colors.accentFg },
+  labelIdle: { fontFamily: fonts.medium, color: colors.muted },
 });

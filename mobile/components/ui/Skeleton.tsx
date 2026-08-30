@@ -27,6 +27,6 @@ export function Skeleton({ style }: { style?: StyleProp<ViewStyle> }) {
 
 const styles = StyleSheet.create({
   base: {
-    backgroundColor: colors.zinc800,
+    backgroundColor: colors.cardAlt,
   },
 });

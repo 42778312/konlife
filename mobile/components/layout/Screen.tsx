@@ -9,7 +9,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { colors } from '@/constants/theme';
+import { colors, space } from '@/constants/theme';
 import { useWebKeyboardInset } from '@/hooks/useWebKeyboardInset';
 
 type ScreenProps = {
@@ -36,7 +36,7 @@ export function Screen({
   const body = scroll ? (
     <ScrollView
       style={styles.flex}
-      contentContainerStyle={[styles.content, { paddingBottom: 24 + kbInset }, contentStyle]}
+      contentContainerStyle={[styles.content, { paddingBottom: space['4xl'] + kbInset }, contentStyle]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
       keyboardDismissMode="on-drag"
@@ -48,9 +48,9 @@ export function Screen({
           <RefreshControl
             refreshing={!!refreshing}
             onRefresh={onRefresh}
-            tintColor={colors.neon}
-            colors={[colors.neon]}
-            progressBackgroundColor={colors.card}
+            tintColor={colors.highlighter}
+            colors={[colors.highlighter]}
+            progressBackgroundColor={colors.paper}
           />
         ) : undefined
       }
@@ -76,14 +76,14 @@ export function Screen({
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: colors.metal,
   },
   flex: {
     flex: 1,
   },
   content: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: space.lg,
+    paddingTop: space.lg,
     flexGrow: 1,
   },
 });

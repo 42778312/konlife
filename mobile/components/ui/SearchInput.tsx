@@ -1,89 +1,83 @@
 import React from 'react';
-import { Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View } from 'react-native';
 import { Search, X } from 'lucide-react-native';
-import { colors, fonts, hitSlop, radius } from '@/constants/theme';
+import { colors, fonts, radius } from '@/constants/theme';
+import { IconButton } from '@/components/ui/IconButton';
 
 type SearchInputProps = {
   value: string;
   onChangeText: (text: string) => void;
   placeholder?: string;
   autoFocus?: boolean;
+  variant?: 'sheet' | 'pill';
 };
 
 export function SearchInput({
   value,
   onChangeText,
-  placeholder = 'Search events, clubs and bars...',
+  placeholder = 'Search nights, venues, genres',
   autoFocus,
+  variant = 'pill',
 }: SearchInputProps) {
   return (
     <View style={styles.wrap}>
-      <View style={styles.icon}>
-        <Search size={18} color={colors.zinc400} strokeWidth={2} />
+      <View style={styles.icon} pointerEvents="none">
+        <Search size={18} color={colors.muted} strokeWidth={2} />
       </View>
       <TextInput
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={colors.zinc500}
-        style={styles.input}
+        placeholderTextColor={colors.muted}
+        style={[styles.input, variant === 'sheet' ? styles.sheet : styles.pill]}
         autoCapitalize="none"
         autoCorrect={false}
         autoFocus={autoFocus}
         returnKeyType="search"
         keyboardType="default"
         underlineColorAndroid="transparent"
-        selectionColor={colors.neon}
-        // 16px prevents iOS Safari from zooming the viewport on focus
+        selectionColor={colors.highlighter}
+        accessibilityLabel="Search nights"
         {...({ inputMode: 'search' } as object)}
       />
       {value.length > 0 ? (
-        <Pressable
-          onPress={() => onChangeText('')}
-          hitSlop={hitSlop}
-          style={styles.clear}
-          accessibilityLabel="Clear search"
-        >
-          <X size={16} color={colors.zinc400} strokeWidth={2.2} />
-        </Pressable>
+        <View style={styles.clear}>
+          <IconButton
+            icon={X}
+            size={16}
+            color={colors.muted}
+            accessibilityLabel="Clear search"
+            onPress={() => onChangeText('')}
+          />
+        </View>
       ) : null}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  wrap: {
-    position: 'relative',
-    justifyContent: 'center',
-  },
-  icon: {
-    position: 'absolute',
-    left: 14,
-    zIndex: 1,
-    pointerEvents: 'none',
-  },
+  wrap: { position: 'relative', justifyContent: 'center' },
+  icon: { position: 'absolute', left: 16, zIndex: 1 },
   input: {
     width: '100%',
     minHeight: 48,
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: radius['2xl'],
-    paddingLeft: 42,
-    paddingRight: 42,
+    paddingLeft: 44,
+    paddingRight: 48,
     paddingVertical: 12,
-    color: colors.white,
+    color: colors.fg,
     fontFamily: fonts.regular,
     fontSize: 16,
     lineHeight: 20,
   },
-  clear: {
-    position: 'absolute',
-    right: 8,
-    width: 36,
-    height: 36,
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
+  pill: {
+    backgroundColor: colors.card,
+    borderRadius: radius.full,
   },
+  sheet: {
+    backgroundColor: colors.card,
+    borderRadius: radius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.rule,
+  },
+  clear: { position: 'absolute', right: 4 },
 });

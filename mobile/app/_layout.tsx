@@ -8,15 +8,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import {
-  Inter_400Regular,
-  Inter_500Medium,
-  Inter_600SemiBold,
-  Inter_700Bold,
-  Inter_800ExtraBold,
-  Inter_900Black,
-} from '@expo-google-fonts/inter';
-import { BebasNeue_400Regular } from '@expo-google-fonts/bebas-neue';
+  Barlow_400Regular,
+  Barlow_500Medium,
+  Barlow_600SemiBold,
+  Barlow_700Bold,
+} from '@expo-google-fonts/barlow';
+import {
+  BarlowCondensed_700Bold,
+  BarlowCondensed_800ExtraBold,
+} from '@expo-google-fonts/barlow-condensed';
 import { EventExpandProvider } from '@/context/EventExpandProvider';
+import { SavedEventsProvider } from '@/context/SavedEventsProvider';
 import { colors } from '@/constants/theme';
 
 export { ErrorBoundary } from 'expo-router';
@@ -32,22 +34,21 @@ const AppTheme = {
   colors: {
     ...DarkTheme.colors,
     background: colors.bg,
-    card: colors.bg,
-    border: colors.zinc800,
-    primary: colors.neon,
+    card: colors.card,
+    border: colors.rule,
+    primary: colors.highlighter,
     text: colors.fg,
   },
 };
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_600SemiBold,
-    Inter_700Bold,
-    Inter_800ExtraBold,
-    Inter_900Black,
-    BebasNeue_400Regular,
+    Barlow_400Regular,
+    Barlow_500Medium,
+    Barlow_600SemiBold,
+    Barlow_700Bold,
+    BarlowCondensed_700Bold,
+    BarlowCondensed_800ExtraBold,
   });
 
   useEffect(() => {
@@ -68,28 +69,30 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.bg }}>
       <SafeAreaProvider>
         <ThemeProvider value={AppTheme}>
-          <EventExpandProvider>
-            <Stack
-              screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: colors.bg },
-                animation: 'fade',
-              }}
-            >
-              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-              <Stack.Screen
-                name="event/[id]"
-                options={{
+          <SavedEventsProvider>
+            <EventExpandProvider>
+              <Stack
+                screenOptions={{
                   headerShown: false,
-                  presentation: 'transparentModal',
-                  animation: 'none',
-                  contentStyle: { backgroundColor: 'transparent' },
-                  gestureEnabled: false,
+                  contentStyle: { backgroundColor: colors.bg },
+                  animation: 'fade',
                 }}
-              />
-            </Stack>
-            <StatusBar style="light" />
-          </EventExpandProvider>
+              >
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen
+                  name="event/[id]"
+                  options={{
+                    headerShown: false,
+                    presentation: 'transparentModal',
+                    animation: 'none',
+                    contentStyle: { backgroundColor: 'transparent' },
+                    gestureEnabled: false,
+                  }}
+                />
+              </Stack>
+              <StatusBar style="light" />
+            </EventExpandProvider>
+          </SavedEventsProvider>
         </ThemeProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>

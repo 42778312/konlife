@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(0,0,0,0.75)',
+    backgroundColor: 'rgba(11,10,13,0.75)',
   },
   panelFill: {
     flex: 1,

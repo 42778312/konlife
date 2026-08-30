@@ -1,19 +1,17 @@
-import { Link, Stack } from 'expo-router';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { colors, fonts, radius } from '@/constants/theme';
+import { useRouter, Stack } from 'expo-router';
+import { StyleSheet, Text, View } from 'react-native';
+import { colors, space, type } from '@/constants/theme';
+import { Button } from '@/components/ui/Button';
 
 export default function NotFoundScreen() {
+  const router = useRouter();
+
   return (
     <>
       <Stack.Screen options={{ title: 'Not found', headerShown: false }} />
       <View style={styles.container}>
-        <Text style={styles.kicker}>KONSTANZ</Text>
-        <Text style={styles.title}>This screen doesn’t exist.</Text>
-        <Link href="/" asChild>
-          <Pressable style={styles.btn}>
-            <Text style={styles.btnText}>Back home</Text>
-          </Pressable>
-        </Link>
+        <Text style={styles.title}>This night isn’t on the list.</Text>
+        <Button label="Back home" onPress={() => router.replace('/')} />
       </View>
     </>
   );
@@ -22,35 +20,15 @@ export default function NotFoundScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg,
+    backgroundColor: colors.metal,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 24,
-    gap: 12,
-  },
-  kicker: {
-    fontFamily: fonts.display,
-    fontSize: 28,
-    color: colors.neon,
-    letterSpacing: 2,
+    padding: space['2xl'],
+    gap: 16,
   },
   title: {
-    fontFamily: fonts.bold,
-    fontSize: 18,
-    color: colors.white,
-    marginBottom: 8,
-  },
-  btn: {
-    backgroundColor: colors.neon,
-    paddingHorizontal: 24,
-    paddingVertical: 14,
-    borderRadius: radius['2xl'],
-    minHeight: 48,
-    cursor: 'pointer',
-  },
-  btnText: {
-    fontFamily: fonts.extrabold,
-    fontSize: 14,
-    color: colors.black,
+    ...type.section,
+    color: colors.fg,
+    textAlign: 'center',
   },
 });

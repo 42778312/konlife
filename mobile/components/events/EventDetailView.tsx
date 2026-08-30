@@ -1,27 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, { FadeInDown, FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  ArrowLeft,
-  Bookmark,
-  Calendar,
-  Clock,
-  ExternalLink,
-  GraduationCap,
-  Heart,
-  MapPin,
-  Share2,
-  Ticket,
-} from 'lucide-react-native';
-import { EventItem } from '@/data/mockEvents';
-import { colors, fonts, hitSlop, radius } from '@/constants/theme';
-import { EVENT_OVERLAY_FADE_MS } from '@/lib/eventMotion';
+import { ArrowLeft, ExternalLink, MapPin, Share2 } from 'lucide-react-native';
+import { EventItem, MOCK_EVENTS } from '@/data/mockEvents';
+import { colors, fonts, radius, space, type, webCursor } from '@/constants/theme';
 import { successTick } from '@/lib/haptics';
+import { useSavedEvents } from '@/context/SavedEventsProvider';
 import { RemoteImage } from '@/components/ui/RemoteImage';
 import { MapWidget } from '@/components/events/MapWidget';
-import { PressableScale } from '@/components/ui/PressableScale';
+import { Button } from '@/components/ui/Button';
+import { IconButton } from '@/components/ui/IconButton';
+import { EventCard } from '@/components/events/EventCard';
 
 type EventDetailViewProps = {
   event: EventItem;
@@ -29,10 +19,11 @@ type EventDetailViewProps = {
   embedded?: boolean;
 };
 
-export function EventDetailView({ event, onClose, embedded }: EventDetailViewProps) {
+export function EventDetailView({ event, onClose }: EventDetailViewProps) {
   const insets = useSafeAreaInsets();
-  const [isSaved, setIsSaved] = useState(false);
-  const delay = embedded ? 180 : 0;
+  const { isSaved, toggleSaved } = useSavedEvents();
+  const saved = isSaved(event.id);
+  const related = MOCK_EVENTS.filter((e) => e.venue === event.venue && e.id !== event.id).slice(0, 3);
 
   const onShare = async () => {
     try {
@@ -41,363 +32,152 @@ export function EventDetailView({ event, onClose, embedded }: EventDetailViewPro
         message: `${event.title} · ${event.venue}, ${event.city} · ${event.date}`,
       });
     } catch {
-      // user cancelled
+      // cancelled
     }
   };
 
   return (
     <View style={styles.root}>
-      <Animated.View
-        entering={FadeIn.delay(delay).duration(EVENT_OVERLAY_FADE_MS)}
-        style={[styles.topBar, { paddingTop: embedded ? 12 : Math.max(insets.top, 8) }]}
-      >
-        <Pressable
-          onPress={onClose}
-          hitSlop={hitSlop}
-          style={styles.roundBtn}
-          accessibilityLabel="Close event"
-        >
-          <ArrowLeft size={16} color={colors.white} strokeWidth={2.4} />
-        </Pressable>
-        <Text style={styles.topTitle}>Event Detail</Text>
-        <Pressable
-          onPress={() => {
-            setIsSaved(true);
-            successTick();
-          }}
-          hitSlop={hitSlop}
-          style={styles.roundBtn}
-          accessibilityLabel="Bookmark event"
-        >
-          <Bookmark size={16} color={colors.white} strokeWidth={2.4} fill={isSaved ? colors.white : 'transparent'} />
-        </Pressable>
-      </Animated.View>
-
       <ScrollView
         style={styles.flex}
-        contentContainerStyle={styles.body}
+        contentContainerStyle={{ paddingBottom: space['4xl'] + insets.bottom }}
         showsVerticalScrollIndicator={false}
-        bounces
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
       >
         <View style={styles.hero}>
           <RemoteImage uri={event.image} alt={event.title} containerStyle={StyleSheet.absoluteFill} />
           <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.3)', 'rgba(0,0,0,0.9)']}
-            locations={[0.25, 0.55, 1]}
+            colors={['rgba(11,10,13,0.35)', 'transparent', 'rgba(11,10,13,0.92)']}
+            locations={[0, 0.35, 1]}
             style={StyleSheet.absoluteFill}
           />
+          <View style={[styles.topBar, { paddingTop: Math.max(insets.top, 12) }]}>
+            <IconButton icon={ArrowLeft} variant="surface" size={18} color={colors.fg} accessibilityLabel="Close event" onPress={onClose} />
+            <IconButton icon={Share2} variant="surface" size={18} color={colors.fg} accessibilityLabel="Share night" onPress={onShare} />
+          </View>
           <View style={styles.heroMeta}>
-            <Text style={styles.heroTitle}>{event.title}</Text>
-            <View style={styles.tagRow}>
-              {event.tags.map((tag) => (
-                <View key={tag} style={styles.heroTag}>
-                  <Text style={styles.heroTagText}>{tag}</Text>
-                </View>
-              ))}
-            </View>
-            <View style={styles.venueRow}>
-              <MapPin size={14} color={colors.neon} strokeWidth={2.4} />
-              <Text style={styles.venueText}>{event.venue}</Text>
-            </View>
+            <Text style={styles.when}>{event.date}</Text>
+            <Text style={styles.title} accessibilityRole="header">
+              {event.title}
+            </Text>
+            <Text style={styles.venue}>
+              {event.venue} · {event.city}
+            </Text>
           </View>
         </View>
 
-        <Animated.View
-          entering={FadeInDown.delay(delay + 80).duration(EVENT_OVERLAY_FADE_MS).springify().damping(18)}
-          style={styles.stack}
-        >
-          <View style={styles.metaCard}>
-            <MetaCell icon={Calendar} label="Date" value={event.fullDate ?? event.date} border />
-            <MetaCell icon={Clock} label="Time" value={event.time} border />
-            <MetaCell icon={Ticket} label="Price" value={event.price} border />
-            <MetaCell icon={GraduationCap} label="Type" value={event.category} />
-          </View>
-
-          <View style={styles.descCard}>
-            <Text style={styles.desc}>{event.description}</Text>
-            <Pressable
-              onPress={() => Linking.openURL('https://www.konstanz.de')}
-              style={styles.linkRow}
-              hitSlop={hitSlop}
-            >
-              <Text style={styles.linkText}>View original event</Text>
-              <ExternalLink size={14} color={colors.neon} strokeWidth={2.2} />
-            </Pressable>
-          </View>
-
+        <View style={styles.body}>
           <View style={styles.actions}>
-            <PressableScale
+            <Button
+              flex
+              label={saved ? 'Saved' : "I'm going"}
               onPress={() => {
-                setIsSaved(!isSaved);
+                toggleSaved(event.id);
                 successTick();
               }}
-              style={styles.saveBtn}
-              contentStyle={styles.saveInner}
-            >
-              <Heart size={16} color={colors.black} strokeWidth={2.4} fill={isSaved ? colors.black : 'transparent'} />
-              <Text style={styles.saveLabel}>{isSaved ? 'Saved' : 'Save'}</Text>
-            </PressableScale>
-            <PressableScale onPress={onShare} style={styles.shareBtn} contentStyle={styles.shareInner}>
-              <Share2 size={16} color={colors.white} strokeWidth={2.2} />
-              <Text style={styles.shareLabel}>Share</Text>
-            </PressableScale>
+            />
+            <Button flex label="Share" variant="secondary" icon={Share2} onPress={onShare} />
           </View>
 
-          <View style={styles.venueCard}>
+          <Text style={type.body}>{event.description}</Text>
+
+          <View style={styles.facts}>
+            <Fact label="Time" value={event.time} />
+            <Fact label="Door" value={event.price} />
+            <Fact label="Vibe" value={event.category} />
+          </View>
+
+          <View style={styles.tags}>
+            {event.tags.map((tag) => (
+              <Text key={tag} style={styles.tag}>
+                {tag}
+              </Text>
+            ))}
+          </View>
+
+          <View style={styles.venueBlock}>
+            <MapPin size={16} color={colors.highlighter} strokeWidth={2} />
             <View style={{ flex: 1 }}>
-              <Text style={styles.venueTitle}>{event.venue}</Text>
-              <Text style={styles.venueCity}>{event.city}</Text>
-              <Pressable style={styles.linkRow} hitSlop={hitSlop}>
-                <Text style={styles.linkText}>Open map</Text>
-                <ExternalLink size={12} color={colors.neon} strokeWidth={2.2} />
-              </Pressable>
-            </View>
-            <View style={styles.mapPreview}>
-              <MapWidget venueName={event.venue} cityName={event.city} interactive={false} compact />
+              <Text style={type.title}>{event.venue}</Text>
+              <Text style={type.meta}>{event.city}</Text>
             </View>
           </View>
-        </Animated.View>
+          <View style={styles.map}>
+            <MapWidget venueName={event.venue} cityName={event.city} interactive={false} compact />
+          </View>
+
+          <Pressable
+            onPress={() => Linking.openURL('https://www.konstanz.de')}
+            style={[styles.linkRow, webCursor]}
+            accessibilityRole="link"
+          >
+            <Text style={styles.linkText}>City of Konstanz</Text>
+            <ExternalLink size={14} color={colors.highlighter} strokeWidth={2.2} />
+          </Pressable>
+
+          {related.length > 0 ? (
+            <View style={styles.related}>
+              <Text style={type.section}>Same venue</Text>
+              {related.map((item) => (
+                <EventCard key={item.id} event={item} variant="compact" instanceId={`related-${item.id}`} />
+              ))}
+            </View>
+          ) : null}
+        </View>
       </ScrollView>
     </View>
   );
 }
 
-function MetaCell({
-  icon: Icon,
-  label,
-  value,
-  border,
-}: {
-  icon: React.ComponentType<{ size: number; color: string; strokeWidth: number }>;
-  label: string;
-  value: string;
-  border?: boolean;
-}) {
+function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <View style={[styles.metaCell, border && styles.metaBorder]}>
-      <Icon size={16} color={colors.neon} strokeWidth={2.2} />
-      <Text style={styles.metaLabel}>{label}</Text>
-      <Text style={styles.metaValue} numberOfLines={1}>
-        {value}
-      </Text>
+    <View style={styles.fact}>
+      <Text style={type.meta}>{label}</Text>
+      <Text style={type.title}>{value}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-    backgroundColor: colors.bg,
-  },
-  flex: {
-    flex: 1,
-  },
+  root: { flex: 1, backgroundColor: colors.bg },
+  flex: { flex: 1 },
+  hero: { width: '100%', height: 420, justifyContent: 'space-between' },
   topBar: {
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingBottom: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.zinc900,
-    backgroundColor: colors.bg,
+    paddingHorizontal: space.lg,
   },
-  roundBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: colors.zinc900,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    alignItems: 'center',
-    justifyContent: 'center',
-    cursor: 'pointer',
+  heroMeta: { padding: space.xl, gap: 6 },
+  when: { ...type.overline, color: colors.highlighter },
+  title: {
+    fontFamily: fonts.displayBlack,
+    fontSize: 44,
+    lineHeight: 46,
+    color: colors.fg,
   },
-  topTitle: {
-    fontFamily: fonts.bold,
-    fontSize: 16,
-    color: colors.white,
+  venue: { ...type.title, color: colors.subtle },
+  body: { padding: space.xl, gap: space.lg },
+  actions: { flexDirection: 'row', gap: 12 },
+  facts: { flexDirection: 'row', gap: 12 },
+  fact: {
+    flex: 1,
+    backgroundColor: colors.card,
+    borderRadius: radius.md,
+    padding: 12,
+    gap: 4,
   },
-  body: {
-    padding: 16,
-    gap: 16,
-    paddingBottom: 40,
-  },
-  hero: {
-    width: '100%',
-    height: 280,
-    borderRadius: 24,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    justifyContent: 'flex-end',
-  },
-  heroMeta: {
-    padding: 16,
-    gap: 8,
-  },
-  heroTitle: {
-    fontFamily: fonts.display,
-    fontSize: 36,
-    color: colors.white,
-    letterSpacing: 1,
-  },
-  tagRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  heroTag: {
-    backgroundColor: colors.neon,
-    paddingHorizontal: 12,
-    paddingVertical: 3,
+  tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  tag: {
+    ...type.overline,
+    color: colors.fg,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.rule,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     borderRadius: radius.full,
   },
-  heroTagText: {
-    fontFamily: fonts.extrabold,
-    fontSize: 10,
-    color: colors.black,
-  },
-  venueRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  venueText: {
-    fontFamily: fonts.semibold,
-    fontSize: 12,
-    color: colors.zinc300,
-  },
-  stack: {
-    gap: 16,
-  },
-  metaCard: {
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: radius['2xl'],
-    paddingVertical: 14,
-    paddingHorizontal: 4,
-    flexDirection: 'row',
-  },
-  metaCell: {
-    flex: 1,
-    alignItems: 'center',
-    gap: 4,
-    paddingHorizontal: 4,
-  },
-  metaBorder: {
-    borderRightWidth: StyleSheet.hairlineWidth,
-    borderRightColor: colors.zinc800,
-  },
-  metaLabel: {
-    fontFamily: fonts.regular,
-    fontSize: 10,
-    color: colors.zinc400,
-  },
-  metaValue: {
-    fontFamily: fonts.bold,
-    fontSize: 11,
-    color: colors.white,
-    textAlign: 'center',
-    width: '100%',
-  },
-  descCard: {
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: radius['2xl'],
-    padding: 16,
-    gap: 12,
-  },
-  desc: {
-    fontFamily: fonts.regular,
-    fontSize: 13,
-    lineHeight: 20,
-    color: colors.zinc300,
-  },
-  linkRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    minHeight: 32,
-    cursor: 'pointer',
-  },
-  linkText: {
-    fontFamily: fonts.bold,
-    fontSize: 12,
-    color: colors.neon,
-  },
-  actions: {
-    flexDirection: 'row',
-    gap: 12,
-  },
-  saveBtn: {
-    flex: 1,
-    minHeight: 48,
-  },
-  saveInner: {
-    minHeight: 48,
-    backgroundColor: colors.neon,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  saveLabel: {
-    fontFamily: fonts.extrabold,
-    fontSize: 14,
-    color: colors.black,
-  },
-  shareBtn: {
-    flex: 1,
-    minHeight: 48,
-  },
-  shareInner: {
-    minHeight: 48,
-    borderWidth: 1,
-    borderColor: colors.zinc700,
-    borderRadius: 12,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-  },
-  shareLabel: {
-    fontFamily: fonts.semibold,
-    fontSize: 14,
-    color: colors.white,
-  },
-  venueCard: {
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: radius['2xl'],
-    padding: 16,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12,
-  },
-  venueTitle: {
-    fontFamily: fonts.bold,
-    fontSize: 14,
-    color: colors.white,
-  },
-  venueCity: {
-    fontFamily: fonts.regular,
-    fontSize: 12,
-    color: colors.zinc400,
-    marginTop: 2,
-  },
-  mapPreview: {
-    width: 128,
-    height: 64,
-    borderRadius: 12,
-    overflow: 'hidden',
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-  },
+  venueBlock: { flexDirection: 'row', alignItems: 'center', gap: 10 },
+  map: { height: 160, borderRadius: radius.md, overflow: 'hidden' },
+  linkRow: { flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44 },
+  linkText: { ...type.label, color: colors.highlighter },
+  related: { gap: 8, marginTop: 8 },
 });

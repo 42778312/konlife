@@ -9,7 +9,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import { ChevronRight, MapPin } from 'lucide-react-native';
-import { colors, fonts, radius } from '@/constants/theme';
+import { colors, radius, space, type, webCursor } from '@/constants/theme';
 import { RemoteImage } from '@/components/ui/RemoteImage';
 
 type MapWidgetProps = {
@@ -44,7 +44,6 @@ export function MapWidget({
 
   return (
     <View style={[styles.canvas, compact && styles.compact]}>
-      <View style={styles.grid} />
       <View style={[styles.river, { top: compact ? 40 : 90 }]} />
       <View style={[styles.roadV, { left: '18%' }]} />
       <View style={[styles.roadV, { left: '42%' }]} />
@@ -53,7 +52,7 @@ export function MapWidget({
 
       {!compact ? (
         <View style={[styles.pinWrap, { top: '28%', left: '22%' }]}>
-          <MapPin size={22} color={colors.neon} fill="rgba(204,255,0,0.3)" strokeWidth={2} />
+          <MapPin size={22} color={colors.ink} fill={colors.highlighter} strokeWidth={2} />
           <View style={styles.pinLabel}>
             <Text style={styles.pinLabelText}>Döbele</Text>
           </View>
@@ -61,7 +60,7 @@ export function MapWidget({
       ) : null}
 
       <Animated.View style={[styles.pinWrap, styles.pinCenter, pinStyle]}>
-        <MapPin size={compact ? 22 : 28} color={colors.neon} fill={colors.neon} strokeWidth={2} />
+        <MapPin size={compact ? 22 : 28} color={colors.ink} fill={colors.highlighter} strokeWidth={2} />
         <View style={styles.cityLabel}>
           <Text style={styles.cityLabelText}>{cityName}</Text>
         </View>
@@ -69,7 +68,7 @@ export function MapWidget({
 
       {!compact ? (
         <View style={[styles.pinWrap, { bottom: '22%', right: '28%' }]}>
-          <MapPin size={20} color={colors.neon} fill="rgba(204,255,0,0.3)" strokeWidth={2} />
+          <MapPin size={20} color={colors.ink} fill={colors.highlighter} strokeWidth={2} />
           <View style={styles.pinLabel}>
             <Text style={styles.pinLabelText}>Petershausen</Text>
           </View>
@@ -83,12 +82,12 @@ export function MapWidget({
             alt={venueName}
             containerStyle={styles.venueThumb}
           />
-          <View style={{ flex: 1 }}>
+          <View style={styles.venueCopy}>
             <Text style={styles.venueName}>{venueName}</Text>
             <Text style={styles.venueMeta}>Popular · 3 upcoming events</Text>
-            <Pressable style={styles.venueLink}>
+            <Pressable style={[styles.venueLink, webCursor]} accessibilityRole="button" accessibilityLabel="View venue">
               <Text style={styles.venueLinkText}>View venue</Text>
-              <ChevronRight size={14} color={colors.neon} strokeWidth={2.5} />
+              <ChevronRight size={14} color={colors.ink} strokeWidth={2.5} />
             </Pressable>
           </View>
         </View>
@@ -101,28 +100,22 @@ const styles = StyleSheet.create({
   canvas: {
     width: '100%',
     height: 260,
-    borderRadius: radius['3xl'],
+    borderRadius: radius.xl,
     overflow: 'hidden',
-    backgroundColor: '#0e0e11',
-    borderWidth: 1,
-    borderColor: colors.zinc800,
+    backgroundColor: colors.paper,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: colors.rule,
   },
   compact: {
     height: '100%',
-    borderRadius: 12,
-  },
-  grid: {
-    ...StyleSheet.absoluteFill,
-    opacity: 0.8,
-    backgroundColor: 'transparent',
-    borderWidth: 0,
+    borderRadius: radius.md,
   },
   river: {
     position: 'absolute',
     left: 0,
     right: 0,
     height: 10,
-    backgroundColor: 'rgba(63, 63, 70, 0.45)',
+    backgroundColor: 'rgba(27, 29, 31, 0.12)',
     transform: [{ rotate: '-4deg' }],
   },
   roadV: {
@@ -130,14 +123,14 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: 2,
-    backgroundColor: 'rgba(39, 39, 42, 0.85)',
+    backgroundColor: 'rgba(27, 29, 31, 0.2)',
   },
   roadH: {
     position: 'absolute',
     left: 0,
     right: 0,
     height: 2,
-    backgroundColor: 'rgba(39, 39, 42, 0.85)',
+    backgroundColor: 'rgba(27, 29, 31, 0.2)',
   },
   pinWrap: {
     position: 'absolute',
@@ -150,43 +143,36 @@ const styles = StyleSheet.create({
   },
   pinLabel: {
     marginTop: 2,
-    backgroundColor: 'rgba(0,0,0,0.8)',
+    backgroundColor: colors.overlay,
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: 4,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
+    borderRadius: radius.sm,
   },
   pinLabelText: {
-    fontFamily: fonts.bold,
-    fontSize: 10,
-    color: colors.zinc400,
+    ...type.overline,
+    letterSpacing: 0.4,
+    textTransform: 'none',
+    color: colors.paper,
   },
   cityLabel: {
     marginTop: 4,
-    backgroundColor: 'rgba(0,0,0,0.9)',
+    backgroundColor: colors.overlay,
     paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 6,
-    borderWidth: 1,
-    borderColor: 'rgba(204, 255, 0, 0.5)',
+    paddingVertical: 4,
+    borderRadius: radius.sm,
   },
   cityLabelText: {
-    fontFamily: fonts.black,
-    fontSize: 12,
-    color: colors.white,
-    letterSpacing: 0.4,
+    ...type.label,
+    color: colors.paper,
   },
   venueCard: {
     position: 'absolute',
-    right: 16,
-    bottom: 16,
-    left: 16,
-    backgroundColor: 'rgba(20, 20, 23, 0.95)',
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: radius['2xl'],
-    padding: 12,
+    right: space.lg,
+    bottom: space.lg,
+    left: space.lg,
+    backgroundColor: colors.card,
+    borderRadius: radius.lg,
+    padding: space.md,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
@@ -194,30 +180,30 @@ const styles = StyleSheet.create({
   venueThumb: {
     width: 56,
     height: 56,
-    borderRadius: 12,
+    borderRadius: radius.md,
+  },
+  venueCopy: {
+    flex: 1,
+    minWidth: 0,
   },
   venueName: {
-    fontFamily: fonts.bold,
+    ...type.title,
     fontSize: 15,
-    color: colors.white,
+    lineHeight: 20,
   },
   venueMeta: {
-    fontFamily: fonts.regular,
-    fontSize: 12,
-    color: colors.zinc400,
+    ...type.meta,
     marginTop: 2,
   },
   venueLink: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
-    marginTop: 6,
-    minHeight: 28,
-    cursor: 'pointer',
+    marginTop: 4,
+    minHeight: 44,
   },
   venueLinkText: {
-    fontFamily: fonts.extrabold,
-    fontSize: 12,
-    color: colors.neon,
+    ...type.label,
+    color: colors.ink,
   },
 });

@@ -1,113 +1,111 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { List, Map } from 'lucide-react-native';
-import { MOCK_EVENTS } from '@/data/mockEvents';
-import { colors, fonts, radius } from '@/constants/theme';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { List, Map, Search } from 'lucide-react-native';
+import { CATEGORIES, DAYS, MOCK_EVENTS, type DayKey } from '@/data/mockEvents';
+import { colors, layout, MIN_TOUCH, radius, space, type, webCursor } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
 import { Screen } from '@/components/layout/Screen';
 import { EventCard } from '@/components/events/EventCard';
 import { MapWidget } from '@/components/events/MapWidget';
 import { SearchInput } from '@/components/ui/SearchInput';
+import { Chip } from '@/components/ui/Chip';
+import { EmptyState } from '@/components/ui/EmptyState';
 
-const FILTERS = ['Date ⌵', 'Category ⌵', 'Music ⌵', 'Price ⌵', 'Distance ⌵'];
+type PriceFilter = 'all' | 'free' | 'paid';
 
-export default function DiscoverScreen() {
-  const insets = useSafeAreaInsets();
+export default function ExploreScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'list' | 'map'>('list');
-  const [activeFilters, setActiveFilters] = useState<string[]>([]);
+  const [day, setDay] = useState<DayKey | 'All'>('All');
+  const [category, setCategory] = useState<string>('All');
+  const [price, setPrice] = useState<PriceFilter>('all');
   const [refreshing, setRefreshing] = useState(false);
 
-  const discoverEvents = useMemo(() => {
+  const events = useMemo(() => {
     const q = searchQuery.trim().toLowerCase();
-    return MOCK_EVENTS.slice(0, 6).filter((event) => {
+    return MOCK_EVENTS.filter((event) => {
+      if (day !== 'All' && event.dayOfWeek !== day) return false;
+      if (category !== 'All' && event.category !== category) return false;
+      if (price === 'free' && !event.isFree) return false;
+      if (price === 'paid' && event.isFree) return false;
       if (!q) return true;
       return (
         event.title.toLowerCase().includes(q) ||
         event.venue.toLowerCase().includes(q) ||
-        event.tags.some((t) => t.toLowerCase().includes(q)) ||
-        event.category.toLowerCase().includes(q)
+        event.tags.some((t) => t.toLowerCase().includes(q))
       );
     });
-  }, [searchQuery]);
+  }, [searchQuery, day, category, price]);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setTimeout(() => setRefreshing(false), 700);
   }, []);
 
-  const header = (
-    <View style={[styles.header, { paddingTop: Math.max(insets.top, 8) }]}>
-      <Text style={styles.title}>Discover</Text>
-      <View style={styles.toggle}>
-        <Pressable
-          onPress={() => {
-            selectionTick();
-            setActiveView('list');
-          }}
-          style={[styles.toggleBtn, activeView === 'list' && styles.toggleActive]}
-          accessibilityLabel="List view"
-        >
-          <List size={16} color={activeView === 'list' ? colors.black : colors.zinc400} strokeWidth={2.2} />
-        </Pressable>
-        <Pressable
-          onPress={() => {
-            selectionTick();
-            setActiveView('map');
-          }}
-          style={[styles.toggleBtn, activeView === 'map' && styles.toggleActive]}
-          accessibilityLabel="Map view"
-        >
-          <Map size={16} color={activeView === 'map' ? colors.black : colors.zinc400} strokeWidth={2.2} />
-        </Pressable>
-      </View>
-    </View>
-  );
-
   return (
-    <Screen header={header} onRefresh={onRefresh} refreshing={refreshing} keyboard>
-      <View style={styles.stack}>
+    <Screen onRefresh={onRefresh} refreshing={refreshing} keyboard>
+      <View style={styles.page}>
+        <View style={styles.headRow}>
+          <Text style={styles.title} accessibilityRole="header">
+            Explore
+          </Text>
+          <View style={styles.toggle}>
+            <Pressable
+              onPress={() => {
+                selectionTick();
+                setActiveView('list');
+              }}
+              style={[styles.toggleBtn, activeView === 'list' && styles.toggleOn, webCursor]}
+              accessibilityRole="button"
+              accessibilityLabel="List view"
+              accessibilityState={{ selected: activeView === 'list' }}
+            >
+              <List size={18} color={activeView === 'list' ? colors.accentFg : colors.muted} strokeWidth={2.2} />
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                selectionTick();
+                setActiveView('map');
+              }}
+              style={[styles.toggleBtn, activeView === 'map' && styles.toggleOn, webCursor]}
+              accessibilityRole="button"
+              accessibilityLabel="Map view"
+              accessibilityState={{ selected: activeView === 'map' }}
+            >
+              <Map size={18} color={activeView === 'map' ? colors.accentFg : colors.muted} strokeWidth={2.2} />
+            </Pressable>
+          </View>
+        </View>
         <SearchInput value={searchQuery} onChangeText={setSearchQuery} />
-
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.filters}
-          decelerationRate="fast"
-          keyboardShouldPersistTaps="handled"
-        >
-          {FILTERS.map((chip) => {
-            const on = activeFilters.includes(chip);
-            return (
-              <Pressable
-                key={chip}
-                onPress={() => {
-                  selectionTick();
-                  setActiveFilters((prev) =>
-                    prev.includes(chip) ? prev.filter((c) => c !== chip) : [...prev, chip],
-                  );
-                }}
-                style={[styles.chip, on && styles.chipOn]}
-              >
-                <Text style={[styles.chipText, on && styles.chipTextOn]}>{chip}</Text>
-              </Pressable>
-            );
-          })}
-        </ScrollView>
-
+        <View style={styles.filters}>
+          <Chip label="Any day" selected={day === 'All'} onPress={() => setDay('All')} />
+          {DAYS.map((d) => (
+            <Chip key={d} label={d} selected={day === d} onPress={() => setDay(d)} />
+          ))}
+        </View>
+        <View style={styles.filters}>
+          <Chip label="All" selected={category === 'All'} onPress={() => setCategory('All')} />
+          {CATEGORIES.map((c) => (
+            <Chip key={c.id} label={c.label} selected={category === c.id} onPress={() => setCategory(c.id)} />
+          ))}
+        </View>
+        <View style={styles.filters}>
+          <Chip label="Any price" selected={price === 'all'} onPress={() => setPrice('all')} />
+          <Chip label="Free" selected={price === 'free'} onPress={() => setPrice('free')} />
+          <Chip label="Paid" selected={price === 'paid'} onPress={() => setPrice('paid')} />
+        </View>
         {activeView === 'list' ? (
           <View style={styles.list}>
-            {discoverEvents.length === 0 ? (
-              <Text style={styles.empty}>No events match “{searchQuery}”</Text>
+            {events.length === 0 ? (
+              <EmptyState icon={Search} title="No matching nights" message="Clear a filter or try another venue." />
             ) : (
-              discoverEvents.map((event) => (
-                <EventCard key={event.id} event={event} variant="list" instanceId="mobile-discover" />
-              ))
+              events.map((event) => <EventCard key={event.id} event={event} variant="list" instanceId="explore" />)
             )}
           </View>
         ) : (
-          <MapWidget venueName="Blechnerei" cityName="Konstanz" interactive />
+          <View style={styles.map}>
+            <MapWidget venueName="Konstanz" cityName="Konstanz" interactive />
+          </View>
         )}
       </View>
     </Screen>
@@ -115,80 +113,30 @@ export default function DiscoverScreen() {
 }
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingBottom: 10,
-    backgroundColor: colors.bg,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.zinc900,
+  page: {
+    width: '100%',
+    maxWidth: layout.sheetMax,
+    alignSelf: 'center',
+    paddingHorizontal: space.lg,
+    gap: space.md,
   },
-  title: {
-    fontFamily: fonts.display,
-    fontSize: 36,
-    color: colors.white,
-    letterSpacing: 1,
-  },
+  headRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  title: { ...type.display, fontSize: 40, lineHeight: 42 },
   toggle: {
     flexDirection: 'row',
     backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    borderRadius: radius['2xl'],
+    borderRadius: radius.full,
     padding: 4,
   },
   toggleBtn: {
-    width: 40,
-    height: 36,
-    borderRadius: 12,
+    width: MIN_TOUCH,
+    height: MIN_TOUCH,
+    borderRadius: radius.full,
     alignItems: 'center',
     justifyContent: 'center',
-    cursor: 'pointer',
   },
-  toggleActive: {
-    backgroundColor: colors.neon,
-  },
-  stack: {
-    gap: 16,
-  },
-  filters: {
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
-    gap: 8,
-  },
-  chip: {
-    minHeight: 36,
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: radius.full,
-    backgroundColor: colors.card,
-    borderWidth: 1,
-    borderColor: colors.zinc800,
-    justifyContent: 'center',
-    cursor: 'pointer',
-  },
-  chipOn: {
-    backgroundColor: colors.neon,
-    borderColor: colors.neon,
-  },
-  chipText: {
-    fontFamily: fonts.semibold,
-    fontSize: 12,
-    color: colors.zinc300,
-  },
-  chipTextOn: {
-    color: colors.black,
-  },
-  list: {
-    gap: 12,
-  },
-  empty: {
-    fontFamily: fonts.medium,
-    fontSize: 14,
-    color: colors.zinc400,
-    textAlign: 'center',
-    paddingVertical: 32,
-  },
+  toggleOn: { backgroundColor: colors.highlighter },
+  filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
+  list: { gap: 12, marginTop: 8 },
+  map: { minHeight: 320, borderRadius: radius.lg, overflow: 'hidden' },
 });

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Pressable, type PressableProps, type StyleProp, type ViewStyle } from 'react-native';
+import { Pressable, type PressableProps, type StyleProp, View, type ViewStyle } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
-import { MIN_TOUCH } from '@/constants/theme';
+import { MIN_TOUCH, webCursor } from '@/constants/theme';
 
 type PressableScaleProps = PressableProps & {
   children: React.ReactNode;
@@ -12,15 +12,10 @@ type PressableScaleProps = PressableProps & {
 
 const SPRING = { damping: 16, stiffness: 420, mass: 0.4 };
 
-export function PressableScale({
-  children,
-  onPressIn,
-  onPressOut,
-  style,
-  contentStyle,
-  scaleTo = 0.97,
-  ...rest
-}: PressableScaleProps) {
+export const PressableScale = React.forwardRef<View, PressableScaleProps>(function PressableScale(
+  { children, onPressIn, onPressOut, style, contentStyle, scaleTo = 0.97, ...rest },
+  ref,
+) {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -28,6 +23,8 @@ export function PressableScale({
 
   return (
     <Pressable
+      ref={ref}
+      {...rest}
       onPressIn={(e) => {
         scale.value = withSpring(scaleTo, SPRING);
         onPressIn?.(e);
@@ -36,10 +33,12 @@ export function PressableScale({
         scale.value = withSpring(1, SPRING);
         onPressOut?.(e);
       }}
-      style={[{ minHeight: MIN_TOUCH, cursor: 'pointer' }, style]}
-      {...rest}
+      style={[{ minHeight: MIN_TOUCH }, webCursor, style]}
     >
       <Animated.View style={[animatedStyle, contentStyle]}>{children}</Animated.View>
     </Pressable>
   );
-}
+});
+
+PressableScale.displayName = 'PressableScale';
+

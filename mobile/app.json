@@ -1,0 +1,60 @@
+{
+  "expo": {
+    "name": "KONSTANZ",
+    "slug": "konstanz",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "konstanz",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#080809",
+    "primaryColor": "#CCFF00",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.konstanz.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#080809",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": true,
+      "softwareKeyboardLayoutMode": "resize",
+      "navigationBarColor": "#080809",
+      "navigationBar": {
+        "barStyle": "dark-content",
+        "backgroundColor": "#080809"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png",
+      "name": "KONSTANZ",
+      "shortName": "KONSTANZ",
+      "lang": "en",
+      "themeColor": "#080809",
+      "backgroundColor": "#080809",
+      "display": "standalone",
+      "orientation": "portrait"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#080809"
+        }
+      ],
+      "expo-image",
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

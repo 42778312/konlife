@@ -104,3 +104,71 @@ export function addYearsLocal(now: Date, years: number, timeZone = TZ): string {
 export function formatApiDateTime(ymd: string, hms = '00:00:00'): string {
   return `${ymd} ${hms}`;
 }
+
+export function monthKey(ymd: string): string {
+  return ymd.slice(0, 7);
+}
+
+export function startOfMonthYmd(ymd: string): string {
+  return `${monthKey(ymd)}-01`;
+}
+
+/** Shift by calendar months, clamped to the 1st so day-31 never overflows. */
+export function addMonthsYmd(ymd: string, months: number): string {
+  const [year, month] = ymd.split('-').map(Number);
+  const dt = new Date(Date.UTC(year ?? 1970, (month ?? 1) - 1 + months, 1));
+  return dt.toISOString().slice(0, 10);
+}
+
+export function formatMonthTitle(ymd: string, timeZone = TZ): string {
+  const [year, month, day] = ymd.split('-').map(Number);
+  const utc = new Date(Date.UTC(year, (month ?? 1) - 1, day ?? 1, 12));
+  return new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    month: 'long',
+    year: 'numeric',
+  }).format(utc);
+}
+
+export function formatAgendaDate(ymd: string, now = new Date(), timeZone = TZ): string {
+  const today = localYmd(now, timeZone);
+  const [year, month, day] = ymd.split('-').map(Number);
+  const utc = new Date(Date.UTC(year, (month ?? 1) - 1, day ?? 1, 12));
+  const long = new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+  }).format(utc);
+  if (ymd === today) return `Today · ${long}`;
+  if (ymd === addDaysYmd(today, 1)) return `Tomorrow · ${long}`;
+  return long;
+}
+
+export type CalendarCell = {
+  ymd: string;
+  inMonth: boolean;
+  weekday: number;
+};
+
+/** Six weeks, Monday-first — iPhone Calendar in a German locale. */
+export function monthGrid(anchorYmd: string): CalendarCell[] {
+  const first = startOfMonthYmd(anchorYmd);
+  const [year, month] = first.split('-').map(Number);
+  const mondayOffset = (weekdaySun0(first) + 6) % 7;
+  const start = addDaysYmd(first, -mondayOffset);
+  return Array.from({ length: 42 }, (_, i) => {
+    const ymd = addDaysYmd(start, i);
+    const [y, m] = ymd.split('-').map(Number);
+    return {
+      ymd,
+      inMonth: y === year && m === month,
+      weekday: weekdaySun0(ymd),
+    };
+  });
+}
+
+export function isWeekendYmd(ymd: string): boolean {
+  const dow = weekdaySun0(ymd);
+  return dow === 0 || dow === 5 || dow === 6;
+}

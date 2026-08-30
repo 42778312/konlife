@@ -6,7 +6,8 @@ import { motion } from 'motion/react';
 import { MOCK_EVENTS, EventItem } from '@/data/mockEvents';
 import { EventCardWeb } from '@/components/events/EventCardWeb';
 import { MapWidget } from '@/components/events/MapWidget';
-import { EVENT_EXPAND_TRANSITION, EVENT_OVERLAY_FADE, EventLayoutIds } from '@/lib/eventMotion';
+import { useEventExpand } from '@/components/events/EventExpandContext';
+import { EVENT_EXPAND_TRANSITION, EVENT_OVERLAY_FADE, INSTANT_LAYOUT, EventLayoutIds } from '@/lib/eventMotion';
 import {
   ArrowLeft,
   Calendar,
@@ -35,14 +36,18 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
 }) => {
   const webLayoutIds = layoutIds && instanceId?.startsWith('web-') ? layoutIds : undefined;
   const mobileLayoutIds = layoutIds && instanceId?.startsWith('mobile-') ? layoutIds : undefined;
+  const { layoutInstant, sharedElement } = useEventExpand();
+  const freezeLayout = Boolean(onClose) && (layoutInstant || !sharedElement);
+  const layoutTransition = freezeLayout ? INSTANT_LAYOUT : EVENT_EXPAND_TRANSITION;
   const [isSaved, setIsSaved] = useState(false);
   const relatedEvents = MOCK_EVENTS.filter((e) => e.id !== event.id).slice(0, 3);
 
   return (
     <motion.div
       layoutId={layoutIds?.container}
-      transition={EVENT_EXPAND_TRANSITION}
-      layoutScroll={Boolean(onClose)}
+      layout={layoutIds ? undefined : false}
+      transition={layoutTransition}
+      layoutScroll={Boolean(onClose && layoutIds)}
       className={`bg-[#080809] text-zinc-100 flex flex-col ${
         onClose ? 'h-full overflow-y-auto pb-20 md:pb-8' : 'min-h-full pb-20 md:pb-8'
       }`}
@@ -55,9 +60,9 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
             <motion.button
               type="button"
               onClick={onClose}
-              initial={{ opacity: 0 }}
+              initial={freezeLayout ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
+              exit={freezeLayout ? undefined : { opacity: 0 }}
               transition={{ ...EVENT_OVERLAY_FADE, delay: 0.18 }}
               className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors text-sm font-semibold w-fit"
             >
@@ -77,7 +82,8 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
           <div className="relative w-full h-[360px] rounded-3xl overflow-hidden border border-zinc-800 shadow-2xl">
             <motion.div
               layoutId={webLayoutIds?.image}
-              transition={EVENT_EXPAND_TRANSITION}
+              layout={webLayoutIds ? undefined : false}
+              transition={layoutTransition}
               className="absolute inset-0"
               style={{ borderRadius: 24 }}
             >
@@ -92,8 +98,8 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
             <div className="absolute bottom-0 left-0 right-0 p-8 flex flex-col gap-3">
               <motion.h1
                 layoutId={webLayoutIds?.title}
-                layout="position"
-                transition={EVENT_EXPAND_TRANSITION}
+                layout={webLayoutIds ? 'position' : false}
+                transition={layoutTransition}
                 className="font-display text-6xl font-black text-white tracking-wide origin-left"
               >
                 {event.title}
@@ -117,9 +123,9 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={freezeLayout ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
+            exit={freezeLayout ? undefined : { opacity: 0, y: 8 }}
             transition={{ ...EVENT_OVERLAY_FADE, delay: 0.12 }}
             className="grid grid-cols-3 gap-8"
           >
@@ -205,9 +211,9 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
           </motion.div>
 
           <motion.section
-            initial={{ opacity: 0, y: 18 }}
+            initial={freezeLayout ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
+            exit={freezeLayout ? undefined : { opacity: 0 }}
             transition={{ ...EVENT_OVERLAY_FADE, delay: 0.18 }}
             className="flex flex-col gap-4 mt-6"
           >
@@ -226,9 +232,9 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
       {/* MOBILE PHONE VIEW */}
       <div className="block md:hidden max-w-md mx-auto w-full">
         <motion.div
-          initial={onClose ? { opacity: 0 } : false}
+          initial={freezeLayout ? false : onClose ? { opacity: 0 } : false}
           animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          exit={freezeLayout ? undefined : { opacity: 0 }}
           transition={{ ...EVENT_OVERLAY_FADE, delay: 0.18 }}
           className="p-4 flex items-center justify-between border-b border-zinc-900 sticky top-0 bg-[#080809] z-40"
         >
@@ -256,7 +262,8 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
           <div className="relative w-full h-[280px] rounded-3xl overflow-hidden border border-zinc-800">
             <motion.div
               layoutId={mobileLayoutIds?.image}
-              transition={EVENT_EXPAND_TRANSITION}
+              layout={mobileLayoutIds ? undefined : false}
+              transition={layoutTransition}
               className="absolute inset-0"
               style={{ borderRadius: 24 }}
             >
@@ -267,8 +274,8 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
             <div className="absolute bottom-4 left-4 right-4 flex flex-col gap-2">
               <motion.h1
                 layoutId={mobileLayoutIds?.title}
-                layout="position"
-                transition={EVENT_EXPAND_TRANSITION}
+                layout={mobileLayoutIds ? 'position' : false}
+                transition={layoutTransition}
                 className="font-display text-4xl font-black text-white origin-left"
               >
                 {event.title}
@@ -288,9 +295,9 @@ export const EventDetailView: React.FC<EventDetailViewProps> = ({
           </div>
 
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={freezeLayout ? false : { opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
+            exit={freezeLayout ? undefined : { opacity: 0, y: 8 }}
             transition={{ ...EVENT_OVERLAY_FADE, delay: 0.12 }}
             className="flex flex-col gap-4"
           >

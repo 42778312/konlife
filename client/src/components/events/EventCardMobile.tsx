@@ -5,7 +5,7 @@ import { motion } from 'motion/react';
 import { Bookmark, Heart } from 'lucide-react';
 import { EventItem } from '@/data/mockEvents';
 import { EventExpandLink } from '@/components/events/EventExpandLink';
-import { EVENT_EXPAND_TRANSITION, eventLayoutIds } from '@/lib/eventMotion';
+import { useSharedLayout } from '@/components/events/EventExpandContext';
 
 interface EventCardMobileProps {
   event: EventItem;
@@ -19,20 +19,22 @@ export const EventCardMobile: React.FC<EventCardMobileProps> = ({
   instanceId: instanceIdProp,
 }) => {
   const instanceId = instanceIdProp ?? `mobile-${variant}`;
-  const ids = eventLayoutIds(event.id, instanceId);
+  const { ids, transition, covered } = useSharedLayout(event.id, instanceId);
 
   if (variant === 'hero') {
     return (
-      <div className="relative w-full h-[380px]">
+      <div className="relative w-full h-[380px]" style={covered ? { visibility: 'hidden' } : undefined}>
         <motion.div
-          layoutId={ids.container}
-          transition={EVENT_EXPAND_TRANSITION}
+          layoutId={ids?.container}
+          layout={ids ? undefined : false}
+          transition={transition}
           className="relative w-full h-full overflow-hidden border border-zinc-800 shadow-2xl"
           style={{ borderRadius: 24 }}
         >
           <motion.div
-            layoutId={ids.image}
-            transition={EVENT_EXPAND_TRANSITION}
+            layoutId={ids?.image}
+            layout={ids ? undefined : false}
+            transition={transition}
             className="absolute inset-0"
           >
             <img
@@ -45,9 +47,9 @@ export const EventCardMobile: React.FC<EventCardMobileProps> = ({
 
           <div className="absolute bottom-0 left-0 right-0 p-5">
             <motion.h2
-              layoutId={ids.title}
-              layout="position"
-              transition={EVENT_EXPAND_TRANSITION}
+              layoutId={ids?.title}
+              layout={ids ? 'position' : false}
+              transition={transition}
               className="font-display text-4xl font-black text-white tracking-wide mb-1 origin-left"
             >
               {event.title}
@@ -72,16 +74,18 @@ export const EventCardMobile: React.FC<EventCardMobileProps> = ({
 
   if (variant === 'horizontal') {
     return (
-      <div className="relative w-[170px] shrink-0 h-[268px]">
+      <div className="relative w-[170px] shrink-0 h-[268px]" style={covered ? { visibility: 'hidden' } : undefined}>
         <motion.div
-          layoutId={ids.container}
-          transition={EVENT_EXPAND_TRANSITION}
+          layoutId={ids?.container}
+          layout={ids ? undefined : false}
+          transition={transition}
           className="relative w-full h-full bg-[#141417] border border-zinc-800 overflow-hidden flex flex-col"
           style={{ borderRadius: 16 }}
         >
           <motion.div
-            layoutId={ids.image}
-            transition={EVENT_EXPAND_TRANSITION}
+            layoutId={ids?.image}
+            layout={ids ? undefined : false}
+            transition={transition}
             className="relative h-44 w-full overflow-hidden"
           >
             <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
@@ -89,9 +93,9 @@ export const EventCardMobile: React.FC<EventCardMobileProps> = ({
           <div className="p-3 flex flex-col flex-1 justify-between">
             <div>
               <motion.h4
-                layoutId={ids.title}
-                layout="position"
-                transition={EVENT_EXPAND_TRANSITION}
+                layoutId={ids?.title}
+                layout={ids ? 'position' : false}
+                transition={transition}
                 className="font-bold text-white text-sm line-clamp-1 origin-left"
               >
                 {event.title}
@@ -112,16 +116,18 @@ export const EventCardMobile: React.FC<EventCardMobileProps> = ({
   }
 
   return (
-    <div className="relative h-36">
+    <div className="relative h-36" style={covered ? { visibility: 'hidden' } : undefined}>
       <motion.div
-        layoutId={ids.container}
-        transition={EVENT_EXPAND_TRANSITION}
+        layoutId={ids?.container}
+        layout={ids ? undefined : false}
+        transition={transition}
         className="relative bg-[#141417] border border-zinc-800/80 overflow-hidden flex h-36"
         style={{ borderRadius: 16 }}
       >
         <motion.div
-          layoutId={ids.image}
-          transition={EVENT_EXPAND_TRANSITION}
+          layoutId={ids?.image}
+          layout={ids ? undefined : false}
+          transition={transition}
           className="w-36 h-full shrink-0 relative"
         >
           <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
@@ -131,9 +137,9 @@ export const EventCardMobile: React.FC<EventCardMobileProps> = ({
           <div>
             <div className="flex items-start justify-between gap-1">
               <motion.h3
-                layoutId={ids.title}
-                layout="position"
-                transition={EVENT_EXPAND_TRANSITION}
+                layoutId={ids?.title}
+                layout={ids ? 'position' : false}
+                transition={transition}
                 className="font-bold text-white text-base truncate origin-left"
               >
                 {event.title}

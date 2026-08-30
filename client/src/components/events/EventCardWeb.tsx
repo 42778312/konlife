@@ -5,7 +5,7 @@ import { motion } from 'motion/react';
 import { Heart, Bookmark } from 'lucide-react';
 import { EventItem } from '@/data/mockEvents';
 import { EventExpandLink } from '@/components/events/EventExpandLink';
-import { EVENT_EXPAND_TRANSITION, eventLayoutIds } from '@/lib/eventMotion';
+import { useSharedLayout } from '@/components/events/EventExpandContext';
 
 interface EventCardWebProps {
   event: EventItem;
@@ -19,20 +19,22 @@ export const EventCardWeb: React.FC<EventCardWebProps> = ({
   instanceId: instanceIdProp,
 }) => {
   const instanceId = instanceIdProp ?? `web-${variant}`;
-  const ids = eventLayoutIds(event.id, instanceId);
+  const { ids, transition, covered } = useSharedLayout(event.id, instanceId);
 
   if (variant === 'hero') {
     return (
-      <div className="relative w-full h-[340px]">
+      <div className="relative w-full h-[340px]" style={covered ? { visibility: 'hidden' } : undefined}>
         <motion.div
-          layoutId={ids.container}
-          transition={EVENT_EXPAND_TRANSITION}
+          layoutId={ids?.container}
+          layout={ids ? undefined : false}
+          transition={transition}
           className="relative w-full h-full overflow-hidden border border-zinc-800/80 group"
           style={{ borderRadius: 24 }}
         >
           <motion.div
-            layoutId={ids.image}
-            transition={EVENT_EXPAND_TRANSITION}
+            layoutId={ids?.image}
+            layout={ids ? undefined : false}
+            transition={transition}
             className="absolute inset-0"
           >
             <img
@@ -48,9 +50,9 @@ export const EventCardWeb: React.FC<EventCardWebProps> = ({
               TONIGHT · FRIDAY
             </span>
             <motion.h1
-              layoutId={ids.title}
-              layout="position"
-              transition={EVENT_EXPAND_TRANSITION}
+              layoutId={ids?.title}
+              layout={ids ? 'position' : false}
+              transition={transition}
               className="font-display text-5xl font-black tracking-wide text-white mb-2 origin-left"
             >
               {event.title}
@@ -80,16 +82,18 @@ export const EventCardWeb: React.FC<EventCardWebProps> = ({
 
   if (variant === 'compact') {
     return (
-      <div className="relative">
+      <div className="relative" style={covered ? { visibility: 'hidden' } : undefined}>
         <motion.div
-          layoutId={ids.container}
-          transition={EVENT_EXPAND_TRANSITION}
+          layoutId={ids?.container}
+          layout={ids ? undefined : false}
+          transition={transition}
           className="flex items-center gap-4 bg-[#141417] border border-zinc-800/70 p-3 hover:border-zinc-700 hover:bg-[#1a1a1f] group"
           style={{ borderRadius: 16 }}
         >
           <motion.div
-            layoutId={ids.image}
-            transition={EVENT_EXPAND_TRANSITION}
+            layoutId={ids?.image}
+            layout={ids ? undefined : false}
+            transition={transition}
             className="w-20 h-20 overflow-hidden shrink-0"
             style={{ borderRadius: 12 }}
           >
@@ -101,9 +105,9 @@ export const EventCardWeb: React.FC<EventCardWebProps> = ({
           </motion.div>
           <div className="flex-1 min-w-0">
             <motion.h3
-              layoutId={ids.title}
-              layout="position"
-              transition={EVENT_EXPAND_TRANSITION}
+              layoutId={ids?.title}
+              layout={ids ? 'position' : false}
+              transition={transition}
               className="font-bold text-white text-base truncate group-hover:text-[#CCFF00] origin-left"
             >
               {event.title}
@@ -126,16 +130,18 @@ export const EventCardWeb: React.FC<EventCardWebProps> = ({
   }
 
   return (
-    <div className="relative">
+    <div className="relative" style={covered ? { visibility: 'hidden' } : undefined}>
       <motion.div
-        layoutId={ids.container}
-        transition={EVENT_EXPAND_TRANSITION}
+        layoutId={ids?.container}
+        layout={ids ? undefined : false}
+        transition={transition}
         className="relative bg-[#141417] border border-zinc-800/70 overflow-hidden flex flex-col group hover:border-zinc-700"
         style={{ borderRadius: 16 }}
       >
         <motion.div
-          layoutId={ids.image}
-          transition={EVENT_EXPAND_TRANSITION}
+          layoutId={ids?.image}
+          layout={ids ? undefined : false}
+          transition={transition}
           className="relative h-44 w-full overflow-hidden"
         >
           <img
@@ -151,9 +157,9 @@ export const EventCardWeb: React.FC<EventCardWebProps> = ({
         <div className="p-4 flex items-center justify-between">
           <div>
             <motion.h3
-              layoutId={ids.title}
-              layout="position"
-              transition={EVENT_EXPAND_TRANSITION}
+              layoutId={ids?.title}
+              layout={ids ? 'position' : false}
+              transition={transition}
               className="font-bold text-white text-lg group-hover:text-[#CCFF00] origin-left"
             >
               {event.title}

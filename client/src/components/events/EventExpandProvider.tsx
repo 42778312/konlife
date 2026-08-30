@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { flushSync } from 'react-dom';
 import { AnimatePresence, LayoutGroup } from 'motion/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { EventExpandContextProvider, EventExpandSource } from '@/components/events/EventExpandContext';
@@ -10,6 +11,8 @@ export const EventExpandProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const router = useRouter();
   const pathname = usePathname();
   const [source, setSource] = useState<EventExpandSource | null>(null);
+  const [sharedElement, setSharedElement] = useState(true);
+  const [layoutInstant, setLayoutInstant] = useState(false);
 
   const eventIdFromPath = useMemo(() => {
     const match = pathname.match(/^\/event\/([^/]+)$/);
@@ -32,7 +35,16 @@ export const EventExpandProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, [source]);
 
   const openEvent = useCallback((eventId: string, instanceId: string) => {
+    setLayoutInstant(false);
+    setSharedElement(true);
     setSource({ eventId, instanceId });
+  }, []);
+
+  const detachSharedElement = useCallback(() => {
+    flushSync(() => {
+      setLayoutInstant(true);
+    });
+    setSharedElement(false);
   }, []);
 
   const closeEvent = useCallback(() => {
@@ -55,8 +67,15 @@ export const EventExpandProvider: React.FC<{ children: React.ReactNode }> = ({ c
   }, [source, closeEvent]);
 
   const value = useMemo(
-    () => ({ source, openEvent, closeEvent }),
-    [source, openEvent, closeEvent],
+    () => ({
+      source,
+      openEvent,
+      closeEvent,
+      sharedElement,
+      layoutInstant,
+      detachSharedElement,
+    }),
+    [source, openEvent, closeEvent, sharedElement, layoutInstant, detachSharedElement],
   );
 
   return (

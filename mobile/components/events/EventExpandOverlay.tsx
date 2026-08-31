@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     ...StyleSheet.absoluteFill,
-    backgroundColor: 'rgba(11,10,13,0.75)',
+    backgroundColor: colors.overlayHeavy,
   },
   panelFill: {
     flex: 1,

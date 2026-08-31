@@ -7,25 +7,25 @@
     "icon": "./assets/images/icon.png",
     "scheme": "konstanz",
     "userInterfaceStyle": "automatic",
-    "backgroundColor": "#1F201F",
-    "primaryColor": "#E0EB53",
+    "backgroundColor": "#161616",
+    "primaryColor": "#F2F862",
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.konstanz.app"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#1F201F",
+        "backgroundColor": "#161616",
         "foregroundImage": "./assets/images/android-icon-foreground.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": true,
       "softwareKeyboardLayoutMode": "resize",
-      "navigationBarColor": "#1F201F",
+      "navigationBarColor": "#161616",
       "navigationBar": {
         "barStyle": "light-content",
-        "backgroundColor": "#1F201F"
+        "backgroundColor": "#161616"
       }
     },
     "web": {
@@ -35,8 +35,8 @@
       "name": "KONSTANZ",
       "shortName": "KONSTANZ",
       "lang": "en",
-      "themeColor": "#1F201F",
-      "backgroundColor": "#1F201F",
+      "themeColor": "#161616",
+      "backgroundColor": "#161616",
       "display": "standalone",
       "orientation": "any"
     },
@@ -47,7 +47,7 @@
         {
           "image": "./assets/images/splash-icon.png",
           "resizeMode": "contain",
-          "backgroundColor": "#1F201F"
+          "backgroundColor": "#161616"
         }
       ],
       "expo-image",

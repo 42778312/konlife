@@ -120,6 +120,15 @@ export function addMonthsYmd(ymd: string, months: number): string {
   return dt.toISOString().slice(0, 10);
 }
 
+export function formatMonthName(ymd: string, timeZone = TZ): string {
+  const [year, month, day] = ymd.split('-').map(Number);
+  const utc = new Date(Date.UTC(year, (month ?? 1) - 1, day ?? 1, 12));
+  return new Intl.DateTimeFormat('en-GB', {
+    timeZone,
+    month: 'long',
+  }).format(utc);
+}
+
 export function formatMonthTitle(ymd: string, timeZone = TZ): string {
   const [year, month, day] = ymd.split('-').map(Number);
   const utc = new Date(Date.UTC(year, (month ?? 1) - 1, day ?? 1, 12));
@@ -128,6 +137,34 @@ export function formatMonthTitle(ymd: string, timeZone = TZ): string {
     month: 'long',
     year: 'numeric',
   }).format(utc);
+}
+
+export function monthDayYmds(anchorYmd: string): string[] {
+  const start = startOfMonthYmd(anchorYmd);
+  const next = addMonthsYmd(start, 1);
+  const days: string[] = [];
+  for (let ymd = start; ymd < next; ymd = addDaysYmd(ymd, 1)) {
+    days.push(ymd);
+  }
+  return days;
+}
+
+export function dayNumber(ymd: string): string {
+  return String(Number(ymd.slice(8, 10)));
+}
+
+/** Wireframe clock label: 08:00 AM. */
+export function formatClock12(time: string): string {
+  const match = time.trim().match(/^(\d{1,2}):(\d{2})(?:\s*([AaPp][Mm]))?/);
+  if (!match) return time;
+  if (match[3]) {
+    return `${match[1].padStart(2, '0')}:${match[2]} ${match[3].toUpperCase()}`;
+  }
+  let hour = Number(match[1]);
+  const min = match[2];
+  const suffix = hour >= 12 ? 'PM' : 'AM';
+  hour = hour % 12 || 12;
+  return `${String(hour).padStart(2, '0')}:${min} ${suffix}`;
 }
 
 export function formatAgendaDate(ymd: string, now = new Date(), timeZone = TZ): string {

@@ -1,0 +1,11 @@
+{
+  "prompt": "User-supplied Upcoming Event wireframe. Portrait mobile schedule: charcoal #161616 ground, lime #F2F862 selected date capsule and featured event card, charcoal #222222 idle cards, geometric sans, circular help, thumbnail + title + category + clock/pin meta + arrow-up-right. No attendee counts. Origin: user screenshot, not generated.",
+  "approved": true,
+  "source": "user screenshot 2026-08-31",
+  "sampled": {
+    "bg": "#161616",
+    "card": "#222222",
+    "highlighter": "#F2F862",
+    "circle": "#282828"
+  }
+}

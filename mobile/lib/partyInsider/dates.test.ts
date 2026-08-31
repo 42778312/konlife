@@ -2,9 +2,13 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 import {
   addMonthsYmd,
+  dayNumber,
   formatAgendaDate,
+  formatClock12,
+  formatMonthName,
   formatMonthTitle,
   isWeekendYmd,
+  monthDayYmds,
   monthGrid,
   monthKey,
   startOfMonthYmd,
@@ -34,10 +38,26 @@ describe('month helpers', () => {
 
   it('names months and marks weekend nights', () => {
     assert.equal(formatMonthTitle('2026-08-01'), 'August 2026');
+    assert.equal(formatMonthName('2026-01-14'), 'January');
     assert.equal(isWeekendYmd('2026-08-28'), true);
     assert.equal(isWeekendYmd('2026-08-29'), true);
     assert.equal(isWeekendYmd('2026-08-30'), true);
     assert.equal(isWeekendYmd('2026-08-31'), false);
+  });
+
+  it('lists every day of the month', () => {
+    const days = monthDayYmds('2026-01-14');
+    assert.equal(days[0], '2026-01-01');
+    assert.equal(days.at(-1), '2026-01-31');
+    assert.equal(days.length, 31);
+    assert.equal(dayNumber('2026-01-04'), '4');
+  });
+
+  it('formats door time as 12-hour clock', () => {
+    assert.equal(formatClock12('08:00'), '08:00 AM');
+    assert.equal(formatClock12('22:00'), '10:00 PM');
+    assert.equal(formatClock12('00:00'), '12:00 AM');
+    assert.equal(formatClock12('12:00'), '12:00 PM');
   });
 
   it('labels today in the agenda heading', () => {

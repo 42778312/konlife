@@ -8,7 +8,7 @@ type IconButtonProps = {
   icon: React.ComponentType<IconProps>;
   onPress?: () => void;
   accessibilityLabel: string;
-  variant?: 'ghost' | 'surface';
+  variant?: 'ghost' | 'surface' | 'circle';
   color?: string;
   size?: number;
   fill?: string;
@@ -31,7 +31,13 @@ export function IconButton({
       hitSlop={hitSlop}
       accessibilityRole="button"
       accessibilityLabel={accessibilityLabel}
-      style={[styles.hit, variant === 'surface' && styles.surface, webCursor, style]}
+      style={[
+        styles.hit,
+        variant === 'surface' && styles.surface,
+        variant === 'circle' && styles.circle,
+        webCursor,
+        style,
+      ]}
     >
       <Icon size={size} color={color} strokeWidth={2.2} fill={fill} />
     </Pressable>
@@ -49,6 +55,12 @@ const styles = StyleSheet.create({
     width: MIN_TOUCH,
     height: MIN_TOUCH,
     borderRadius: 999,
-    backgroundColor: 'rgba(11, 10, 13, 0.55)',
+    backgroundColor: colors.overlay,
+  },
+  circle: {
+    width: MIN_TOUCH,
+    height: MIN_TOUCH,
+    borderRadius: 999,
+    backgroundColor: colors.circle,
   },
 });

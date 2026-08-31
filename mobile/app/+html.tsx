@@ -11,7 +11,7 @@ export default function Root({ children }: { children: ReactNode }) {
           name="viewport"
           content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content"
         />
-        <meta name="theme-color" content="#0B0A0D" />
+        <meta name="theme-color" content="#161616" />
         <meta name="color-scheme" content="dark" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -29,11 +29,11 @@ export default function Root({ children }: { children: ReactNode }) {
       </head>
       <body>
         {/*
-THESIS: Home is this week's nights as photographs you tap — not a clipboard, not a ticket marketplace.
-OWN-WORLD: Night black #0B0A0D, warm type #F6F1EA, lime #E8FF4A on saved/price, photo-led cards, Barlow Condensed titles.
-STORY: See what's on, save a night, open the photo sheet. No tickets, no account.
-FIRST VIEWPORT: KONSTANZ nav; Out this week; search; full-bleed featured photo; This week row; Happening list.
-FORM: User-pinned event-app canon (photos, this week, party vibe) over Door Clipboard seed a2aab498.
+THESIS: Weekend is a date you tap and a night you open — not a month grid, not a ticket marketplace.
+OWN-WORLD: Charcoal #161616, plates #222222, lime #F2F862 only on selected date and featured card, Poppins, 24px plates, circular chrome.
+STORY: Pick a day in Konstanz, scan the lime featured night, open the sheet. No tickets, no account, no fake crowds.
+FIRST VIEWPORT: Site nav; Upcoming Event + lime help; month; horizontal date capsules; lime lead card then charcoal cards.
+FORM: User-pinned Upcoming Event screenshot (.impeccable/mocks/weekend-approved.png); sampled #161616 / #F2F862 / #222222; Poppins.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
         */}
         {children}
@@ -48,7 +48,7 @@ html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #0B0A0D;
+  background-color: #161616;
   overscroll-behavior: none;
 }
 html { height: 100%; height: 100dvh; }
@@ -58,12 +58,12 @@ body {
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-text-size-adjust: 100%;
-  font-family: Barlow, system-ui, sans-serif;
-  color: #F6F1EA;
+  font-family: Poppins, system-ui, sans-serif;
+  color: #FFFFFF;
 }
-::selection { background: #E8FF4A; color: #0B0A0D; }
-:focus-visible { outline: 2px solid #E8FF4A; outline-offset: 2px; }
-input, textarea { caret-color: #E8FF4A; font-size: 16px; }
+::selection { background: #F2F862; color: #161616; }
+:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }
+input, textarea { caret-color: #F2F862; font-size: 16px; }
 * { box-sizing: border-box; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

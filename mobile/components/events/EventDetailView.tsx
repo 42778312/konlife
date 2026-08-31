@@ -51,7 +51,7 @@ export function EventDetailView({ event, onClose }: EventDetailViewProps) {
         <View style={styles.hero}>
           <RemoteImage uri={event.image} alt={event.title} containerStyle={StyleSheet.absoluteFill} />
           <LinearGradient
-            colors={['rgba(11,10,13,0.35)', 'transparent', 'rgba(11,10,13,0.92)']}
+            colors={['rgba(22,22,22,0.35)', 'transparent', colors.overlayHeavy]}
             locations={[0, 0.35, 1]}
             style={StyleSheet.absoluteFill}
           />

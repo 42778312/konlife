@@ -55,7 +55,7 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
         <PressableScale onPress={onOpen} style={styles.featuredPress} contentStyle={styles.featuredInner} accessibilityLabel={event.title}>
           <RemoteImage uri={event.image} alt={event.title} containerStyle={StyleSheet.absoluteFill} />
           <LinearGradient
-            colors={['transparent', 'rgba(11,10,13,0.2)', 'rgba(11,10,13,0.92)']}
+            colors={['transparent', colors.overlay, colors.overlayHeavy]}
             locations={[0.28, 0.55, 1]}
             style={StyleSheet.absoluteFill}
           />
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     height: MIN_TOUCH,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(11,10,13,0.45)',
+    backgroundColor: colors.overlay,
     borderRadius: radius.full,
   },
   venue: { ...type.meta },
@@ -191,7 +191,7 @@ const styles = StyleSheet.create({
     ...type.overline,
     color: colors.fg,
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: 'rgba(246,241,234,0.35)',
+    borderColor: 'rgba(255,255,255,0.35)',
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: radius.full,

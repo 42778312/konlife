@@ -5,6 +5,7 @@ import {
   dayNumber,
   formatAgendaDate,
   formatClock12,
+  formatMonthDay,
   formatMonthName,
   formatMonthTitle,
   isWeekendYmd,
@@ -51,6 +52,13 @@ describe('month helpers', () => {
     assert.equal(days.at(-1), '2026-01-31');
     assert.equal(days.length, 31);
     assert.equal(dayNumber('2026-01-04'), '4');
+  });
+
+  it('splits a date into month name and day', () => {
+    const badge = formatMonthDay('2026-05-20');
+    assert.equal(badge.month, 'May');
+    assert.equal(badge.day, '20');
+    assert.equal(formatMonthDay('2026-01-04').day, '4');
   });
 
   it('formats door time as 12-hour clock', () => {

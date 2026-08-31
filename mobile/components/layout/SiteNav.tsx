@@ -18,6 +18,8 @@ export function SiteNav() {
   const pathname = usePathname();
   const router = useRouter();
   const { desktop } = useBreakpoint();
+  const homePhone = !desktop && (pathname === '/' || pathname === '/index');
+  if (homePhone) return null;
 
   return (
     <View style={[styles.bar, { paddingTop: Math.max(insets.top, 8) }]}>

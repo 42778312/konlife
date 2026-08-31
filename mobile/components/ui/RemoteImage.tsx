@@ -26,6 +26,9 @@ export function RemoteImage({
   useEffect(() => {
     setLoaded(false);
     setFailed(false);
+    if (!uri) return;
+    const timer = setTimeout(() => setLoaded(true), 2800);
+    return () => clearTimeout(timer);
   }, [uri]);
 
   if (!uri || failed) {

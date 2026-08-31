@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { StyleSheet, TextInput, View, type StyleProp, type ViewStyle } from 'react-native';
 import { Search, X } from 'lucide-react-native';
 import { colors, fonts, radius } from '@/constants/theme';
 import { IconButton } from '@/components/ui/IconButton';
@@ -10,6 +10,9 @@ type SearchInputProps = {
   placeholder?: string;
   autoFocus?: boolean;
   variant?: 'sheet' | 'pill';
+  style?: StyleProp<ViewStyle>;
+  surfaceColor?: string;
+  compact?: boolean;
 };
 
 export function SearchInput({
@@ -18,10 +21,13 @@ export function SearchInput({
   placeholder = 'Search nights, venues, genres',
   autoFocus,
   variant = 'pill',
+  style,
+  surfaceColor,
+  compact = false,
 }: SearchInputProps) {
   return (
-    <View style={styles.wrap}>
-      <View style={styles.icon} pointerEvents="none">
+    <View style={[styles.wrap, style]}>
+      <View style={[styles.icon, { pointerEvents: 'none' }]}>
         <Search size={18} color={colors.muted} strokeWidth={2} />
       </View>
       <TextInput
@@ -29,7 +35,12 @@ export function SearchInput({
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor={colors.muted}
-        style={[styles.input, variant === 'sheet' ? styles.sheet : styles.pill]}
+        style={[
+          styles.input,
+          variant === 'sheet' ? styles.sheet : styles.pill,
+          surfaceColor ? { backgroundColor: surfaceColor } : null,
+          compact ? styles.compact : null,
+        ]}
         autoCapitalize="none"
         autoCorrect={false}
         autoFocus={autoFocus}
@@ -78,6 +89,10 @@ const styles = StyleSheet.create({
     borderRadius: radius.md,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: colors.rule,
+  },
+  compact: {
+    minHeight: 44,
+    paddingVertical: 10,
   },
   clear: { position: 'absolute', right: 4 },
 });

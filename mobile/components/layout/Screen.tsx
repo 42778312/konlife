@@ -20,6 +20,7 @@ type ScreenProps = {
   scroll?: boolean;
   contentStyle?: StyleProp<ViewStyle>;
   keyboard?: boolean;
+  backgroundColor?: string;
 };
 
 export function Screen({
@@ -30,12 +31,14 @@ export function Screen({
   scroll = true,
   contentStyle,
   keyboard = true,
+  backgroundColor,
 }: ScreenProps) {
   const kbInset = useWebKeyboardInset();
+  const field = backgroundColor ?? colors.metal;
 
   const body = scroll ? (
     <ScrollView
-      style={styles.flex}
+      style={[styles.flex, { backgroundColor: field }]}
       contentContainerStyle={[styles.content, { paddingBottom: space['4xl'] + kbInset }, contentStyle]}
       showsVerticalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
@@ -63,7 +66,7 @@ export function Screen({
 
   return (
     <KeyboardAvoidingView
-      style={styles.root}
+      style={[styles.root, { backgroundColor: field }]}
       behavior={keyboard && Platform.OS === 'ios' ? 'padding' : undefined}
       enabled={keyboard && Platform.OS !== 'web'}
     >

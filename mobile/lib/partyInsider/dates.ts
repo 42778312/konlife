@@ -153,6 +153,15 @@ export function dayNumber(ymd: string): string {
   return String(Number(ymd.slice(8, 10)));
 }
 
+export function formatMonthDay(ymd: string, timeZone = TZ): { month: string; day: string } {
+  const [year, month, day] = ymd.split('-').map(Number);
+  const utc = new Date(Date.UTC(year, (month ?? 1) - 1, day ?? 1, 12));
+  return {
+    month: new Intl.DateTimeFormat('en-GB', { timeZone, month: 'short' }).format(utc),
+    day: String(day),
+  };
+}
+
 /** Wireframe clock label: 08:00 AM. */
 export function formatClock12(time: string): string {
   const match = time.trim().match(/^(\d{1,2}):(\d{2})(?:\s*([AaPp][Mm]))?/);

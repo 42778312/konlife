@@ -29,11 +29,11 @@ export default function Root({ children }: { children: ReactNode }) {
       </head>
       <body>
         {/*
-THESIS: Weekend is a date you tap and a night you open — not a month grid, not a ticket marketplace.
-OWN-WORLD: Charcoal #161616, plates #222222, lime #F2F862 only on selected date and featured card, Poppins, 24px plates, circular chrome.
-STORY: Pick a day in Konstanz, scan the lime featured night, open the sheet. No tickets, no account, no fake crowds.
-FIRST VIEWPORT: Site nav; Upcoming Event + lime help; month; horizontal date capsules; lime lead card then charcoal cards.
-FORM: User-pinned Upcoming Event screenshot (.impeccable/mocks/weekend-approved.png); sampled #161616 / #F2F862 / #222222; Poppins.
+THESIS: Discover is a night you open from a photo plate — not a paper clipboard, not a ticket desk.
+OWN-WORLD: Black #000000 field, plate #171717, lime #F2F862 on selected stadium, Open night, and the door-time mark; Poppins; 32px photo plate; circular chrome.
+STORY: Scan Konstanz categories, open tonight’s featured night, swipe the coming posters. No tickets, no account, no fake crowds.
+FIRST VIEWPORT: K mark · Welcome back / Konstanz · saved; Discover search + filter; category stadiums; photo plate with date badge, save, title, place, price, door-time mark, Open night; Top nights posters.
+FORM: User-pinned home screenshot (.impeccable/mocks/home-approved.png); sampled #000000 / #171717 / #F2F862; Poppins.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
         */}
         {children}

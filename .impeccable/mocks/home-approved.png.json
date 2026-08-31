@@ -1,0 +1,12 @@
+{
+  "prompt": "User-provided Discover home screenshot. Pixel source of truth for the KONSTANZ home rebuild: black field, lime stadiums, photo featured plate, poster carousel. Origin: user attachment 2026-08-31.",
+  "origin": "User-attached screenshot (not generated). Path: assets/image-cad818b0-106e-498e-aadc-cbd526d9e0b1.png",
+  "approved": true,
+  "sampled": {
+    "ground": "#000000",
+    "plate": "#171717",
+    "lime": "#F2F862",
+    "circle": "#282828",
+    "muted": "#8D8D8D"
+  }
+}

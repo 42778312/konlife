@@ -1,14 +1,32 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-31T16:40:00.000Z",
+  "generatedAt": "2026-08-31T19:22:00.000Z",
   "title": "Design System: KONSTANZ",
   "extensions": {
     "colorMeta": {
+      "night": {
+        "role": "neutral",
+        "displayName": "Night Field",
+        "canonical": "#000000",
+        "tonalRamp": ["#000000", "#0A0A0A", "#171717", "#2A2A2A", "#484848", "#6E6E6E", "#A8A8A8", "#E8E8E8"]
+      },
       "charcoal": {
         "role": "neutral",
         "displayName": "Charcoal Night",
         "canonical": "#161616",
         "tonalRamp": ["#0A0A0A", "#161616", "#2C2C2C", "#484848", "#6A6A6A", "#8E8E8E", "#C4C4C4", "#F0F0F0"]
+      },
+      "plate-night": {
+        "role": "neutral",
+        "displayName": "Night Plate",
+        "canonical": "#171717",
+        "tonalRamp": ["#000000", "#0A0A0A", "#171717", "#2C2C2C", "#484848", "#6A6A6A", "#A0A0A0", "#E4E4E4"]
+      },
+      "capsule": {
+        "role": "neutral",
+        "displayName": "Capsule Idle",
+        "canonical": "#1A1A1A",
+        "tonalRamp": ["#0A0A0A", "#121212", "#1A1A1A", "#2E2E2E", "#4A4A4A", "#6E6E6E", "#A8A8A8", "#E4E4E4"]
       },
       "plate": {
         "role": "neutral",
@@ -16,11 +34,11 @@
         "canonical": "#222222",
         "tonalRamp": ["#0E0E0E", "#161616", "#222222", "#3A3A3A", "#5A5A5A", "#7A7A7A", "#B0B0B0", "#E8E8E8"]
       },
-      "capsule": {
+      "circle": {
         "role": "neutral",
-        "displayName": "Capsule Idle",
-        "canonical": "#1A1A1A",
-        "tonalRamp": ["#0A0A0A", "#121212", "#1A1A1A", "#2E2E2E", "#4A4A4A", "#6E6E6E", "#A8A8A8", "#E4E4E4"]
+        "displayName": "Circle Chrome",
+        "canonical": "#282828",
+        "tonalRamp": ["#101010", "#1A1A1A", "#282828", "#404040", "#5C5C5C", "#7C7C7C", "#B4B4B4", "#EAEAEA"]
       },
       "lime": {
         "role": "primary",
@@ -34,17 +52,17 @@
         "canonical": "#161616",
         "tonalRamp": ["#0A0A0A", "#161616", "#2C2C2C", "#484848", "#6A6A6A", "#8E8E8E", "#C4C4C4", "#F0F0F0"]
       },
-      "circle": {
-        "role": "neutral",
-        "displayName": "Circle Chrome",
-        "canonical": "#282828",
-        "tonalRamp": ["#101010", "#1A1A1A", "#282828", "#404040", "#5C5C5C", "#7C7C7C", "#B4B4B4", "#EAEAEA"]
-      },
       "white": {
         "role": "neutral",
         "displayName": "Type White",
         "canonical": "#FFFFFF",
         "tonalRamp": ["#161616", "#3A3A3A", "#5C5C5C", "#8E8E93", "#C7C7C7", "#E4E4E4", "#F5F5F5", "#FFFFFF"]
+      },
+      "muted-night": {
+        "role": "neutral",
+        "displayName": "Night Mute",
+        "canonical": "#8D8D8D",
+        "tonalRamp": ["#2A2A2A", "#3F3F3F", "#565656", "#6E6E6E", "#8D8D8D", "#A8A8A8", "#C8C8C8", "#E8E8E8"]
       },
       "muted": {
         "role": "neutral",
@@ -57,6 +75,12 @@
         "displayName": "Soft Silver",
         "canonical": "#C7C7C7",
         "tonalRamp": ["#2E2E2E", "#4A4A4A", "#6A6A6A", "#8A8A8A", "#A8A8A8", "#C7C7C7", "#E0E0E0", "#F5F5F5"]
+      },
+      "frost": {
+        "role": "neutral",
+        "displayName": "Frost",
+        "canonical": "rgba(0, 0, 0, 0.48)",
+        "tonalRamp": ["rgba(0,0,0,0.16)", "rgba(0,0,0,0.28)", "rgba(0,0,0,0.48)", "rgba(0,0,0,0.62)", "rgba(0,0,0,0.74)", "rgba(0,0,0,0.84)", "rgba(0,0,0,0.92)", "rgba(0,0,0,1)"]
       },
       "rule": {
         "role": "neutral",
@@ -78,15 +102,16 @@
       }
     },
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Discover headline and night-sheet titles. Poppins ExtraBold only." },
-      "headline": { "displayName": "Headline", "purpose": "Section titles and the Weekend month name (month sits at 22px, same weight)." },
-      "title": { "displayName": "Title", "purpose": "Event names on plates. Weekend screen title is 18px Bold, centered." },
+      "display": { "displayName": "Display", "purpose": "Explore and night-sheet titles. Poppins ExtraBold only." },
+      "headline": { "displayName": "Headline", "purpose": "Explore section titles and the Weekend month name (month sits at 22px, same weight)." },
+      "title": { "displayName": "Title", "purpose": "Event names on plates and Discover section rows." },
       "body": { "displayName": "Body", "purpose": "Ledes and night-sheet description in Soft Silver." },
-      "label": { "displayName": "Label", "purpose": "Category on weekend plates, chip labels, button labels." },
-      "wordmark": { "displayName": "Wordmark", "purpose": "KONSTANZ in the site nav. Tracked, not a kicker." },
-      "meta": { "displayName": "Meta", "purpose": "Time, place, and supporting lines in Muted Steel." },
+      "label": { "displayName": "Label", "purpose": "Category stadiums, weekend plate category, chip labels, button labels." },
+      "wordmark": { "displayName": "Wordmark", "purpose": "KONSTANZ in the site nav. Tracked, not a kicker. Hidden on phone Discover." },
+      "city": { "displayName": "City", "purpose": "Konstanz in the Discover header. Weekend screen title is the same weight, centered." },
+      "meta": { "displayName": "Meta", "purpose": "Place and supporting lines. Discover place uses Night Mute." },
       "overline": { "displayName": "Overline", "purpose": "Structural labels only. Not a lime eyebrow on cards." },
-      "button": { "displayName": "Button", "purpose": "Pill button labels, Bold 14." },
+      "button": { "displayName": "Button", "purpose": "Pill button labels, Bold 14. Open night and Try again." },
       "nav": { "displayName": "Nav", "purpose": "Site-nav links. Medium idle, Bold when active." }
     },
     "shadows": [],
@@ -94,7 +119,7 @@
       {
         "name": "press-scale",
         "value": "transform: scale(0.97); spring damping 16 / stiffness 420 / mass 0.4",
-        "purpose": "PressableScale on plates, buttons, and featured cards. Restores to 1 on release."
+        "purpose": "PressableScale on plates, posters, Open night, and buttons. Restores to 1 on release."
       },
       {
         "name": "focus-ring",
@@ -109,117 +134,124 @@
       {
         "name": "skeleton-pulse",
         "value": "opacity 0.35–0.7, 900ms in-out quad, repeating",
-        "purpose": "Loading placeholders on the Weekend strip and plates."
+        "purpose": "Loading placeholders on Discover (pills, 360px photo plate, posters) and Weekend."
       }
     ],
     "breakpoints": [
       { "name": "phone", "value": "<900px" },
       { "name": "desktop", "value": "900px" },
+      { "name": "discover-column", "value": "430px" },
       { "name": "weekend-column", "value": "640px" },
-      { "name": "sheet-max", "value": "1120px" }
+      { "name": "sheet-max", "value": "1120px" },
+      { "name": "featured-hero-compact", "value": "<360px" }
     ]
   },
   "components": [
     {
-      "name": "Primary Button",
+      "name": "Open Night",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "Lime pill. Charcoal Bold label. Try again / I'm going.",
-      "html": "<button class=\"ds-btn-primary\">I'm going</button>",
-      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border: none; border-radius: 999px; background: #F2F862; color: #161616; font-family: Poppins, system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 18px; letter-spacing: 0.2px; cursor: pointer; transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-primary:hover { transform: scale(0.97); } .ds-btn-primary:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-btn-primary:active { transform: scale(0.97); }"
+      "refersTo": "button-open-night",
+      "description": "Lime pill on the Discover photo plate. Charcoal Bold 14. The mark that opens a night.",
+      "html": "<button class=\"ds-open-night\">Open night</button>",
+      "css": ".ds-open-night { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; width: 100%; max-width: 280px; padding: 0 20px; border: none; border-radius: 999px; background: #F2F862; color: #161616; font-family: Poppins, system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 18px; letter-spacing: 0.2px; cursor: pointer; transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1); } .ds-open-night:hover { transform: scale(0.97); } .ds-open-night:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-open-night:active { transform: scale(0.97); }"
     },
     {
-      "name": "Secondary Button",
-      "kind": "button",
-      "refersTo": "button-secondary",
-      "description": "Plate pill with a white hairline. Share.",
-      "html": "<button class=\"ds-btn-secondary\">Share</button>",
-      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 48px; padding: 0 20px; border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; background: #222222; color: #FFFFFF; font-family: Poppins, system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 18px; letter-spacing: 0.2px; cursor: pointer; transition: transform 0.16s cubic-bezier(0.4, 0, 0.2, 1); } .ds-btn-secondary:hover { transform: scale(0.97); } .ds-btn-secondary:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-btn-secondary:active { transform: scale(0.97); }"
-    },
-    {
-      "name": "Filter Chip",
+      "name": "Category Stadium",
       "kind": "chip",
-      "refersTo": "chip-selected",
-      "description": "Day filter. Idle plate; selected is the lime mark.",
-      "html": "<div class=\"ds-chips\"><button class=\"ds-chip ds-chip-on\">All</button><button class=\"ds-chip\">Fri</button><button class=\"ds-chip\">Sat</button></div>",
-      "css": ".ds-chips { display: flex; flex-wrap: wrap; gap: 8px; } .ds-chip { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 14px; border: none; border-radius: 999px; background: #222222; color: #FFFFFF; font-family: Poppins, system-ui, sans-serif; font-size: 13px; font-weight: 600; line-height: 18px; cursor: pointer; } .ds-chip-on { background: #F2F862; color: #161616; } .ds-chip:hover { filter: brightness(1.08); } .ds-chip:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
+      "refersTo": "stadium-selected",
+      "description": "Discover category. Circular catalog thumb; lime when selected, night plate when idle.",
+      "html": "<div class=\"ds-stadiums\"><button class=\"ds-stadium ds-stadium-on\"><span class=\"ds-stadium-thumb\"></span>Club</button><button class=\"ds-stadium\"><span class=\"ds-stadium-thumb\"></span>Live</button><button class=\"ds-stadium\"><span class=\"ds-stadium-thumb\"></span>Bar</button></div>",
+      "css": ".ds-stadiums { display: flex; align-items: center; gap: 10px; } .ds-stadium { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 14px 6px 6px; border: none; border-radius: 999px; background: #171717; color: #FFFFFF; font-family: Poppins, system-ui, sans-serif; font-size: 14px; font-weight: 600; line-height: 18px; cursor: pointer; } .ds-stadium-on { background: #F2F862; color: #161616; } .ds-stadium-thumb { width: 32px; height: 32px; border-radius: 16px; background: #282828; flex-shrink: 0; } .ds-stadium:hover { filter: brightness(1.08); } .ds-stadium:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
     },
     {
       "name": "Date Capsule",
       "kind": "chip",
       "refersTo": "date-capsule-selected",
-      "description": "Vertical stadium. Number over weekday. Lime when selected, unstroked #1A1A1A when idle.",
+      "description": "Weekend vertical stadium. Number over weekday. Lime when selected, unstroked #1A1A1A when idle.",
       "html": "<div class=\"ds-strip\"><button class=\"ds-capsule\"><span class=\"ds-capsule-num\">13</span><span class=\"ds-capsule-day\">Tue</span></button><button class=\"ds-capsule ds-capsule-on\"><span class=\"ds-capsule-num\">14</span><span class=\"ds-capsule-day\">Wed</span></button><button class=\"ds-capsule\"><span class=\"ds-capsule-num\">15</span><span class=\"ds-capsule-day\">Thu</span></button></div>",
       "css": ".ds-strip { display: flex; align-items: center; gap: 10px; } .ds-capsule { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 54px; height: 76px; border: none; border-radius: 38px; background: #1A1A1A; cursor: pointer; } .ds-capsule-on { background: #F2F862; } .ds-capsule-num { font-family: Poppins, system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 22px; color: #FFFFFF; font-variant-numeric: tabular-nums; } .ds-capsule-day { font-family: Poppins, system-ui, sans-serif; font-size: 12px; font-weight: 500; line-height: 16px; color: #8E8E93; } .ds-capsule-on .ds-capsule-num, .ds-capsule-on .ds-capsule-day { color: #161616; } .ds-capsule:hover { filter: brightness(1.1); } .ds-capsule:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
+    },
+    {
+      "name": "Photo Plate",
+      "kind": "card",
+      "refersTo": "photo-plate",
+      "description": "Discover featured night. 32px image plate, frost date, white save disc, door-time plus Open night.",
+      "html": "<article class=\"ds-photo\"><div class=\"ds-photo-hero\"><span class=\"ds-photo-date\"><span class=\"ds-photo-month\">AUG</span><span class=\"ds-photo-day\">31</span></span><button class=\"ds-save\" aria-label=\"Save night\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#161616\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z\"/></svg></button></div><div class=\"ds-photo-body\"><div class=\"ds-photo-copy\"><div><div class=\"ds-photo-title\">Blechnerei Night</div><div class=\"ds-photo-place\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8D8D8D\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.2\"/></svg>Hafenstraße, Konstanz</div></div><div class=\"ds-photo-price\">Free</div></div><div class=\"ds-photo-foot\"><span class=\"ds-door\">22:00</span><button class=\"ds-open-night\">Open night</button></div></div></article>",
+      "css": ".ds-photo { width: 100%; max-width: 430px; background: #171717; border-radius: 32px; overflow: hidden; font-family: Poppins, system-ui, sans-serif; } .ds-photo-hero { position: relative; height: 200px; background: #282828; } .ds-photo-date { position: absolute; top: 10px; left: 10px; width: 48px; height: 48px; border-radius: 24px; background: rgba(0,0,0,0.48); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFFFFF; } .ds-photo-month { font-size: 11px; font-weight: 500; line-height: 13px; } .ds-photo-day { font-size: 16px; font-weight: 700; line-height: 18px; } .ds-save { position: absolute; top: 10px; right: 10px; width: 36px; height: 36px; border: none; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; } .ds-save:hover { filter: brightness(0.96); } .ds-save:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-photo-body { padding: 8px 14px; display: flex; flex-direction: column; gap: 8px; } .ds-photo-copy { display: flex; align-items: flex-start; gap: 12px; } .ds-photo-copy > div:first-child { flex: 1; min-width: 0; } .ds-photo-title { font-size: 16px; font-weight: 700; line-height: 20px; letter-spacing: -0.2px; color: #FFFFFF; } .ds-photo-place { display: flex; align-items: center; gap: 4px; margin-top: 2px; font-size: 13px; font-weight: 400; line-height: 18px; color: #8D8D8D; } .ds-photo-price { font-size: 18px; font-weight: 700; line-height: 22px; color: #FFFFFF; } .ds-photo-foot { display: flex; align-items: center; gap: 10px; } .ds-door { min-width: 44px; height: 44px; padding: 0 8px; border-radius: 22px; background: #F2F862; color: #161616; font-size: 12px; font-weight: 700; line-height: 16px; display: inline-flex; align-items: center; justify-content: center; } .ds-open-night { flex: 1; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 20px; border: none; border-radius: 999px; background: #F2F862; color: #161616; font-family: Poppins, system-ui, sans-serif; font-size: 14px; font-weight: 700; line-height: 18px; letter-spacing: 0.2px; cursor: pointer; } .ds-open-night:hover { transform: scale(0.97); } .ds-open-night:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
     },
     {
       "name": "Featured Night Plate",
       "kind": "card",
       "refersTo": "plate-featured",
-      "description": "The lime lead card. Two registers, charcoal ink, charcoal arrow circle with lime glyph.",
+      "description": "Weekend lime lead card. Two registers, charcoal ink, charcoal arrow circle with lime glyph.",
       "html": "<button class=\"ds-plate ds-plate-on\"><span class=\"ds-plate-arrow ds-plate-arrow-on\" aria-hidden=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#F2F862\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17L17 7\"/><path d=\"M7 7h10v10\"/></svg></span><span class=\"ds-plate-top\"><span class=\"ds-thumb\"></span><span class=\"ds-copy\"><span class=\"ds-plate-title\">Blechnerei Night</span><span class=\"ds-plate-sub\">Club</span></span></span><span class=\"ds-plate-meta\"><span class=\"ds-meta-bit\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#161616\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>10:00 PM</span><span class=\"ds-meta-rule ds-meta-rule-on\"></span><span class=\"ds-meta-bit ds-meta-place\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#161616\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.2\"/></svg>Konstanz, Hafenstraße</span></span></button>",
       "css": ".ds-plate { position: relative; display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 480px; padding: 16px 48px 16px 16px; border: none; border-radius: 24px; text-align: left; cursor: pointer; font-family: Poppins, system-ui, sans-serif; } .ds-plate-on { background: #F2F862; color: #161616; } .ds-plate:hover { transform: scale(0.97); } .ds-plate:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-plate-top { display: flex; align-items: flex-start; gap: 12px; } .ds-thumb { width: 56px; height: 56px; border-radius: 12px; background: #3A3A3A; flex-shrink: 0; } .ds-copy { display: flex; flex-direction: column; justify-content: center; gap: 2px; min-height: 56px; min-width: 0; } .ds-plate-title { font-size: 16px; font-weight: 700; line-height: 20px; letter-spacing: -0.2px; } .ds-plate-sub { font-size: 14px; font-weight: 600; line-height: 18px; } .ds-plate-meta { display: flex; align-items: center; gap: 10px; } .ds-meta-bit { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 500; line-height: 16px; white-space: nowrap; } .ds-meta-place { min-width: 0; flex: 1; } .ds-meta-rule { width: 1px; height: 12px; border-radius: 1px; background: rgba(255,255,255,0.18); } .ds-meta-rule-on { background: rgba(22,22,22,0.28); } .ds-plate-arrow { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: #282828; } .ds-plate-arrow-on { background: #161616; }"
     },
     {
-      "name": "Idle Night Plate",
+      "name": "Poster Card",
       "kind": "card",
-      "refersTo": "plate-idle",
-      "description": "Charcoal plate. Same two-register structure; chrome arrow with white glyph.",
-      "html": "<button class=\"ds-plate ds-plate-off\"><span class=\"ds-plate-arrow\" aria-hidden=\"true\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M7 17L17 7\"/><path d=\"M7 7h10v10\"/></svg></span><span class=\"ds-plate-top\"><span class=\"ds-thumb\"></span><span class=\"ds-copy\"><span class=\"ds-plate-title\">Hafenbar Session</span><span class=\"ds-plate-sub\">Live</span></span></span><span class=\"ds-plate-meta\"><span class=\"ds-meta-bit ds-meta-off\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>11:00 PM</span><span class=\"ds-meta-rule\"></span><span class=\"ds-meta-bit ds-meta-place ds-meta-off\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.2\"/></svg>Konstanz, Seestrasse</span></span></button>",
-      "css": ".ds-plate { position: relative; display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 480px; padding: 16px 48px 16px 16px; border: none; border-radius: 24px; text-align: left; cursor: pointer; font-family: Poppins, system-ui, sans-serif; } .ds-plate-off { background: #222222; color: #FFFFFF; } .ds-plate-off:hover { transform: scale(0.97); } .ds-plate-off:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-meta-off { color: #8E8E93; }"
+      "refersTo": "poster-card",
+      "description": "Discover coming night. 200×248 image, lime date pill, white save disc. No ratings.",
+      "html": "<div class=\"ds-poster\"><div class=\"ds-poster-art\"></div><span class=\"ds-poster-date\">31 AUG</span><button class=\"ds-poster-save\" aria-label=\"Save night\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#161616\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z\"/></svg></button></div>",
+      "css": ".ds-poster { position: relative; width: 200px; height: 248px; border-radius: 22px; overflow: hidden; background: #171717; } .ds-poster-art { width: 100%; height: 100%; background: #282828; } .ds-poster-date { position: absolute; top: 10px; left: 10px; background: #F2F862; color: #161616; border-radius: 999px; padding: 4px 8px; font-family: Poppins, system-ui, sans-serif; font-size: 11px; font-weight: 700; line-height: 14px; } .ds-poster-save { position: absolute; top: 8px; right: 8px; width: 36px; height: 36px; border: none; border-radius: 18px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer; } .ds-poster-save:hover { filter: brightness(0.96); } .ds-poster-save:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
     },
     {
       "name": "Circle Chrome",
       "kind": "button",
-      "refersTo": "chrome-circle",
-      "description": "Help, month chevrons, idle arrows. Fill #282828, no stroke.",
-      "html": "<div class=\"ds-chrome-row\"><button class=\"ds-chrome\" aria-label=\"Previous month\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M15 18l-6-6 6-6\"/></svg></button><button class=\"ds-chrome ds-chrome-help\" aria-label=\"How this screen works\">?</button></div>",
-      "css": ".ds-chrome-row { display: flex; align-items: center; gap: 8px; } .ds-chrome { width: 36px; height: 36px; border: none; border-radius: 18px; background: #282828; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; } .ds-chrome-help { width: 44px; height: 44px; border-radius: 22px; font-family: Poppins, system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 22px; color: #F2F862; } .ds-chrome:hover { filter: brightness(1.15); } .ds-chrome:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
+      "refersTo": "chrome-home",
+      "description": "Discover K, filter, saved, Weekend help. Fill #282828, no stroke. K and bookmark are lime on chrome.",
+      "html": "<div class=\"ds-chrome-row\"><button class=\"ds-chrome ds-chrome-k\" aria-label=\"KONSTANZ\">K</button><button class=\"ds-chrome\" aria-label=\"Explore filters\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#FFFFFF\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 21v-7\"/><path d=\"M4 10V3\"/><path d=\"M12 21v-9\"/><path d=\"M12 8V3\"/><path d=\"M20 21v-5\"/><path d=\"M20 12V3\"/><circle cx=\"4\" cy=\"12\" r=\"2\"/><circle cx=\"12\" cy=\"10\" r=\"2\"/><circle cx=\"20\" cy=\"14\" r=\"2\"/></svg></button><button class=\"ds-chrome ds-chrome-help\" aria-label=\"How this screen works\">?</button></div>",
+      "css": ".ds-chrome-row { display: flex; align-items: center; gap: 8px; } .ds-chrome { width: 44px; height: 44px; border: none; border-radius: 22px; background: #282828; color: #FFFFFF; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; } .ds-chrome-k { font-family: Poppins, system-ui, sans-serif; font-size: 18px; font-weight: 800; line-height: 22px; color: #F2F862; } .ds-chrome-help { font-family: Poppins, system-ui, sans-serif; font-size: 18px; font-weight: 700; line-height: 22px; color: #F2F862; } .ds-chrome:hover { filter: brightness(1.15); } .ds-chrome:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
     },
     {
       "name": "Search Pill",
       "kind": "input",
-      "refersTo": "search-pill",
-      "description": "Plate pill on Discover. Muted placeholder, lime caret.",
-      "html": "<label class=\"ds-search\"><svg class=\"ds-search-icon\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Search nights, venues, genres\" /></label>",
-      "css": ".ds-search { position: relative; display: block; width: 100%; max-width: 420px; } .ds-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; } .ds-search-input { width: 100%; min-height: 48px; padding: 12px 48px 12px 44px; border: none; border-radius: 999px; background: #222222; color: #FFFFFF; font-family: Poppins, system-ui, sans-serif; font-size: 16px; line-height: 20px; caret-color: #F2F862; } .ds-search-input::placeholder { color: #8E8E93; } .ds-search-input:focus { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-search-input::selection { background: #F2F862; color: #161616; }"
+      "refersTo": "search-pill-home",
+      "description": "Discover compact night-plate pill. Placeholder Discover. Lime caret.",
+      "html": "<label class=\"ds-search\"><svg class=\"ds-search-icon\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M20 20l-3.5-3.5\"/></svg><input class=\"ds-search-input\" type=\"search\" placeholder=\"Discover\" /></label>",
+      "css": ".ds-search { position: relative; display: block; width: 100%; max-width: 420px; } .ds-search-icon { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; } .ds-search-input { width: 100%; min-height: 44px; padding: 10px 48px 10px 44px; border: none; border-radius: 999px; background: #171717; color: #FFFFFF; font-family: Poppins, system-ui, sans-serif; font-size: 16px; line-height: 20px; caret-color: #F2F862; } .ds-search-input::placeholder { color: #8E8E93; } .ds-search-input:focus { outline: 2px solid #F2F862; outline-offset: 2px; } .ds-search-input::selection { background: #F2F862; color: #161616; }"
     },
     {
       "name": "Site Nav",
       "kind": "nav",
       "refersTo": "tab-active",
-      "description": "Desktop top bar. KONSTANZ wordmark; active link is Bold with a 1px lime underline.",
-      "html": "<nav class=\"ds-sitenav\"><a class=\"ds-wordmark\" href=\"/\">KONSTANZ</a><div class=\"ds-links\"><a class=\"ds-link\" href=\"/\">Discover</a><a class=\"ds-link\" href=\"/discover\">Explore</a><a class=\"ds-link ds-link-on\" href=\"/weekend\">Weekend</a><a class=\"ds-link\" href=\"/saved\">Saved</a></div></nav>",
+      "description": "Desktop top bar on charcoal. KONSTANZ wordmark; active link is Bold with a 1px lime underline. Hidden on phone Discover.",
+      "html": "<nav class=\"ds-sitenav\"><a class=\"ds-wordmark\" href=\"/\">KONSTANZ</a><div class=\"ds-links\"><a class=\"ds-link ds-link-on\" href=\"/\">Discover</a><a class=\"ds-link\" href=\"/discover\">Explore</a><a class=\"ds-link\" href=\"/weekend\">Weekend</a><a class=\"ds-link\" href=\"/saved\">Saved</a></div></nav>",
       "css": ".ds-sitenav { display: flex; align-items: center; justify-content: space-between; padding: 8px 20px; background: #161616; border-bottom: 1px solid rgba(255,255,255,0.1); font-family: Poppins, system-ui, sans-serif; } .ds-wordmark { color: #FFFFFF; font-size: 20px; font-weight: 700; line-height: 24px; letter-spacing: 1.8px; text-decoration: none; } .ds-links { display: flex; align-items: center; gap: 8px; } .ds-link { position: relative; display: inline-flex; align-items: center; min-height: 44px; padding: 0 10px; color: #FFFFFF; font-size: 14px; font-weight: 500; line-height: 18px; text-decoration: none; } .ds-link-on { font-weight: 700; } .ds-link-on::after { content: \"\"; position: absolute; left: 10px; right: 10px; bottom: 8px; height: 1px; background: #F2F862; } .ds-link:hover { opacity: 0.85; } .ds-link:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
     },
     {
       "name": "Mobile Tab Bar",
       "kind": "nav",
       "refersTo": "tab-active",
-      "description": "Phone tabs. Idle muted; active is a lime pill with charcoal ink.",
-      "html": "<nav class=\"ds-tabs\"><button class=\"ds-tab\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z\"/></svg><span>Home</span></button><button class=\"ds-tab ds-tab-on\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#161616\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 10h18M8 5V3M16 5V3\"/></svg><span>Weekend</span></button><button class=\"ds-tab\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z\"/></svg><span>Saved</span></button></nav>",
+      "description": "Phone tabs on charcoal, including under Discover’s black column. Idle muted; active is a lime pill with charcoal ink.",
+      "html": "<nav class=\"ds-tabs\"><button class=\"ds-tab ds-tab-on\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#161616\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z\"/></svg><span>Home</span></button><button class=\"ds-tab\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 10h18M8 5V3M16 5V3\"/></svg><span>Weekend</span></button><button class=\"ds-tab\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"#8E8E93\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z\"/></svg><span>Saved</span></button></nav>",
       "css": ".ds-tabs { display: flex; align-items: center; justify-content: space-around; padding: 8px 8px 12px; background: #161616; border-top: 1px solid rgba(255,255,255,0.1); } .ds-tab { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-height: 44px; min-width: 64px; padding: 6px 0; margin: 0 4px; border: none; border-radius: 999px; background: transparent; color: #8E8E93; font-family: Poppins, system-ui, sans-serif; font-size: 11px; font-weight: 500; line-height: 14px; cursor: pointer; } .ds-tab-on { background: #F2F862; color: #161616; font-weight: 700; } .ds-tab:hover { filter: brightness(1.08); } .ds-tab:focus-visible { outline: 2px solid #F2F862; outline-offset: 2px; }"
     }
   ],
   "narrative": {
     "northStar": "The Lime Mark",
-    "overview": "KONSTANZ is a night phone: charcoal ground, Poppins, and one lime signal that means *this date and this night are on*. The Weekend surface is the world at rest — a month name, a row of vertical stadiums, a lime lead plate, then charcoal plates. You tap a day, you open a night. Nothing else asks for attention.\n\nThe field is dark because the subject is going out after dark. Plates sit one step up from the ground; circular chrome sits one step up from the plates. Lime is not a brand wash and not a marketplace CTA. It is a mark: selected capsule, featured plate, help glyph, active tab. Type on lime is charcoal, never white. The face is Poppins at 400 / 500 / 600 / 700 / 800 — one family, no second display cut.\n\nThis is a city going-out guide, not a ticket desk. Nav is Discover, Explore, Weekend, Saved. No create, no profile, no attendee piles, no invented crowds. Web is the product; native is a companion. Phone is a single column. Desktop keeps the same column on Weekend (max 640px) with site nav on top.",
+    "overview": "KONSTANZ is a night phone: Poppins, circular chrome, and one lime signal that means *this night is on*. Discover is a night you open from a photo plate — black field, a 32px image plate, stadiums you scan, posters you swipe. Weekend is still the charcoal list: a month name, vertical date stadiums, a lime lead plate, then charcoal plates. You tap a day, you open a night. Nothing else asks for attention.\n\nTwo grounds, one mark. Discover’s column is true black; Weekend, the html shell, site nav, and tab bar stay charcoal. Plates sit one step up from their field; circular chrome sits one step up from the plates. Lime is not a brand wash and not a marketplace CTA. Type on lime is charcoal, never white. The face is Poppins at 400 / 500 / 600 / 700 / 800 — one family, no second display cut.\n\nThis is a city going-out guide, not a ticket desk. Nav is Discover, Explore, Weekend, Saved. No create, no profile, no attendee piles, no invented crowds. Web is the product; native is a companion. Phone is a single column. Discover on desktop keeps a 430px column under site nav; Weekend keeps 640px.",
     "keyCharacteristics": [
-      "Charcoal field (`#161616`) with plate charcoal (`#222222`) and unstroked idle capsules (`#1A1A1A`)",
-      "One lime (`#F2F862`) reserved for selected / featured / active; charcoal ink on lime",
-      "Circular chrome (`#282828`) for help, month chevrons, idle plate arrows",
-      "Poppins only; event plates at 24px; date capsules as vertical stadiums (number over weekday)",
-      "Two-register night plates; up-right arrow in a circle; no fake attendee counts"
+      "Discover field (`#000000`) with night plates (`#171717`); Weekend/chrome field (`#161616`) with charcoal plates (`#222222`) and idle capsules (`#1A1A1A`)",
+      "One lime (`#F2F862`) for selected / open / active; charcoal ink on lime",
+      "Circular chrome (`#282828`) for the K mark, filter, saved, help, month chevrons, idle plate arrows",
+      "Poppins only; Discover photo plates at 32px; Weekend event plates at 24px; date capsules as vertical stadiums",
+      "Discover: category stadiums, image-led featured plate, poster carousel. Weekend: two-register night plates. No fake attendee counts"
     ],
     "rules": [
       {
         "name": "The Lime Mark Rule",
-        "body": "Lime is a selection, not a decoration. It fills the selected date, the featured plate, the help glyph, and the active tab. It does not paint prices, dates, section actions, empty-state icons, or saved hearts. Audit: cover every lime pixel that is not selected, featured, active, or focus — those pixels are out.",
+        "body": "Lime is a selection and an open-door, not a decoration. On Discover it fills the selected stadium, the door-time mark, Open night, and the poster date pill; the K and the saved bookmark sit lime on chrome. On Weekend it fills the selected date, the featured plate, the help glyph, and the active tab. Focus, caret, and selection are lime. It does not paint prices, “See all”, or the field. Audit: cover every lime pixel that is not selected, open, featured, active, or focus — those pixels are out.",
         "section": "colors"
       },
       {
         "name": "The Ink-on-Lime Rule",
-        "body": "Type and icons sitting on lime are charcoal (`#161616`). White on lime is illegal. Lime on lime (featured arrow) sits in a charcoal circle so the glyph stays lime.",
+        "body": "Type and icons sitting on lime are charcoal. White on lime is illegal. Lime on lime (Weekend featured arrow) sits in a charcoal circle so the glyph stays lime. Discover save uses a white disc with charcoal stroke; lime *fill* means saved.",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Fields Rule",
+        "body": "Discover’s column is black with night plates. Weekend and app chrome are charcoal with charcoal plates. Do not put a `#222222` Weekend plate on Discover home, or a `#000000` field under Weekend.",
         "section": "colors"
       },
       {
@@ -229,25 +261,27 @@
       },
       {
         "name": "The Flat Night Rule",
-        "body": "Surfaces are fills. No offset drop shadows on plates, capsules, or chrome. If a leftover paper-sheet shadow still exists in the codebase, it is not this world.",
+        "body": "Surfaces are fills. No offset drop shadows on plates, capsules, posters, or chrome. If a leftover paper-sheet shadow still exists in the codebase, it is not this world.",
         "section": "elevation"
       }
     ],
     "dos": [
-      "Do put lime only on the selected date, the featured plate, the help glyph, and the active tab (plus focus/selection/caret).",
+      "Do put lime on selected stadiums/capsules, Open night, the door-time mark, poster date pills, the K and saved bookmark on chrome, the Weekend featured plate, the help glyph, and the active tab (plus focus/selection/caret).",
       "Do set type and icons on lime to charcoal (`#161616`).",
-      "Do build night plates as two registers with a 24px radius and a 32px up-right arrow circle.",
-      "Do stack date capsules as vertical stadiums: number over weekday, unstroked idle fill `#1A1A1A`.",
-      "Do keep Weekend a single 640px column on desktop, with site nav above.",
-      "Do use Poppins 400 / 500 / 600 / 700 / 800 and circular chrome `#282828` for help, chevrons, and idle arrows."
+      "Do build Discover nights as 32px photo plates on `#000000` / `#171717`, with a white save disc and a lime open-door.",
+      "Do build Weekend nights as two-register plates with a 24px radius and a 32px up-right arrow circle, on `#161616` / `#222222`.",
+      "Do stack Weekend date capsules as vertical stadiums: number over weekday, unstroked idle fill `#1A1A1A`.",
+      "Do keep Discover a 430px column and Weekend a 640px column on desktop, with site nav above (wordmark hidden on phone Discover).",
+      "Do use Poppins 400 / 500 / 600 / 700 / 800 and circular chrome `#282828`."
     ],
     "donts": [
-      "Don't draw attendee avatars, overlapping faces, or fake counts (“3K+”).",
+      "Don't draw attendee avatars, overlapping faces, fake counts (“3K+”), or invented poster ratings.",
       "Don't stroke idle capsules, add a month grid, or put a back chevron on Weekend.",
-      "Don't use lime for prices, date overlines, empty-state icons, “See all” links, or saved bookmarks.",
-      "Don't drop paper sheets, binder clips, or offset shadows onto this charcoal field.",
+      "Don't use lime for prices, “See all” links, or a field wash.",
+      "Don't drop paper sheets, binder clips, or offset shadows onto this night field.",
       "Don't add Create, Profile, tickets, or checkout chrome.",
-      "Don't introduce a second type family or a decorative accent besides lime."
+      "Don't introduce a second type family or a decorative accent besides lime.",
+      "Don't swap Discover’s photo plate for Weekend’s two-register card, or the other way around."
     ]
   }
 }

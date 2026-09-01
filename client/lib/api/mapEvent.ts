@@ -45,6 +45,13 @@ export function startParts(
   return { ymd, time: `${hour}:${minutes}` };
 }
 
+function coord(value: number | string | null | undefined): number | undefined {
+  if (value == null || value === '') return undefined;
+  const n = typeof value === 'number' ? value : Number(value);
+  if (!Number.isFinite(n) || n === 0) return undefined;
+  return n;
+}
+
 export function mapApiEvent(event: ApiEvent): EventItem | null {
   const start = startParts(event.start_date, event.timezone || TZ);
   if (!start) return null;
@@ -71,8 +78,9 @@ export function mapApiEvent(event: ApiEvent): EventItem | null {
     description: event.description ?? '',
     isFeatured: Boolean(event.featured),
     dayOfWeek: weekdayLabel(start.ymd),
-    lat: event.venue?.latitude ?? undefined,
-    lng: event.venue?.longitude ?? undefined,
+    venueId: event.venue?.id,
+    lat: coord(event.venue?.latitude),
+    lng: coord(event.venue?.longitude),
     sourceUrl: event.url || undefined,
     website: event.website?.trim() || event.venue?.website?.trim() || undefined,
     venueAddress: event.venue?.address?.trim() || undefined,

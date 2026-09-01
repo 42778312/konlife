@@ -24,9 +24,10 @@ describe('hasCoords', () => {
     assert.equal(hasCoords(event({ id: '1', venue: 'Hafen', lat: 47.66, lng: 9.17 })), true);
   });
 
-  it('rejects missing or non-finite coords', () => {
+  it('rejects missing, zero, or non-finite coords', () => {
     assert.equal(hasCoords(event({ id: '1', venue: 'Hafen' })), false);
     assert.equal(hasCoords(event({ id: '1', venue: 'Hafen', lat: Number.NaN, lng: 9.17 })), false);
+    assert.equal(hasCoords(event({ id: '1', venue: 'Hafen', lat: 0, lng: 0 })), false);
   });
 });
 
@@ -53,6 +54,15 @@ describe('groupEventsByVenue', () => {
     assert.equal(pins.length, 2);
     const blech = pins.find((pin) => pin.venue === 'Blechnerei');
     assert.equal(blech?.events.length, 2);
+  });
+
+  it('clusters by venue id even when coordinates differ slightly', () => {
+    const pins = groupEventsByVenue([
+      event({ id: 'a', venue: 'K9', venueId: 2644, lat: 47.65991, lng: 9.17147 }),
+      event({ id: 'b', venue: 'K9', venueId: 2644, lat: 47.65992, lng: 9.17148 }),
+    ]);
+    assert.equal(pins.length, 1);
+    assert.equal(pins[0].events.length, 2);
   });
 });
 

@@ -1,6 +1,7 @@
+import math
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict
 
 
 class VenueBase(BaseModel):
@@ -35,11 +36,38 @@ class VenueListResponse(BaseModel):
     has_next: bool = False
 
 
+def parse_coord(value: Any) -> Optional[float]:
+    """Read a map coordinate; empty strings and 0 (TEC missing) are absent."""
+    if value is None or value is False:
+        return None
+    if isinstance(value, str):
+        value = value.strip()
+        if not value:
+            return None
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(number) or number == 0:
+        return None
+    return number
+
+
+def first_coord(*values: Any) -> Optional[float]:
+    for value in values:
+        parsed = parse_coord(value)
+        if parsed is not None:
+            return parsed
+    return None
+
+
+def has_coords(venue: Venue) -> bool:
+    return venue.latitude is not None and venue.longitude is not None
+
+
 def normalize_venue(raw: dict[str, Any]) -> Venue:
     """Convert a Party-Insider venue payload into our model."""
     name = raw.get("venue") or raw.get("name") or ""
-    geo_lat = raw.get("geo_lat")
-    geo_lng = raw.get("geo_lng")
 
     return Venue(
         id=int(raw["id"]),
@@ -51,8 +79,8 @@ def normalize_venue(raw: dict[str, Any]) -> Venue:
         zip=raw.get("zip"),
         phone=raw.get("phone"),
         website=raw.get("website"),
-        latitude=float(geo_lat) if geo_lat is not None else None,
-        longitude=float(geo_lng) if geo_lng is not None else None,
+        latitude=first_coord(raw.get("geo_lat"), raw.get("latitude"), raw.get("lat")),
+        longitude=first_coord(raw.get("geo_lng"), raw.get("longitude"), raw.get("lng")),
         description=_strip_html(raw.get("description")),
         url=raw.get("url"),
     )

@@ -24,14 +24,19 @@ export const KONSTANZ_REGION: MapRegion = {
 };
 
 export function hasCoords(event: EventItem): event is EventItem & { lat: number; lng: number } {
-  return Number.isFinite(event.lat) && Number.isFinite(event.lng);
+  const lat = Number(event.lat);
+  const lng = Number(event.lng);
+  return Number.isFinite(lat) && Number.isFinite(lng) && lat !== 0 && lng !== 0;
 }
 
 export function groupEventsByVenue(events: EventItem[]): VenuePin[] {
   const grouped = new Map<string, VenuePin>();
   for (const event of events) {
     if (!hasCoords(event)) continue;
-    const id = `${event.venue}|${event.lat.toFixed(5)}|${event.lng.toFixed(5)}`;
+    const id =
+      event.venueId != null
+        ? `v${event.venueId}`
+        : `${event.venue}|${event.lat.toFixed(5)}|${event.lng.toFixed(5)}`;
     const existing = grouped.get(id);
     if (existing) {
       existing.events.push(event);

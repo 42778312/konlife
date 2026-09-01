@@ -72,6 +72,7 @@ describe('mapApiEvent', () => {
     assert.equal(mapped!.image, 'https://www.party-insider.com/photo.jpg');
     assert.equal(mapped!.description, 'Drinks on the ferry.');
     assert.equal(mapped!.isFeatured, true);
+    assert.equal(mapped!.venueId, 13070);
     assert.equal(mapped!.lat, 47.6602);
     assert.equal(mapped!.lng, 9.1758);
     assert.equal(mapped!.sourceUrl, 'https://www.party-insider.com/event/aperitivo/');
@@ -87,6 +88,15 @@ describe('mapApiEvent', () => {
     const free = mapApiEvent({ ...sample, cost: 'Gratis' });
     assert.equal(free?.isFree, true);
     assert.equal(mapApiEvent({ ...sample, start_date: null }), null);
+  });
+
+  it('drops zero or blank venue coordinates', () => {
+    const mapped = mapApiEvent({
+      ...sample,
+      venue: { ...sample.venue!, latitude: 0, longitude: 0 },
+    });
+    assert.equal(mapped?.lat, undefined);
+    assert.equal(mapped?.lng, undefined);
   });
 
   it('falls back to venue name for category and city', () => {

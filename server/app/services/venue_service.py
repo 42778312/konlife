@@ -10,7 +10,8 @@ from app.clients.party_insider import PartyInsiderClient
 from app.core.cache import cache_get_entry, cache_set, singleflight, spawn_refresh
 from app.core.config import get_settings
 from app.core.logging import get_logger
-from app.models.venue import Venue, normalize_venue
+from app.models.venue import Venue, has_coords, normalize_venue
+from app.services.geocode import get_shared_geocoder
 
 logger = get_logger(__name__)
 
@@ -132,3 +133,31 @@ class VenueService:
     async def get_konstanz_venue_ids(self) -> list[int]:
         venues = await self.get_konstanz_venues()
         return [v.id for v in venues]
+
+    async def fill_coordinates(self, venues: list[Venue]) -> None:
+        """Attach lat/lng for venues that have an address but no upstream geo."""
+        pending: dict[int, Venue] = {}
+        for venue in venues:
+            if has_coords(venue) or not (venue.address or "").strip():
+                continue
+            pending.setdefault(venue.id, venue)
+
+        if not pending:
+            return
+
+        geocoder = await get_shared_geocoder()
+        found: dict[int, tuple[float, float]] = {}
+        for venue in pending.values():
+            hit = await geocoder.geocode_venue(venue)
+            if hit is not None:
+                found[venue.id] = hit
+                logger.info("Geocoded %s -> %s,%s", venue.name, hit[0], hit[1])
+
+        if not found:
+            return
+
+        for venue in venues:
+            pair = found.get(venue.id)
+            if pair is None or has_coords(venue):
+                continue
+            venue.latitude, venue.longitude = pair

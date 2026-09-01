@@ -39,6 +39,12 @@ class Settings(BaseSettings):
     upstream_per_page: int = 50
     max_concurrent_venue_requests: int = 5
 
+    # Geocode missing venue coordinates (Nominatim)
+    geocode_min_interval: float = 1.1
+    geocode_cache_ttl: int = 2592000
+    geocode_cache_stale_ttl: int = 15552000
+    geocode_negative_ttl: int = 86400
+
     # Party filter
     party_only_default: bool = True
     party_keywords: str = (

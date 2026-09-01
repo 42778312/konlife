@@ -290,6 +290,7 @@ class EventService:
                     ),
                 )
             logger.info("events cache %s key=%s items=%s", state.upper(), cache_key, len(events))
+            await self._with_venue_coords(events)
             return self._paginate(events, page, per_page)
 
         events = await singleflight(
@@ -309,7 +310,12 @@ class EventService:
                 party_only=party_only,
             ),
         )
+        await self._with_venue_coords(events)
         return self._paginate(events, page, per_page)
+
+    async def _with_venue_coords(self, events: list[Event]) -> None:
+        venues = [event.venue for event in events if event.venue is not None]
+        await self.venue_service.fill_coordinates(venues)
 
     def _key_dt(self, dt: Optional[datetime]) -> str:
         if dt is None:
@@ -385,6 +391,7 @@ class EventService:
         if party_only:
             events = [e for e in events if e.is_party]
         events = self._dedupe_and_sort(events)
+        await self._with_venue_coords(events)
 
         await cache_set(
             cache_key,
@@ -435,7 +442,9 @@ class EventService:
         cache_key = f"event:{event_id}"
         cached = await cache_get(cache_key)
         if cached is not None:
-            return Event.model_validate(cached)
+            event = Event.model_validate(cached)
+            await self._with_venue_coords([event])
+            return event
 
         try:
             raw = await self.client.get_event(event_id)
@@ -444,6 +453,7 @@ class EventService:
         event = normalize_event(raw)
         event = self.classify_temporal(event)
         event = self.classifier.classify(event)
+        await self._with_venue_coords([event])
 
         await cache_set(
             cache_key,

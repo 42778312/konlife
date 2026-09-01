@@ -20,6 +20,7 @@ export interface EventItem {
   isPopular?: boolean;
   isFeatured?: boolean;
   dayOfWeek: DayKey | string;
+  venueId?: number;
   lat?: number;
   lng?: number;
   sourceUrl?: string;

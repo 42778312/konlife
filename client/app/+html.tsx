@@ -72,7 +72,15 @@ input, textarea { caret-color: #F2F862; font-size: 16px; }
     transition-duration: 0.01ms !important;
   }
 }
-.maplibregl-map { font-family: Poppins, system-ui, sans-serif; background: #161616; }
+.maplibregl-map {
+  font-family: Poppins, system-ui, sans-serif;
+  background: #161616;
+  touch-action: none;
+}
+.maplibregl-canvas,
+.maplibregl-canvas-container {
+  touch-action: none;
+}
 .maplibregl-ctrl-attrib {
   background: rgba(22, 22, 22, 0.72) !important;
   color: #8E8E93 !important;

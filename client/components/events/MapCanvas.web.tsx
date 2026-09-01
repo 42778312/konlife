@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Map, Marker, type MapRef } from '@vis.gl/react-maplibre';
 import { colors } from '@/constants/theme';
@@ -8,9 +8,14 @@ import type { MapCanvasProps } from '@/components/events/mapTypes';
 
 const STYLE_URL = 'https://tiles.openfreemap.org/styles/dark';
 
+const stopBubble = (event: Event) => {
+  event.stopPropagation();
+};
+
 export function MapCanvas({ pins, selectedId, interactive, compact, onSelectPin }: MapCanvasProps) {
   const [map, setMap] = useState<MapRef | null>(null);
   const [ready, setReady] = useState(false);
+  const shellRef = useRef<HTMLDivElement>(null);
   const region = useMemo(() => regionForPins(pins), [pins]);
   const canMove = interactive && !compact;
   const bounds = useMemo(() => {
@@ -26,6 +31,16 @@ export function MapCanvas({ pins, selectedId, interactive, compact, onSelectPin 
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    const shell = shellRef.current;
+    if (!shell) return;
+    const types = ['touchstart', 'touchmove', 'touchend', 'touchcancel'] as const;
+    for (const type of types) shell.addEventListener(type, stopBubble);
+    return () => {
+      for (const type of types) shell.removeEventListener(type, stopBubble);
+    };
+  }, [ready]);
 
   useEffect(() => {
     if (!map) return;
@@ -59,7 +74,7 @@ export function MapCanvas({ pins, selectedId, interactive, compact, onSelectPin 
   }
 
   return (
-    <View style={StyleSheet.absoluteFill}>
+    <div ref={shellRef} style={shellStyle}>
       <Map
         ref={setMap}
         mapStyle={STYLE_URL}
@@ -72,7 +87,7 @@ export function MapCanvas({ pins, selectedId, interactive, compact, onSelectPin 
         }}
         style={canvasStyle}
         attributionControl={{ compact: true }}
-        cooperativeGestures={canMove}
+        cooperativeGestures={false}
         dragPan={canMove}
         dragRotate={false}
         scrollZoom={canMove}
@@ -104,10 +119,11 @@ export function MapCanvas({ pins, selectedId, interactive, compact, onSelectPin 
           );
         })}
       </Map>
-    </View>
+    </div>
   );
 }
 
+const shellStyle = { position: 'absolute', inset: 0, touchAction: 'none' } as const;
 const canvasStyle = { width: '100%', height: '100%' } as const;
 
 const styles = StyleSheet.create({

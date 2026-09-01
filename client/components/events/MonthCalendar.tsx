@@ -5,25 +5,23 @@ import type { EventItem } from '@/data/mockEvents';
 import {
   addMonthsYmd,
   formatMonthTitle,
-  isWeekendYmd,
   monthGrid,
   monthKey,
   startOfMonthYmd,
 } from '@/lib/partyInsider/dates';
 import { selectionTick } from '@/lib/haptics';
-import { useEventExpand } from '@/context/EventExpandContext';
 import { colors, fonts, MIN_TOUCH, radius, type, webCursor } from '@/constants/theme';
 
 const WEEKDAYS = ['M', 'T', 'W', 'T', 'F', 'S', 'S'] as const;
 const MAX_PILLS = 3;
-const MAX_DOTS = 3;
 
 type MonthCalendarProps = {
   monthYmd: string;
   selectedYmd: string;
   todayYmd: string;
   eventsByDay: Map<string, EventItem[]>;
-  showTitles: boolean;
+  showTitles?: boolean;
+  hideHeader?: boolean;
   onSelectDay: (ymd: string) => void;
   onMonthChange: (ymd: string) => void;
 };
@@ -41,11 +39,11 @@ export function MonthCalendar({
   selectedYmd,
   todayYmd,
   eventsByDay,
-  showTitles,
+  showTitles = false,
+  hideHeader = false,
   onSelectDay,
   onMonthChange,
 }: MonthCalendarProps) {
-  const { openEvent } = useEventExpand();
   const cells = useMemo(() => monthGrid(monthYmd), [monthYmd]);
   const title = formatMonthTitle(startOfMonthYmd(monthYmd));
   const onTodayMonth = monthKey(monthYmd) === monthKey(todayYmd);
@@ -63,43 +61,45 @@ export function MonthCalendar({
 
   return (
     <View style={styles.wrap}>
-      <View style={styles.header}>
-        <Text style={styles.month} accessibilityRole="header">
-          {title}
-        </Text>
-        <View style={styles.nav}>
-          {!onTodayMonth || selectedYmd !== todayYmd ? (
+      {hideHeader ? null : (
+        <View style={styles.header}>
+          <Text style={styles.month} accessibilityRole="header">
+            {title}
+          </Text>
+          <View style={styles.nav}>
+            {!onTodayMonth || selectedYmd !== todayYmd ? (
+              <Pressable
+                onPress={jumpToday}
+                style={[styles.todayHit, webCursor]}
+                accessibilityRole="button"
+                accessibilityLabel="Jump to today"
+              >
+                <Text style={styles.todayLabel}>Today</Text>
+              </Pressable>
+            ) : null}
             <Pressable
-              onPress={jumpToday}
-              style={[styles.todayHit, webCursor]}
+              onPress={() => go(-1)}
+              style={[styles.chevron, webCursor]}
               accessibilityRole="button"
-              accessibilityLabel="Jump to today"
+              accessibilityLabel="Previous month"
             >
-              <Text style={styles.todayLabel}>Today</Text>
+              <ChevronLeft size={18} color={colors.fg} strokeWidth={2.2} />
             </Pressable>
-          ) : null}
-          <Pressable
-            onPress={() => go(-1)}
-            style={[styles.chevron, webCursor]}
-            accessibilityRole="button"
-            accessibilityLabel="Previous month"
-          >
-            <ChevronLeft size={22} color={colors.fg} strokeWidth={2.2} />
-          </Pressable>
-          <Pressable
-            onPress={() => go(1)}
-            style={[styles.chevron, webCursor]}
-            accessibilityRole="button"
-            accessibilityLabel="Next month"
-          >
-            <ChevronRight size={22} color={colors.fg} strokeWidth={2.2} />
-          </Pressable>
+            <Pressable
+              onPress={() => go(1)}
+              style={[styles.chevron, webCursor]}
+              accessibilityRole="button"
+              accessibilityLabel="Next month"
+            >
+              <ChevronRight size={18} color={colors.fg} strokeWidth={2.2} />
+            </Pressable>
+          </View>
         </View>
-      </View>
+      )}
 
       <View style={styles.weekRow}>
         {WEEKDAYS.map((label, i) => (
-          <Text key={`${label}-${i}`} style={[styles.weekday, i >= 4 && styles.weekendHead]}>
+          <Text key={`${label}-${i}`} style={styles.weekday}>
             {label}
           </Text>
         ))}
@@ -110,10 +110,10 @@ export function MonthCalendar({
           const events = eventsByDay.get(cell.ymd) ?? [];
           const selected = cell.ymd === selectedYmd;
           const today = cell.ymd === todayYmd;
-          const weekend = isWeekendYmd(cell.ymd);
           const count = events.length;
           const pills = showTitles ? events.slice(0, MAX_PILLS) : [];
           const extra = showTitles ? Math.max(0, count - MAX_PILLS) : 0;
+          const hasEvent = count > 0;
 
           return (
             <Pressable
@@ -122,12 +122,7 @@ export function MonthCalendar({
                 selectionTick();
                 onSelectDay(cell.ymd);
               }}
-              style={[
-                styles.cell,
-                showTitles && styles.cellWide,
-                weekend && cell.inMonth && styles.weekendCell,
-                webCursor,
-              ]}
+              style={[styles.cell, showTitles && styles.cellWide, webCursor]}
               accessibilityRole="button"
               accessibilityState={{ selected }}
               accessibilityLabel={
@@ -139,17 +134,16 @@ export function MonthCalendar({
               <View
                 style={[
                   styles.numWrap,
-                  today && styles.numToday,
-                  selected && !today && styles.numSelected,
-                  selected && today && styles.numToday,
+                  selected && styles.numSelected,
                 ]}
               >
                 <Text
                   style={[
                     styles.num,
                     !cell.inMonth && styles.numOutside,
-                    today && styles.numOnMark,
-                    selected && !today && styles.numOnMarkDark,
+                    selected && styles.numOnMark,
+                    today && !selected && styles.numToday,
+                    !cell.inMonth && selected && styles.numOnMark,
                   ]}
                 >
                   {dayNumber(cell.ymd)}
@@ -159,16 +153,9 @@ export function MonthCalendar({
               {showTitles ? (
                 <View style={styles.pills}>
                   {pills.map((event) => (
-                    <Pressable
+                    <View
                       key={`${event.id}-${event.time}`}
-                      onPress={() => {
-                        selectionTick();
-                        onSelectDay(cell.ymd);
-                        openEvent(event.id, `cal-${event.id}`);
-                      }}
-                      style={[styles.pill, isFeatured(event) ? styles.pillFeatured : styles.pillIdle, webCursor]}
-                      accessibilityRole="button"
-                      accessibilityLabel={`${event.time} ${event.title}`}
+                      style={[styles.pill, isFeatured(event) ? styles.pillFeatured : styles.pillIdle]}
                     >
                       <Text
                         numberOfLines={1}
@@ -176,18 +163,15 @@ export function MonthCalendar({
                       >
                         {event.time} {event.title}
                       </Text>
-                    </Pressable>
+                    </View>
                   ))}
                   {extra > 0 ? <Text style={styles.more}>+{extra}</Text> : null}
                 </View>
               ) : (
-                <View style={styles.dots}>
-                  {events.slice(0, MAX_DOTS).map((event, i) => (
-                    <View
-                      key={`${event.id}-${i}`}
-                      style={[styles.dot, isFeatured(event) ? styles.dotFeatured : styles.dotIdle]}
-                    />
-                  ))}
+                <View style={styles.dotSlot}>
+                  {hasEvent ? (
+                    <View style={[styles.dot, selected ? styles.dotOnMark : styles.dotIdle]} />
+                  ) : null}
                 </View>
               )}
             </Pressable>
@@ -201,9 +185,7 @@ export function MonthCalendar({
 const styles = StyleSheet.create({
   wrap: {
     gap: 10,
-    paddingBottom: 16,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: colors.rule,
+    paddingBottom: 8,
   },
   header: {
     flexDirection: 'row',
@@ -213,12 +195,14 @@ const styles = StyleSheet.create({
     minHeight: MIN_TOUCH,
   },
   month: {
-    ...type.section,
-    fontSize: 32,
-    lineHeight: 36,
+    fontFamily: fonts.bold,
+    fontSize: 22,
+    lineHeight: 28,
+    letterSpacing: -0.3,
+    color: colors.fg,
     flex: 1,
   },
-  nav: { flexDirection: 'row', alignItems: 'center', gap: 2 },
+  nav: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   todayHit: {
     minHeight: MIN_TOUCH,
     paddingHorizontal: 12,
@@ -229,8 +213,10 @@ const styles = StyleSheet.create({
     color: colors.highlighter,
   },
   chevron: {
-    width: MIN_TOUCH,
-    height: MIN_TOUCH,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: colors.circle,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -243,14 +229,13 @@ const styles = StyleSheet.create({
     lineHeight: 16,
     color: colors.muted,
   },
-  weekendHead: { color: colors.subtle },
   grid: { flexDirection: 'row', flexWrap: 'wrap' },
   cell: {
     width: `${100 / 7}%`,
-    minHeight: 56,
+    minHeight: 52,
     alignItems: 'center',
     paddingTop: 4,
-    paddingBottom: 8,
+    paddingBottom: 6,
     gap: 4,
   },
   cellWide: {
@@ -258,9 +243,6 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
     paddingHorizontal: 4,
     paddingBottom: 6,
-  },
-  weekendCell: {
-    backgroundColor: 'rgba(232, 255, 74, 0.04)',
   },
   numWrap: {
     width: 32,
@@ -270,8 +252,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
   },
-  numToday: { backgroundColor: colors.highlighter },
-  numSelected: { backgroundColor: colors.fg },
+  numSelected: { backgroundColor: colors.highlighter },
   num: {
     fontFamily: fonts.semibold,
     fontSize: 16,
@@ -281,10 +262,8 @@ const styles = StyleSheet.create({
   },
   numOutside: { color: colors.zinc700 },
   numOnMark: { color: colors.accentFg },
-  numOnMarkDark: { color: colors.bg },
-  dots: {
-    flexDirection: 'row',
-    gap: 3,
+  numToday: { color: colors.highlighter },
+  dotSlot: {
     height: 6,
     alignItems: 'center',
     justifyContent: 'center',
@@ -294,8 +273,8 @@ const styles = StyleSheet.create({
     height: 5,
     borderRadius: radius.full,
   },
-  dotFeatured: { backgroundColor: colors.highlighter },
-  dotIdle: { backgroundColor: colors.subtle },
+  dotIdle: { backgroundColor: colors.highlighter },
+  dotOnMark: { backgroundColor: colors.highlighter },
   pills: { gap: 3, flex: 1 },
   pill: {
     borderRadius: 4,

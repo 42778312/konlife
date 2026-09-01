@@ -1,21 +1,24 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import { CalendarX, ChevronLeft, ChevronRight, WifiOff } from 'lucide-react-native';
+import { CalendarDays, CalendarX, ChevronLeft, ChevronRight, WifiOff } from 'lucide-react-native';
 import type { EventItem } from '@/data/mockEvents';
 import {
   addMonthsYmd,
+  dayHeading,
   formatMonthName,
+  formatMonthTitle,
   localYmd,
   monthDayYmds,
   monthKey,
   startOfMonthYmd,
 } from '@/lib/partyInsider/dates';
 import { selectionTick } from '@/lib/haptics';
-import { colors, fonts, layout, MIN_TOUCH, space, webCursor } from '@/constants/theme';
+import { colors, fonts, layout, MIN_TOUCH, space, type, webCursor } from '@/constants/theme';
 import { useEvents } from '@/context/EventsProvider';
 import { Screen } from '@/components/layout/Screen';
 import { DateCapsuleStrip } from '@/components/events/DateCapsuleStrip';
-import { WeekendEventCard } from '@/components/events/WeekendEventCard';
+import { MonthCalendar } from '@/components/events/MonthCalendar';
+import { EventCard } from '@/components/events/EventCard';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
@@ -29,6 +32,7 @@ export default function WeekendScreen() {
   const today = localYmd(new Date());
   const [monthYmd, setMonthYmd] = useState(() => startOfMonthYmd(today));
   const [selectedYmd, setSelectedYmd] = useState(today);
+  const [monthOpen, setMonthOpen] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [helpOpen, setHelpOpen] = useState(false);
   const didLand = useRef(false);
@@ -54,11 +58,12 @@ export default function WeekendScreen() {
     return map;
   }, [events]);
 
+  const eventDays = useMemo(() => new Set(eventsByDay.keys()), [eventsByDay]);
   const dayEvents = eventsByDay.get(selectedYmd) ?? [];
-  const featured = dayEvents.filter(isFeatured);
-  const rest = featured.length ? dayEvents.filter((e) => !isFeatured(e)) : dayEvents.slice(1);
-  const lead = featured[0] ?? (featured.length ? undefined : dayEvents[0]);
-  const trail = featured.length ? [...featured.slice(1), ...rest] : rest;
+  const monthLabel =
+    monthKey(monthYmd).slice(0, 4) === today.slice(0, 4)
+      ? formatMonthName(monthYmd)
+      : formatMonthTitle(monthYmd);
 
   useEffect(() => {
     if (loading || didLand.current) return;
@@ -87,14 +92,16 @@ export default function WeekendScreen() {
     (delta: number) => {
       selectionTick();
       const start = startOfMonthYmd(addMonthsYmd(monthYmd, delta));
+      const key = monthKey(start);
+      const firstNight = [...eventsByDay.keys()].filter((ymd) => monthKey(ymd) === key).sort()[0];
       setMonthYmd(start);
       setSelectedYmd((current) => {
-        if (monthKey(current) === monthKey(start)) return current;
-        if (monthKey(today) === monthKey(start)) return today;
-        return start;
+        if (monthKey(current) === key) return current;
+        if (key === monthKey(today) && (eventsByDay.get(today) ?? []).length) return today;
+        return firstNight ?? (key === monthKey(today) ? today : start);
       });
     },
-    [monthYmd, today],
+    [monthYmd, today, eventsByDay],
   );
 
   const onRefresh = useCallback(async () => {
@@ -127,7 +134,8 @@ export default function WeekendScreen() {
 
         {helpOpen ? (
           <Text style={styles.hint}>
-            Pick a date to see nights in Konstanz. The lime card is the featured night that day.
+            Pick a date to see nights in Konstanz. A lime point marks a night. Open the month to look
+            ahead.
           </Text>
         ) : null}
 
@@ -139,8 +147,24 @@ export default function WeekendScreen() {
         ) : null}
 
         <View style={styles.monthRow}>
-          <Text style={styles.month}>{formatMonthName(monthYmd)}</Text>
+          <Text style={styles.month}>{monthLabel}</Text>
           <View style={styles.monthNav}>
+            <Pressable
+              onPress={() => {
+                selectionTick();
+                setMonthOpen((open) => !open);
+              }}
+              style={[styles.chevron, monthOpen && styles.chevronOn, webCursor]}
+              accessibilityRole="button"
+              accessibilityState={{ expanded: monthOpen }}
+              accessibilityLabel={monthOpen ? 'Show date strip' : 'Show full month'}
+            >
+              <CalendarDays
+                size={18}
+                color={monthOpen ? colors.accentFg : colors.fg}
+                strokeWidth={2.2}
+              />
+            </Pressable>
             <Pressable
               onPress={() => onMonthChange(-1)}
               style={[styles.chevron, webCursor]}
@@ -161,18 +185,41 @@ export default function WeekendScreen() {
         </View>
 
         {loading && events.length === 0 ? (
-          <Skeleton style={styles.skStrip} />
+          <Skeleton style={monthOpen ? styles.skMonth : styles.skStrip} />
+        ) : monthOpen ? (
+          <MonthCalendar
+            monthYmd={monthYmd}
+            selectedYmd={selectedYmd}
+            todayYmd={today}
+            eventsByDay={eventsByDay}
+            hideHeader
+            onSelectDay={onSelectDay}
+            onMonthChange={(ymd) => {
+              setMonthYmd(startOfMonthYmd(ymd));
+              setSelectedYmd((current) => {
+                if (monthKey(current) === monthKey(ymd)) return current;
+                if (monthKey(today) === monthKey(ymd)) return today;
+                return startOfMonthYmd(ymd);
+              });
+            }}
+          />
         ) : (
           <View style={styles.strip}>
-            <DateCapsuleStrip days={days} selectedYmd={selectedYmd} onSelect={onSelectDay} />
+            <DateCapsuleStrip
+              days={days}
+              selectedYmd={selectedYmd}
+              onSelect={onSelectDay}
+              eventDays={eventDays}
+            />
           </View>
         )}
 
         <View style={styles.list}>
           {loading && events.length === 0 ? (
             <>
-              <Skeleton style={styles.skCard} />
-              <Skeleton style={styles.skCard} />
+              <Skeleton style={styles.skRow} />
+              <Skeleton style={styles.skRow} />
+              <Skeleton style={styles.skRow} />
             </>
           ) : dayEvents.length === 0 ? (
             <EmptyState
@@ -186,16 +233,19 @@ export default function WeekendScreen() {
             />
           ) : (
             <>
-              {lead ? (
-                <WeekendEventCard event={lead} featured instanceId={`weekend-lead-${lead.id}`} />
-              ) : null}
-              {trail.map((event) => (
-                <WeekendEventCard
-                  key={`${event.id}-${event.startDate}`}
-                  event={event}
-                  instanceId={`weekend-${event.id}`}
-                />
-              ))}
+              <Text style={styles.dayTitle} accessibilityRole="header">
+                {dayHeading(selectedYmd)}
+              </Text>
+              <View style={styles.rows}>
+                {dayEvents.map((event) => (
+                  <EventCard
+                    key={`${event.id}-${event.startDate}`}
+                    event={event}
+                    variant="compact"
+                    instanceId={`weekend-${event.id}`}
+                  />
+                ))}
+              </View>
             </>
           )}
         </View>
@@ -277,11 +327,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  chevronOn: {
+    backgroundColor: colors.highlighter,
+  },
   strip: {
     overflow: 'hidden',
   },
-  list: { gap: 12 },
+  list: { gap: 0 },
+  rows: {
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: colors.rule,
+  },
+  dayTitle: {
+    ...type.section,
+    marginBottom: 8,
+  },
   fail: { gap: 12 },
   skStrip: { height: 76, borderRadius: 38 },
-  skCard: { height: 96, borderRadius: 24 },
+  skMonth: { height: 280, borderRadius: 16 },
+  skRow: { height: 92, borderRadius: 8 },
 });

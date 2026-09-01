@@ -117,13 +117,17 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
   if (variant === 'compact') {
     return (
       <View ref={ref} collapsable={false} style={[styles.compactOuter, covered && styles.covered]}>
-        <PressableScale onPress={onOpen} contentStyle={styles.compactInner} accessibilityLabel={event.title}>
+        <PressableScale
+          onPress={onOpen}
+          contentStyle={styles.compactInner}
+          accessibilityLabel={`${event.title}, ${event.time} at ${event.venue}`}
+        >
           <RemoteImage uri={event.image} alt="" containerStyle={styles.compactImage} />
           <View style={styles.copy}>
             <Text style={type.title} numberOfLines={1}>
               {event.title}
             </Text>
-            <Text style={styles.venue}>
+            <Text style={styles.venue} numberOfLines={1}>
               {event.time} · {event.venue}
             </Text>
           </View>
@@ -223,10 +227,10 @@ const styles = StyleSheet.create({
   compactInner: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    paddingVertical: 10,
+    gap: 16,
+    paddingVertical: 14,
   },
-  compactImage: { width: 56, height: 56, borderRadius: radius.sm },
+  compactImage: { width: 64, height: 64, borderRadius: radius.sm },
   listOuter: {},
   listInner: {
     flexDirection: 'row',

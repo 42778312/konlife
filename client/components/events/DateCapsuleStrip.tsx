@@ -11,9 +11,10 @@ type DateCapsuleStripProps = {
   days: string[];
   selectedYmd: string;
   onSelect: (ymd: string) => void;
+  eventDays?: ReadonlySet<string>;
 };
 
-export function DateCapsuleStrip({ days, selectedYmd, onSelect }: DateCapsuleStripProps) {
+export function DateCapsuleStrip({ days, selectedYmd, onSelect, eventDays }: DateCapsuleStripProps) {
   const scrollRef = useRef<ScrollView>(null);
 
   useEffect(() => {
@@ -38,6 +39,7 @@ export function DateCapsuleStrip({ days, selectedYmd, onSelect }: DateCapsuleStr
       {days.map((ymd) => {
         const selected = ymd === selectedYmd;
         const weekday = weekdayLabel(ymd);
+        const hasEvent = eventDays?.has(ymd) ?? false;
         return (
           <Pressable
             key={ymd}
@@ -48,10 +50,19 @@ export function DateCapsuleStrip({ days, selectedYmd, onSelect }: DateCapsuleStr
             style={[styles.capsule, selected ? styles.capsuleOn : styles.capsuleOff, webCursor]}
             accessibilityRole="button"
             accessibilityState={{ selected }}
-            accessibilityLabel={`${dayNumber(ymd)} ${weekday}`}
+            accessibilityLabel={
+              hasEvent
+                ? `${dayNumber(ymd)} ${weekday}, nights listed`
+                : `${dayNumber(ymd)} ${weekday}`
+            }
           >
             <Text style={[styles.num, selected && styles.onInk]}>{dayNumber(ymd)}</Text>
             <Text style={[styles.day, selected && styles.onInk]}>{weekday}</Text>
+            {hasEvent ? (
+              <View style={styles.dotSlot} accessibilityElementsHidden>
+                <View style={[styles.dot, selected ? styles.dotOn : styles.dotOff]} />
+              </View>
+            ) : null}
           </Pressable>
         );
       })}
@@ -97,6 +108,24 @@ const styles = StyleSheet.create({
   },
   onInk: {
     color: colors.accentFg,
+  },
+  dotSlot: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 9,
+    alignItems: 'center',
+  },
+  dot: {
+    width: 5,
+    height: 5,
+    borderRadius: 999,
+  },
+  dotOn: {
+    backgroundColor: colors.accentFg,
+  },
+  dotOff: {
+    backgroundColor: colors.highlighter,
   },
   tail: { width: 4 },
 });

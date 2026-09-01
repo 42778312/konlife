@@ -1,0 +1,38 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      CACHE_BACKEND: redis
+      REDIS_URL: redis://redis:6379/0
+      PARTY_INSIDER_BASE_URL: https://www.party-insider.com/wp-json
+      DEFAULT_CITY: Konstanz
+      TIMEZONE: Europe/Zurich
+      EVENT_CACHE_TTL: 900
+      EVENT_CACHE_STALE_TTL: 21600
+      VENUE_CACHE_TTL: 3600
+      VENUE_CACHE_STALE_TTL: 86400
+      CORS_ORIGINS: http://localhost:8081,http://127.0.0.1:8081,http://localhost:19006,http://localhost:3000,http://localhost:5173
+      LOG_LEVEL: INFO
+    depends_on:
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+volumes:
+  redis_data:

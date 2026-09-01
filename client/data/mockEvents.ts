@@ -27,6 +27,9 @@ export interface EventItem {
   venueAddress?: string;
   venueZip?: string;
   startDate?: string;
+  isParty?: boolean;
+  partyScore?: number;
+  status?: 'current' | 'upcoming' | 'past' | 'unknown';
 }
 
 export const MOCK_EVENTS: EventItem[] = [

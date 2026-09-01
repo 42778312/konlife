@@ -1,6 +1,6 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import type { EventItem } from '@/data/mockEvents';
-import { fetchKonstanzEvents } from '@/lib/partyInsider/fetchEvents';
+import { fetchKonstanzEvents } from '@/lib/api/events';
 
 type EventsContextValue = {
   events: EventItem[];

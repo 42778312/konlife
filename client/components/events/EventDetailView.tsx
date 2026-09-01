@@ -10,6 +10,7 @@ import { successTick } from '@/lib/haptics';
 import { useSavedEvents } from '@/context/SavedEventsProvider';
 import { RemoteImage } from '@/components/ui/RemoteImage';
 import { MapWidget } from '@/components/events/MapWidget';
+import { hasCoords } from '@/lib/mapVenues';
 import { Button } from '@/components/ui/Button';
 import { IconButton } from '@/components/ui/IconButton';
 import { EventCard } from '@/components/events/EventCard';
@@ -108,9 +109,11 @@ export function EventDetailView({ event, onClose }: EventDetailViewProps) {
               </Text>
             </View>
           </View>
-          <View style={styles.map}>
-            <MapWidget venueName={event.venue} cityName={event.city} interactive={false} compact />
-          </View>
+          {hasCoords(event) ? (
+            <View style={styles.map}>
+              <MapWidget events={[event]} interactive={false} compact />
+            </View>
+          ) : null}
 
           {moreUrl ? (
             <Pressable

@@ -57,6 +57,15 @@ class Settings(BaseSettings):
         "http://localhost:8081,http://127.0.0.1:8081,"
         "http://localhost:19006,http://localhost:3000,http://localhost:5173"
     )
+    # Phones opening Expo web via a LAN IP (http://192.168.x.x:8081).
+    cors_origin_regex: str = (
+        r"https?://("
+        r"localhost|127\.0\.0\.1|"
+        r"192\.168\.\d{1,3}\.\d{1,3}|"
+        r"10\.\d{1,3}\.\d{1,3}\.\d{1,3}|"
+        r"172\.(1[6-9]|2\d|3[0-1])\.\d{1,3}\.\d{1,3}"
+        r")(:\d+)?$"
+    )
 
     # App
     app_name: str = "Party-Insider Konstanz API"

@@ -25,6 +25,7 @@ export default function Root({ children }: { children: ReactNode }) {
           content="Discover clubs, student nights, bars, and live music in Konstanz this week."
         />
         <ScrollViewStyleReset />
+        <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
         <style dangerouslySetInnerHTML={{ __html: nativeWebCss }} />
       </head>
       <body>
@@ -71,4 +72,14 @@ input, textarea { caret-color: #F2F862; font-size: 16px; }
     transition-duration: 0.01ms !important;
   }
 }
+.maplibregl-map { font-family: Poppins, system-ui, sans-serif; background: #161616; }
+.maplibregl-ctrl-attrib {
+  background: rgba(22, 22, 22, 0.72) !important;
+  color: #8E8E93 !important;
+  font-size: 12px !important;
+  font-family: Poppins, system-ui, sans-serif !important;
+}
+.maplibregl-ctrl-attrib a { color: #C7C7C7 !important; }
+.maplibregl-ctrl-bottom-left, .maplibregl-ctrl-bottom-right { margin: 8px !important; }
+.maplibregl-marker { background: transparent; }
 `;

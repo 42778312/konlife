@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './config.ts';
+import { getApiBaseUrl } from './config.ts';
 
 export class ApiError extends Error {
   status: number;
@@ -24,7 +24,7 @@ function detailMessage(body: unknown, status: number): string {
 }
 
 export async function apiGet<T>(path: string, query?: Record<string, QueryValue>): Promise<T> {
-  const url = new URL(path.startsWith('/') ? path : `/${path}`, `${API_BASE_URL}/`);
+  const url = new URL(path.startsWith('/') ? path : `/${path}`, `${getApiBaseUrl()}/`);
   if (query) {
     for (const [key, value] of Object.entries(query)) {
       if (value === undefined) continue;

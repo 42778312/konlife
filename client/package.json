@@ -8,6 +8,7 @@
     "@expo-google-fonts/bebas-neue": "^0.4.1",
     "@expo-google-fonts/inter": "^0.4.2",
     "@expo-google-fonts/poppins": "^0.4.1",
+    "@vis.gl/react-maplibre": "^8.1.2",
     "expo": "~57.0.18",
     "expo-blur": "~57.0.2",
     "expo-constants": "~57.0.16",
@@ -23,10 +24,12 @@
     "expo-system-ui": "~57.0.3",
     "expo-web-browser": "~57.0.2",
     "lucide-react-native": "^1.37.0",
+    "maplibre-gl": "^5.24.0",
     "react": "19.2.3",
     "react-dom": "19.2.3",
     "react-native": "0.86.3",
     "react-native-gesture-handler": "~2.32.0",
+    "react-native-maps": "1.27.2",
     "react-native-reanimated": "4.5.1",
     "react-native-safe-area-context": "~5.7.0",
     "react-native-screens": "~4.26.0",
@@ -43,7 +46,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "test": "node --experimental-strip-types --test lib/api/*.test.ts lib/partyInsider/*.test.ts"
+    "test": "node --experimental-strip-types --test lib/*.test.ts lib/api/*.test.ts lib/partyInsider/*.test.ts"
   },
   "private": true
 }

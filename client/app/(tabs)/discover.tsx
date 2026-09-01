@@ -1,28 +1,29 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { List, Map, Search, WifiOff } from 'lucide-react-native';
-import { DAYS, type DayKey } from '@/data/mockEvents';
+import { type DayKey } from '@/data/mockEvents';
 import { groupEventsByDate, matchesDayChip } from '@/lib/partyInsider/dates';
+import { matchesVenueFilter, type PriceFilter } from '@/lib/exploreFilters';
 import { colors, layout, MIN_TOUCH, radius, space, type, webCursor } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
 import { useEvents } from '@/context/EventsProvider';
 import { Screen } from '@/components/layout/Screen';
 import { EventCard } from '@/components/events/EventCard';
 import { MapWidget } from '@/components/events/MapWidget';
+import { useEventExpand } from '@/context/EventExpandContext';
 import { SearchInput } from '@/components/ui/SearchInput';
-import { Chip } from '@/components/ui/Chip';
+import { ExploreFilters } from '@/components/events/ExploreFilters';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { Button } from '@/components/ui/Button';
 import { Skeleton } from '@/components/ui/Skeleton';
 
-type PriceFilter = 'all' | 'free' | 'paid';
-
 export default function ExploreScreen() {
   const { events, loading, error, refresh } = useEvents();
+  const { openEvent } = useEventExpand();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeView, setActiveView] = useState<'list' | 'map'>('list');
   const [day, setDay] = useState<DayKey | 'All'>('All');
-  const [venue, setVenue] = useState<string>('All');
+  const [selectedVenues, setSelectedVenues] = useState<string[]>([]);
   const [price, setPrice] = useState<PriceFilter>('all');
   const [refreshing, setRefreshing] = useState(false);
 
@@ -34,7 +35,7 @@ export default function ExploreScreen() {
     const q = searchQuery.trim().toLowerCase();
     return events.filter((event) => {
       if (!matchesDayChip(event.startDate, day)) return false;
-      if (venue !== 'All' && event.venue !== venue) return false;
+      if (!matchesVenueFilter(event.venue, selectedVenues, venues)) return false;
       if (price === 'free' && event.isFree !== true) return false;
       if (price === 'paid' && event.isFree !== false) return false;
       if (!q) return true;
@@ -45,7 +46,7 @@ export default function ExploreScreen() {
         event.tags.some((t) => t.toLowerCase().includes(q))
       );
     });
-  }, [searchQuery, day, venue, price, events]);
+  }, [searchQuery, day, selectedVenues, price, events, venues]);
 
   const grouped = useMemo(() => groupEventsByDate(filtered), [filtered]);
 
@@ -55,8 +56,28 @@ export default function ExploreScreen() {
     setRefreshing(false);
   }, [refresh]);
 
+  const filtersOn = day !== 'All' || selectedVenues.length > 0 || price !== 'all';
+  const clearFilters = () => {
+    setDay('All');
+    setSelectedVenues([]);
+    setPrice('all');
+  };
+
+  const empty = (
+    <View style={styles.fail}>
+      <EmptyState icon={Search} title="No matching nights" message="Clear a filter or try another venue." />
+      {filtersOn ? <Button label="Clear filters" variant="secondary" onPress={clearFilters} /> : null}
+    </View>
+  );
+
   return (
-    <Screen onRefresh={onRefresh} refreshing={refreshing} keyboard>
+    <Screen
+      scroll={activeView !== 'map'}
+      onRefresh={activeView === 'map' ? undefined : onRefresh}
+      refreshing={refreshing}
+      keyboard={activeView !== 'map'}
+      contentStyle={activeView === 'map' ? styles.mapScreen : undefined}
+    >
       <View style={styles.page}>
         <View style={styles.headRow}>
           <Text style={styles.title} accessibilityRole="header">
@@ -90,23 +111,15 @@ export default function ExploreScreen() {
           </View>
         </View>
         <SearchInput value={searchQuery} onChangeText={setSearchQuery} />
-        <View style={styles.filters}>
-          <Chip label="Any day" selected={day === 'All'} onPress={() => setDay('All')} />
-          {DAYS.map((d) => (
-            <Chip key={d} label={d} selected={day === d} onPress={() => setDay(d)} />
-          ))}
-        </View>
-        <View style={styles.filters}>
-          <Chip label="All venues" selected={venue === 'All'} onPress={() => setVenue('All')} />
-          {venues.map((name) => (
-            <Chip key={name} label={name} selected={venue === name} onPress={() => setVenue(name)} />
-          ))}
-        </View>
-        <View style={styles.filters}>
-          <Chip label="Any price" selected={price === 'all'} onPress={() => setPrice('all')} />
-          <Chip label="Free" selected={price === 'free'} onPress={() => setPrice('free')} />
-          <Chip label="Paid" selected={price === 'paid'} onPress={() => setPrice('paid')} />
-        </View>
+        <ExploreFilters
+          day={day}
+          onDayChange={setDay}
+          venues={venues}
+          selectedVenues={selectedVenues}
+          onVenuesChange={setSelectedVenues}
+          price={price}
+          onPriceChange={setPrice}
+        />
         {error ? (
           <View style={styles.fail}>
             <EmptyState icon={WifiOff} title="Couldn’t load nights" message={error} />
@@ -121,9 +134,7 @@ export default function ExploreScreen() {
           </View>
         ) : activeView === 'list' ? (
           <View style={styles.list}>
-            {filtered.length === 0 ? (
-              <EmptyState icon={Search} title="No matching nights" message="Clear a filter or try another venue." />
-            ) : (
+            {filtered.length === 0 ? empty : (
               grouped.map((group) => (
                 <View key={group.ymd} style={styles.dayGroup}>
                   <Text style={styles.dayLabel}>{group.label}</Text>
@@ -135,8 +146,15 @@ export default function ExploreScreen() {
             )}
           </View>
         ) : (
-          <View style={styles.map}>
-            <MapWidget venueName="Konstanz" cityName="Konstanz" interactive />
+          <View style={styles.mapBlock}>
+            {filtered.length === 0 ? empty : null}
+            <View style={styles.map}>
+              <MapWidget
+                events={filtered}
+                interactive
+                onSelectEvent={(event) => openEvent(event.id, 'explore-map')}
+              />
+            </View>
           </View>
         )}
       </View>
@@ -151,6 +169,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingHorizontal: space.lg,
     gap: space.md,
+    flex: 1,
   },
   headRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   title: { ...type.display, fontSize: 40, lineHeight: 42 },
@@ -168,11 +187,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toggleOn: { backgroundColor: colors.highlighter },
-  filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   list: { gap: 20, marginTop: 8 },
   dayGroup: { gap: 12 },
   dayLabel: { ...type.section },
-  map: { minHeight: 320, borderRadius: radius.lg, overflow: 'hidden' },
+  mapScreen: { flex: 1, paddingTop: space.lg },
+  mapBlock: { flex: 1, gap: 8, minHeight: 280 },
+  map: { flex: 1, minHeight: 280, borderRadius: radius.xl, overflow: 'hidden' },
   fail: { gap: 12 },
   sk: { height: 88, borderRadius: 12 },
 });

@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { afterEach, describe, it } from 'node:test';
 import { ApiError } from './client.ts';
 import { API_BASE_URL } from './config.ts';
-import { clearEventsCache, fetchKonstanzEvents, listEvents } from './events.ts';
+import { clearEventsCache, fetchEventById, fetchKonstanzEvents, listEvents } from './events.ts';
 import type { ApiEvent, EventListResponse } from './types.ts';
 
 const originalFetch = globalThis.fetch;
@@ -126,5 +126,38 @@ describe('fetchKonstanzEvents', () => {
     assert.equal(hits, 1);
     assert.equal(first, second);
     assert.equal(first[0]?.id, '10');
+  });
+});
+
+describe('fetchEventById', () => {
+  it('loads a single night from /api/events/{id}', async () => {
+    const calls: string[] = [];
+    globalThis.fetch = async (input) => {
+      calls.push(String(input));
+      return jsonResponse(sampleEvent(18492, 'Techno Friday'));
+    };
+
+    const event = await fetchEventById('18492');
+    assert.equal(event?.id, '18492');
+    assert.equal(event?.title, 'Techno Friday');
+    assert.equal(new URL(calls[0]!).pathname, '/api/events/18492');
+
+    await fetchEventById('18492');
+    assert.equal(calls.length, 1);
+  });
+
+  it('returns null on 404', async () => {
+    globalThis.fetch = async () => jsonResponse({ detail: 'Event not found' }, 404);
+    assert.equal(await fetchEventById('9'), null);
+  });
+
+  it('skips non-numeric ids', async () => {
+    let hits = 0;
+    globalThis.fetch = async () => {
+      hits += 1;
+      return jsonResponse(sampleEvent(1, 'Nope'));
+    };
+    assert.equal(await fetchEventById('student-night'), null);
+    assert.equal(hits, 0);
   });
 });

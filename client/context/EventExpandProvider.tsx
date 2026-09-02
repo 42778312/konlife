@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'expo-router';
 import { EventExpandContextProvider, EventExpandSource } from '@/context/EventExpandContext';
 import { EventExpandOverlay } from '@/components/events/EventExpandOverlay';
 import type { SourceRect } from '@/lib/eventMotion';
+import { decodeEventShareId, encodeEventShareId } from '@/lib/shareId';
 
 export const EventExpandProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
@@ -11,8 +12,11 @@ export const EventExpandProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const [source, setSource] = useState<EventExpandSource | null>(null);
 
   const eventIdFromPath = useMemo(() => {
-    const match = pathname.match(/^\/event\/([^/]+)$/);
-    return match ? match[1] : null;
+    const share = pathname.match(/^\/e\/([^/]+)$/);
+    if (share?.[1]) return decodeEventShareId(share[1]);
+    const legacy = pathname.match(/^\/event\/([^/]+)$/);
+    if (legacy?.[1]) return decodeEventShareId(legacy[1]);
+    return null;
   }, [pathname]);
 
   useEffect(() => {
@@ -24,7 +28,7 @@ export const EventExpandProvider: React.FC<{ children: React.ReactNode }> = ({ c
   const openEvent = useCallback(
     (eventId: string, instanceId: string, rect?: SourceRect | null) => {
       setSource({ eventId, instanceId, rect: rect ?? null });
-      router.push(`/event/${eventId}`);
+      router.push({ pathname: '/e/[code]', params: { code: encodeEventShareId(eventId) } });
     },
     [router],
   );

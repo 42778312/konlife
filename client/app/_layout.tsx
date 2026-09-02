@@ -78,13 +78,21 @@ export default function RootLayout() {
                 >
                   <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                   <Stack.Screen
-                    name="event/[id]"
+                    name="e/[code]"
                     options={{
                       headerShown: false,
                       presentation: 'transparentModal',
                       animation: 'none',
                       contentStyle: { backgroundColor: 'transparent' },
                       gestureEnabled: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="event/[id]"
+                    options={{
+                      headerShown: false,
+                      animation: 'none',
+                      contentStyle: { backgroundColor: colors.bg },
                     }}
                   />
                 </Stack>

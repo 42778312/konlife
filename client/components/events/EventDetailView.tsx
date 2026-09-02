@@ -1,5 +1,5 @@
-import React from 'react';
-import { Linking, Pressable, ScrollView, Share, StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { ArrowLeft, ExternalLink, MapPin, Share2 } from 'lucide-react-native';
@@ -14,6 +14,7 @@ import { hasCoords } from '@/lib/mapVenues';
 import { Button } from '@/components/ui/Button';
 import { IconButton } from '@/components/ui/IconButton';
 import { EventCard } from '@/components/events/EventCard';
+import { shareNight } from '@/lib/shareNight';
 
 type EventDetailViewProps = {
   event: EventItem;
@@ -30,15 +31,30 @@ export function EventDetailView({ event, onClose }: EventDetailViewProps) {
     .filter((e) => e.venue === event.venue && e.id !== event.id && e.title !== event.title)
     .slice(0, 3);
   const moreUrl = event.sourceUrl || event.website;
+  const [notice, setNotice] = useState<string | null>(null);
+  const shareLock = useRef(false);
+
+  useEffect(() => {
+    if (!notice) return;
+    const timer = setTimeout(() => setNotice(null), 2200);
+    return () => clearTimeout(timer);
+  }, [notice]);
 
   const onShare = async () => {
+    if (shareLock.current) return;
+    shareLock.current = true;
     try {
-      await Share.share({
-        title: event.title,
-        message: `${event.title} · ${event.venue}, ${event.city} · ${event.date}`,
-      });
-    } catch {
-      // cancelled
+      const result = await shareNight(event);
+      if (result === 'copied') {
+        successTick();
+        setNotice('Link copied');
+      } else if (result === 'shared') {
+        successTick();
+      } else if (result === 'failed') {
+        setNotice('Couldn’t copy the link');
+      }
+    } finally {
+      shareLock.current = false;
     }
   };
 
@@ -137,6 +153,11 @@ export function EventDetailView({ event, onClose }: EventDetailViewProps) {
           ) : null}
         </View>
       </ScrollView>
+      {notice ? (
+        <View style={[styles.toast, { bottom: Math.max(insets.bottom, 12) + 12 }]} accessibilityLiveRegion="polite">
+          <Text style={styles.toastText}>{notice}</Text>
+        </View>
+      ) : null}
     </View>
   );
 }
@@ -193,4 +214,15 @@ const styles = StyleSheet.create({
   linkRow: { flexDirection: 'row', alignItems: 'center', gap: 6, minHeight: 44 },
   linkText: { ...type.label, color: colors.highlighter },
   related: { gap: 8, marginTop: 8 },
+  toast: {
+    position: 'absolute',
+    alignSelf: 'center',
+    zIndex: 20,
+    pointerEvents: 'none',
+    backgroundColor: colors.highlighter,
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: radius.full,
+  },
+  toastText: { ...type.label, color: colors.accentFg },
 });

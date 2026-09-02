@@ -1,6 +1,6 @@
 import type { EventItem } from '../../data/mockEvents.ts';
 import { addDaysYmd, localYmd } from '../partyInsider/dates.ts';
-import { apiGet } from './client.ts';
+import { ApiError, apiGet } from './client.ts';
 import { CACHE_TTL_MS, EVENTS_PER_PAGE, LISTING_DAYS, MAX_PAGES } from './config.ts';
 import { mapApiEvent } from './mapEvent.ts';
 import type { ApiEvent, EventListResponse } from './types.ts';
@@ -81,6 +81,7 @@ export async function fetchKonstanzEvents(options?: {
     const toDate = `${addDaysYmd(from, LISTING_DAYS)}T23:59:59`;
     const raw = await collectEvents(fromDate, toDate);
     const events = dedupeEvents(raw.map(mapApiEvent).filter((event): event is EventItem => event !== null));
+    for (const event of events) singleEventCache.set(event.id, event);
     memoryCache = { at: Date.now(), from, events };
     return events;
   })().finally(() => {
@@ -90,7 +91,37 @@ export async function fetchKonstanzEvents(options?: {
   return inflight;
 }
 
+const singleEventCache = new Map<string, EventItem>();
+const singleEventInflight = new Map<string, Promise<EventItem | null>>();
+
 export function clearEventsCache(): void {
   memoryCache = null;
   inflight = null;
+  singleEventCache.clear();
+  singleEventInflight.clear();
+}
+
+export async function fetchEventById(id: string): Promise<EventItem | null> {
+  if (!/^\d+$/.test(id)) return null;
+  const cached = singleEventCache.get(id);
+  if (cached) return cached;
+  const pending = singleEventInflight.get(id);
+  if (pending) return pending;
+
+  const request = (async () => {
+    try {
+      const raw = await apiGet<ApiEvent>(`/api/events/${id}`);
+      const event = mapApiEvent(raw);
+      if (event) singleEventCache.set(id, event);
+      return event;
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 404) return null;
+      throw err;
+    }
+  })().finally(() => {
+    singleEventInflight.delete(id);
+  });
+
+  singleEventInflight.set(id, request);
+  return request;
 }

@@ -1,0 +1,17 @@
+node_modules
+.expo
+dist
+web-build
+.git
+.gitignore
+*.md
+**/*.test.ts
+.env
+.env.*
+!.env.example
+.DS_Store
+*.tsbuildinfo
+expo-env.d.ts
+ios
+android
+.kotlin

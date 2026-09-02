@@ -46,6 +46,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "export:web": "expo export --platform web --output-dir dist",
     "test": "node --experimental-strip-types --test lib/*.test.ts lib/api/*.test.ts lib/partyInsider/*.test.ts"
   },
   "private": true

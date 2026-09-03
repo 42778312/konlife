@@ -1,17 +1,17 @@
 {
   "expo": {
-    "name": "KONSTANZ",
-    "slug": "konstanz",
+    "name": "KonVita",
+    "slug": "konvita",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "konstanz",
+    "scheme": "konvita",
     "userInterfaceStyle": "automatic",
     "backgroundColor": "#161616",
     "primaryColor": "#F2F862",
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.konstanz.app"
+      "bundleIdentifier": "com.konvita.app"
     },
     "android": {
       "adaptiveIcon": {
@@ -26,19 +26,22 @@
       "navigationBar": {
         "barStyle": "light-content",
         "backgroundColor": "#161616"
-      }
+      },
+      "package": "com.konvita.app"
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png",
-      "name": "KONSTANZ",
-      "shortName": "KONSTANZ",
+      "name": "KonVita",
+      "shortName": "KonVita",
       "lang": "en",
       "themeColor": "#161616",
       "backgroundColor": "#161616",
       "display": "standalone",
-      "orientation": "any"
+      "orientation": "any",
+      "startUrl": "/",
+      "barStyle": "black-translucent"
     },
     "plugins": [
       "expo-router",
@@ -46,7 +49,7 @@
       [
         "expo-location",
         {
-          "locationWhenInUsePermission": "KONSTANZ uses your location to set the taxi pickup."
+          "locationWhenInUsePermission": "KonVita uses your location to set the taxi pickup."
         }
       ],
       [

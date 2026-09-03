@@ -1,5 +1,5 @@
 ---
-name: KONSTANZ
+name: KonVita
 description: A night you open from a photo plate — black field, charcoal weekend, one lime mark.
 colors:
   night: "#000000"
@@ -222,13 +222,13 @@ components:
     height: "44px"
 ---
 
-# Design System: KONSTANZ
+# Design System: KonVita
 
 ## Overview
 
 **Creative North Star: "The Lime Mark"**
 
-KONSTANZ is a night phone: Poppins, circular chrome, and one lime signal that means *this night is on*. Discover is a night you open from a photo plate — black field, a 32px image plate, stadiums you scan, posters you swipe. Weekend is still the charcoal list: a month name, vertical date stadiums, a lime lead plate, then charcoal plates. You tap a day, you open a night. Nothing else asks for attention.
+KonVita is a night phone: Poppins, circular chrome, and one lime signal that means *this night is on*. Discover is a night you open from a photo plate — black field, a 32px image plate, stadiums you scan, posters you swipe. Weekend is still the charcoal list: a month name, vertical date stadiums, a lime lead plate, then charcoal plates. You tap a day, you open a night. Nothing else asks for attention.
 
 Two grounds, one mark. Discover’s column is true black; Weekend, the html shell, site nav, and tab bar stay charcoal. Plates sit one step up from their field; circular chrome sits one step up from the plates. Lime is not a brand wash and not a marketplace CTA. Type on lime is charcoal, never white. The face is Poppins at 400 / 500 / 600 / 700 / 800 — one family, no second display cut.
 
@@ -238,7 +238,7 @@ This is a city going-out guide, not a ticket desk. Nav is Discover, Explore, Wee
 
 - Discover field (`#000000`) with night plates (`#171717`); Weekend/chrome field (`#161616`) with charcoal plates (`#222222`) and idle capsules (`#1A1A1A`)
 - One lime (`#F2F862`) for selected / open / active; charcoal ink on lime
-- Circular chrome (`#282828`) for the K mark, filter, saved, help, month chevrons, idle plate arrows
+- Circular chrome (`#282828`) for the Imperia mark, filter, saved, help, month chevrons, idle plate arrows
 - Poppins only; Discover photo plates at 32px; Weekend event plates at 24px; date capsules as vertical stadiums
 - Discover: category stadiums, image-led featured plate, poster carousel. Weekend: two-register night plates. No fake attendee counts
 
@@ -248,7 +248,7 @@ A near-black night with one acid-yellow mark. Neutrals do the structure; lime do
 
 ### Primary
 
-- **Lime Mark**: The selected category stadium and date capsule; Discover’s door-time mark and Open night; the poster date pill; the K glyph and saved bookmark on chrome; Weekend’s featured plate and help glyph; the active bottom tab and the 1px underline on the active site-nav link. Also the web selection highlight, caret, and `:focus-visible` ring. If it is not selected, open, featured, or active, it is not lime.
+- **Lime Mark**: The selected category stadium and date capsule; Discover’s door-time mark and Open night; the poster date pill; the saved bookmark on chrome; Weekend’s featured plate and help glyph; the active bottom tab and the 1px underline on the active site-nav link. Also the web selection highlight, caret, and `:focus-visible` ring. If it is not selected, open, featured, or active, it is not lime.
 
 ### Neutral
 
@@ -257,7 +257,7 @@ A near-black night with one acid-yellow mark. Neutrals do the structure; lime do
 - **Night Plate**: Discover search pill, idle category stadiums, featured plate body, poster card fallback.
 - **Capsule Idle**: Unstroked fill for unselected Weekend date stadiums and skeleton bases. Darker than a charcoal plate so the strip reads as a control, not a card.
 - **Plate**: Weekend idle event plates, Explore chips, default search pill, secondary buttons.
-- **Circle Chrome**: 36–44px circles for the K mark, filter, saved, help, month chevrons, idle plate arrows, and the `circle` icon-button variant.
+- **Circle Chrome**: 36–44px circles for the Imperia mark, filter, saved, help, month chevrons, idle plate arrows, and the `circle` icon-button variant.
 - **Type White**: Primary type and icons on black or charcoal. Featured-plate and poster save sit on a white disc.
 - **Night Mute**: Discover greeting, place line, and “See all”.
 - **Muted Steel**: Placeholders, idle tab labels, Weekend plate meta, idle capsule weekdays. Search on Discover still uses this for the glyph and placeholder (shared field chrome).
@@ -268,7 +268,7 @@ A near-black night with one acid-yellow mark. Neutrals do the structure; lime do
 
 ### Named Rules
 
-**The Lime Mark Rule.** Lime is a selection and an open-door, not a decoration. On Discover it fills the selected stadium, the door-time mark, Open night, and the poster date pill; the K and the saved bookmark sit lime on chrome. On Weekend it fills the selected date, the featured plate, the help glyph, and the active tab. Focus, caret, and selection are lime. It does not paint prices, “See all”, or the field. Audit: cover every lime pixel that is not selected, open, featured, active, or focus — those pixels are out.
+**The Lime Mark Rule.** Lime is a selection and an open-door, not a decoration. On Discover it fills the selected stadium, the door-time mark, Open night, and the poster date pill; the saved bookmark sits lime on chrome. On Weekend it fills the selected date, the featured plate, the help glyph, and the active tab. Focus, caret, and selection are lime. It does not paint prices, “See all”, or the field. Audit: cover every lime pixel that is not selected, open, featured, active, or focus — those pixels are out.
 
 **The Ink-on-Lime Rule.** Type and icons sitting on lime are charcoal. White on lime is illegal. Lime on lime (Weekend featured arrow) sits in a charcoal circle so the glyph stays lime. Discover save uses a white disc with charcoal stroke; lime *fill* means saved.
 
@@ -280,7 +280,7 @@ A near-black night with one acid-yellow mark. Neutrals do the structure; lime do
 **Body Font:** Poppins (same cut)
 **Label/Mono Font:** Poppins (tabular nums on date capsules only)
 
-**Character:** One geometric grotesque at night. ExtraBold for the word that opens a screen and the K mark; Bold for plates, city, and month; Medium for weekdays and “See all”; Regular for ledes and the Discover greeting. Tight tracking on display; open tracking only on the KONSTANZ wordmark and true overlines.
+**Character:** One geometric grotesque at night. ExtraBold for the word that opens a screen; Bold for plates, city, and month; Medium for weekdays and “See all”; Regular for ledes and the Discover greeting. Tight tracking on display; light tracking on the KonVita wordmark; true overlines stay open.
 
 ### Hierarchy
 
@@ -290,11 +290,11 @@ A near-black night with one acid-yellow mark. Neutrals do the structure; lime do
 - **City** (700, 18px / 22, −0.2): “Konstanz” in the Discover header. Weekend screen title is the same weight at 18px / 24, centered.
 - **Body** (400, 16px / 24, Soft Silver): Ledes and night-sheet description.
 - **Label** (600, 14px / 18): Category stadium labels; Weekend plate category; chip labels at 13px / 18 Semibold; buttons 14px / 18 Bold.
-- **Wordmark** (700, 20px / 24, +1.8): `KONSTANZ` in the site nav. Tracking, not a kicker. Phone Discover hides the wordmark so the K circle is the first mark.
+- **Wordmark** (700, 20px / 24, +0.2): `KonVita` in the site nav. Phone Discover hides the wordmark so the Imperia circle is the first mark.
+- **Imperia mark**: 44px cropped harbor icon in the Discover chrome circle. Identity is the statue, not a letter.
 - **Meta** (400, 13px / 18): Supporting lines. Discover place uses Night Mute; Weekend plate clock/place is 12px / 16 Medium.
 - **Overline** (600, 12px / 16, +1.2, uppercase): Structural labels only. Do not use it as a lime eyebrow on cards.
 - **Nav** (500, 14px / 18): Site-nav links; Bold when active.
-- **K mark** (800, 18px / 22, lime): Single letter in the 44px chrome circle. Identity, not a portrait.
 
 ### Named Rules
 
@@ -302,12 +302,12 @@ A near-black night with one acid-yellow mark. Neutrals do the structure; lime do
 
 ## Layout
 
-Web-responsive first: one column, not a stretched phone chrome. Break to desktop site nav at 900px; hide the bottom tab bar at that width. Phone Discover also hides the top wordmark so the header (K · greeting · saved) is the first layer.
+Web-responsive first: one column, not a stretched phone chrome. Break to desktop site nav at 900px; hide the bottom tab bar at that width. Phone Discover also hides the top wordmark so the header (Imperia · greeting · saved) is the first layer.
 
 - **Discover column:** max 430px, centered, screen padding 16px, block gap 8px. Search row gap 10px. Featured image 200px tall (100px below 360px viewport). Posters 200×248, 12px gap, snap to interval.
 - **Weekend column:** max 640px, centered, page gap 20px, list gap 12px. Screen padding 16px.
 - **Explore / Saved:** max 1120px. Explore “Happening” becomes a two-up wrap on desktop; Weekend and Discover do not — they stay a single stack.
-- **Touch:** 44px minimum. Discover chrome (K, filter, saved, door-time, Open night) is 44×44. Category stadiums reach 44 via 32px thumb plus 6px vertical pad.
+- **Touch:** 44px minimum. Discover chrome (Imperia mark, filter, saved, door-time, Open night) is 44×44. Category stadiums reach 44 via 32px thumb plus 6px vertical pad.
 - **Date strip (Weekend):** horizontal scroll, 54×76 stadiums, 10px gap, no scrollbar.
 - **Month row:** name left, two 36px chrome chevrons right, 8px apart.
 - **Nav:** Discover, Explore, Weekend, Saved. Site nav is wordmark left, text links right (desktop). Phone: wordmark on top except Discover home; lime pill tabs on the bottom (charcoal bar).
@@ -376,9 +376,9 @@ Discover’s signature card is the photo plate. Weekend’s is the two-register 
 
 ### Navigation
 
-- **Site nav:** Charcoal bar, hairline bottom, 20px horizontal padding. Wordmark `KONSTANZ`. Desktop links 14 Medium, 10px pad; active is Bold with a 1px lime underline (the mark, not a fill). Hidden on phone Discover so the home header leads.
+- **Site nav:** Charcoal bar, hairline bottom, 20px horizontal padding. Wordmark `KonVita`. Desktop links 14 Medium, 10px pad; active is Bold with a 1px lime underline (the mark, not a fill). Hidden on phone Discover so the home header leads.
 - **Bottom tabs (phone):** Charcoal bar, hairline top — including under Discover’s black column. Idle: muted glyph + Medium 11px label. Active: lime pill behind glyph + Bold charcoal label. Icons 20px, stroke 1.8 idle / 2.4 active.
-- **Discover header:** 44px chrome K (ExtraBold 18, lime) · centered “Welcome back” / “Konstanz” · 44px chrome bookmark (lime stroke). Bookmark goes to Saved.
+- **Discover header:** 44px Imperia icon in a chrome circle · centered “Welcome back” / “Konstanz” · 44px chrome bookmark (lime stroke). Bookmark goes to Saved.
 - **Help (Weekend):** 44px chrome circle, Bold 18 “?” in lime. Toggles one muted 14px hint: pick a date, the lime card is the featured night.
 
 ### Date Capsule Strip
@@ -393,7 +393,7 @@ Help, month chevrons, idle Weekend arrows, Discover K / filter / saved, and the 
 
 ### Do:
 
-- **Do** put lime on selected stadiums/capsules, Open night, the door-time mark, poster date pills, the K and saved bookmark on chrome, the Weekend featured plate, the help glyph, and the active tab (plus focus/selection/caret).
+- **Do** put lime on selected stadiums/capsules, Open night, the door-time mark, poster date pills, the saved bookmark on chrome, the Weekend featured plate, the help glyph, and the active tab (plus focus/selection/caret).
 - **Do** set type and icons on lime to charcoal (`#161616`).
 - **Do** build Discover nights as 32px photo plates on `#000000` / `#171717`, with a white save disc and a lime open-door.
 - **Do** build Weekend nights as two-register plates with a 24px radius and a 32px up-right arrow circle, on `#161616` / `#222222`.

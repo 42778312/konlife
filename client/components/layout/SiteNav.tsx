@@ -27,10 +27,10 @@ export function SiteNav() {
       <Pressable
         onPress={() => router.push('/')}
         accessibilityRole="link"
-        accessibilityLabel="KONSTANZ home"
+        accessibilityLabel="KonVita home"
         style={[styles.brandHit, webCursor]}
       >
-        <Text style={type.wordmark}>KONSTANZ</Text>
+        <Text style={type.wordmark}>KonVita</Text>
       </Pressable>
       {desktop ? (
         <View style={styles.links}>

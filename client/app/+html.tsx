@@ -16,14 +16,35 @@ export default function Root({ children }: { children: ReactNode }) {
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="apple-mobile-web-app-title" content="KONSTANZ" />
-        <meta name="application-name" content="KONSTANZ" />
+        <meta name="apple-mobile-web-app-title" content="KonVita" />
+        <meta name="application-name" content="KonVita" />
         <meta name="format-detection" content="telephone=no" />
-        <title>KONSTANZ · Nights in Konstanz</title>
+        <title>KonVita · Nights in Konstanz</title>
         <meta
           name="description"
           content="Discover clubs, student nights, bars, and live music in Konstanz this week."
         />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="KonVita · Nights in Konstanz" />
+        <meta
+          property="og:description"
+          content="Discover clubs, student nights, bars, and live music in Konstanz this week."
+        />
+        <meta property="og:image" content="/icons/icon-512.png" />
+        <meta name="twitter:card" content="summary" />
+        {appleSplash.map((splash) => (
+          <link
+            key={splash.href}
+            rel="apple-touch-startup-image"
+            href={splash.href}
+            media={splash.media}
+          />
+        ))}
+        <script dangerouslySetInnerHTML={{ __html: registerServiceWorker }} />
         <ScrollViewStyleReset />
         <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
         <style dangerouslySetInnerHTML={{ __html: nativeWebCss }} />
@@ -33,7 +54,7 @@ export default function Root({ children }: { children: ReactNode }) {
 THESIS: Discover is a night you open from a photo plate — not a paper clipboard, not a ticket desk.
 OWN-WORLD: Black #000000 field, plate #171717, lime #F2F862 on selected stadium, Open night, and the door-time mark; Poppins; 32px photo plate; circular chrome.
 STORY: Scan Konstanz categories, open tonight’s featured night, swipe the coming posters. No tickets, no account, no fake crowds.
-FIRST VIEWPORT: K mark · Welcome back / Konstanz · saved; Discover search + filter; category stadiums; photo plate with date badge, save, title, place, price, door-time mark, Open night; Top nights posters.
+FIRST VIEWPORT: KonVita mark · Welcome back / Konstanz · saved; Discover search + filter; category stadiums; photo plate with date badge, save, title, place, price, door-time mark, Open night; Top nights posters.
 FORM: User-pinned home screenshot (.impeccable/mocks/home-approved.png); sampled #000000 / #171717 / #F2F862; Poppins.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
         */}
@@ -42,6 +63,59 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     </html>
   );
 }
+
+const appleSplash = [
+  {
+    href: '/splash/apple-1320x2868.png',
+    media:
+      '(device-width: 440px) and (device-height: 956px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-1206x2622.png',
+    media:
+      '(device-width: 402px) and (device-height: 874px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-1290x2796.png',
+    media:
+      '(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-1179x2556.png',
+    media:
+      '(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-1170x2532.png',
+    media:
+      '(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-1284x2778.png',
+    media:
+      '(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-750x1334.png',
+    media:
+      '(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+  },
+  {
+    href: '/splash/apple-2048x2732.png',
+    media:
+      '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
+  },
+] as const;
+
+const registerServiceWorker = `
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    var host = location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') return;
+    navigator.serviceWorker.register('/sw.js', { scope: '/' });
+  });
+}
+`;
 
 const nativeWebCss = `
 html, body, #root {
@@ -59,6 +133,8 @@ body {
   overflow: hidden;
   -webkit-overflow-scrolling: touch;
   -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
   font-family: Poppins, system-ui, sans-serif;
   color: #FFFFFF;
 }

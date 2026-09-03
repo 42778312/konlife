@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Bookmark } from 'lucide-react-native';
@@ -16,8 +16,8 @@ export function HomeHeader() {
 
   return (
     <View style={[styles.row, { paddingTop: padTop }]}>
-      <View style={styles.mark} accessibilityLabel="KONSTANZ">
-        <Text style={styles.k}>K</Text>
+      <View style={styles.mark} accessibilityLabel="KonVita">
+        <Image source={require('@/assets/images/icon.png')} style={styles.markImage} />
       </View>
       <View style={styles.greet}>
         <Text style={styles.welcome}>Welcome back</Text>
@@ -52,12 +52,11 @@ const styles = StyleSheet.create({
     backgroundColor: home.circle,
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
-  k: {
-    fontFamily: fonts.extrabold,
-    fontSize: 18,
-    lineHeight: 22,
-    color: home.lime,
+  markImage: {
+    width: CHROME,
+    height: CHROME,
   },
   greet: {
     flex: 1,

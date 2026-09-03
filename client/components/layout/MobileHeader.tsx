@@ -16,7 +16,7 @@ export function MobileHeader({ onSearchPress }: MobileHeaderProps) {
   return (
     <View style={[styles.header, { paddingTop: Math.max(insets.top, 8) }]}>
       <Text style={styles.logo} accessibilityRole="header">
-        KONSTANZ
+        KonVita
       </Text>
       <IconButton
         icon={Search}
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
   logo: {
     ...type.display,
     color: colors.neon,
-    letterSpacing: 1.6,
+    letterSpacing: 0.2,
   },
 });

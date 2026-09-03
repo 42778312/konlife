@@ -129,7 +129,7 @@ export const type = {
     fontFamily: fonts.bold,
     fontSize: 20,
     lineHeight: 24,
-    letterSpacing: 1.8,
+    letterSpacing: 0.2,
     color: colors.fg,
   },
   heroPrice: {

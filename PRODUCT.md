@@ -12,7 +12,7 @@ Primary users are students and locals in Konstanz planning a night out tonight o
 
 ## Product Purpose
 
-KONSTANZ shows nightlife and going-out events in Konstanz so people can discover what is on, when, and where. Success is finding a real night worth attending without creating an account, buying a ticket, or publishing an event.
+KONVITA shows nightlife and going-out events in Konstanz so people can discover what is on, when, and where. Success is finding a real night worth attending without creating an account, buying a ticket, or publishing an event.
 
 ## Positioning
 
@@ -34,7 +34,7 @@ Expo app (`mobile/`) with expo-router, currently also runnable on iOS and Androi
 
 ## Brand Commitments
 
-- Product name: KONSTANZ (app.json).
+- Product name: KonVita (app.json).
 - Place: Konstanz, Germany.
 - Voice of the current copy is nightlife-direct (“plan your nights out”); keep that register, not corporate event-platform language.
 - User-stated visual intent for the redesign (not a locked palette): premium, modern, editorial, energetic, trustworthy, social, easy to navigate; restrained palette with one strong brand/accent; suitable for discovering real-world nights out. Visual world is decided in new-work, not here.

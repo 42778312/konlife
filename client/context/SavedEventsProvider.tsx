@@ -1,4 +1,7 @@
-import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+
+const STORAGE_KEY = 'saved_event_ids';
 
 type SavedEventsContextValue = {
   savedIds: Set<string>;
@@ -10,6 +13,23 @@ const SavedEventsContext = createContext<SavedEventsContextValue | null>(null);
 
 export function SavedEventsProvider({ children }: { children: React.ReactNode }) {
   const [savedIds, setSavedIds] = useState<Set<string>>(() => new Set());
+
+  // Load persisted IDs on mount
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY)
+      .then((raw) => {
+        if (raw) {
+          const ids: string[] = JSON.parse(raw);
+          setSavedIds(new Set(ids));
+        }
+      })
+      .catch(() => {/* ignore read errors */});
+  }, []);
+
+  // Persist whenever savedIds changes
+  useEffect(() => {
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify([...savedIds])).catch(() => {/* ignore write errors */});
+  }, [savedIds]);
 
   const isSaved = useCallback((id: string) => savedIds.has(id), [savedIds]);
 

@@ -25,6 +25,7 @@ Expo app (`mobile/`) with expo-router, currently also runnable on iOS and Androi
 ## Capabilities and Constraints
 
 - Discover, filter, search, and open event details for nights in Konstanz.
+- Estimate a taxi home: type start and end in Konstanz, see the driving path and the official Landkreis tariff, then call a local dispatcher. No in-app booking or payments.
 - Save/bookmark events locally in the client. No accounts, sign-in, or profiles.
 - No payments, ticketing, QR codes, or booking status.
 - No create-event, organizer publishing, or organizer profiles.

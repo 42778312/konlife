@@ -45,6 +45,12 @@ class Settings(BaseSettings):
     geocode_cache_stale_ttl: int = 15552000
     geocode_negative_ttl: int = 86400
 
+    # Ride home: Photon autocomplete + OSRM driving + Landkreis tariff
+    photon_base_url: str = "https://photon.komoot.io"
+    osrm_base_url: str = "https://router.project-osrm.org"
+    places_cache_ttl: int = 3600
+    taxi_quote_cache_ttl: int = 120
+
     # Party filter
     party_only_default: bool = True
     party_keywords: str = (

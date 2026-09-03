@@ -10,6 +10,7 @@ const LINKS = [
   { href: '/', label: 'Discover', match: (p: string) => p === '/' || p === '/index' },
   { href: '/discover', label: 'Explore', match: (p: string) => p.startsWith('/discover') },
   { href: '/weekend', label: 'Weekend', match: (p: string) => p.startsWith('/weekend') },
+  { href: '/ride', label: 'Ride', match: (p: string) => p.startsWith('/ride') },
   { href: '/saved', label: 'Saved', match: (p: string) => p.startsWith('/saved') },
 ] as const;
 
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   link: {
     minHeight: MIN_TOUCH,
     justifyContent: 'center',
-    paddingHorizontal: 10,
+    paddingHorizontal: 8,
   },
   linkText: {
     ...type.nav,

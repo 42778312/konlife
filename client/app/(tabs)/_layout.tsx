@@ -30,6 +30,7 @@ export default function TabLayout() {
         <Tabs.Screen name="index" options={{ title: 'Discover' }} />
         <Tabs.Screen name="discover" options={{ title: 'Explore' }} />
         <Tabs.Screen name="weekend" options={{ title: 'Weekend' }} />
+        <Tabs.Screen name="ride" options={{ title: 'Ride' }} />
         <Tabs.Screen name="saved" options={{ title: 'Saved' }} />
       </Tabs>
     </View>

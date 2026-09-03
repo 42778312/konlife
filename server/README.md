@@ -125,6 +125,9 @@ When `CACHE_BACKEND=redis` and Redis is unreachable at startup, the app **falls 
 | GET | `/api/categories` | Categories |
 | GET | `/api/tags` | Tags |
 | GET | `/api/organizers` | Organizers linked to Konstanz events |
+| GET | `/api/places/search?q=` | Konstanz place autocomplete (Photon) |
+| GET | `/api/places/reverse?lat=&lng=` | Reverse geocode a pickup |
+| GET | `/api/taxi/quote` | Driving route + Landkreis Konstanz taxi estimate |
 
 Interactive docs: `/docs` and `/redoc`.
 

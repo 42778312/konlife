@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from app.api.routes import health, events, venues, categories, tags, organizers
+from app.api.routes import health, events, venues, categories, tags, organizers, taxi
 
 api_router = APIRouter(prefix="/api")
 
@@ -10,3 +10,4 @@ api_router.include_router(venues.router)
 api_router.include_router(categories.router)
 api_router.include_router(tags.router)
 api_router.include_router(organizers.router)
+api_router.include_router(taxi.router)

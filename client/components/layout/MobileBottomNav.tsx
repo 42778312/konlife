@@ -1,7 +1,7 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Bookmark, Calendar, Compass, Home } from 'lucide-react-native';
+import { Bookmark, Calendar, Car, Compass, Home } from 'lucide-react-native';
 import { colors, fonts, MIN_TOUCH, radius, space, webCursor } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
 
@@ -9,6 +9,7 @@ const ICONS = {
   index: Home,
   discover: Compass,
   weekend: Calendar,
+  ride: Car,
   saved: Bookmark,
 } as const;
 
@@ -16,6 +17,7 @@ const LABELS = {
   index: 'Home',
   discover: 'Explore',
   weekend: 'Weekend',
+  ride: 'Ride',
   saved: 'Saved',
 } as const;
 
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around' },
   item: {
     minHeight: MIN_TOUCH,
-    minWidth: 64,
+    minWidth: 52,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
@@ -99,7 +101,7 @@ const styles = StyleSheet.create({
   itemActive: {
     backgroundColor: colors.highlighter,
     borderRadius: radius.full,
-    marginHorizontal: 4,
+    marginHorizontal: 2,
   },
   label: { fontSize: 11, lineHeight: 14 },
   labelActive: { fontFamily: fonts.bold, color: colors.accentFg },

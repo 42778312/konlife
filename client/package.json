@@ -17,6 +17,7 @@
     "expo-image": "~57.0.3",
     "expo-linear-gradient": "~57.0.1",
     "expo-linking": "~57.0.8",
+    "expo-location": "~57.0.15",
     "expo-router": "~57.0.17",
     "expo-splash-screen": "~57.0.8",
     "expo-status-bar": "~57.0.1",
@@ -47,7 +48,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "export:web": "expo export --platform web --output-dir dist",
-    "test": "node --experimental-strip-types --test lib/*.test.ts lib/api/*.test.ts lib/partyInsider/*.test.ts"
+    "test": "node --experimental-strip-types --test lib/*.test.ts lib/api/*.test.ts lib/partyInsider/*.test.ts lib/ride/*.test.ts"
   },
   "private": true
 }

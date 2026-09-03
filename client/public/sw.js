@@ -1,4 +1,4 @@
-const CACHE = 'konvita-v1';
+const CACHE = 'konvita-__SW_BUILD__';
 const PRECACHE = [
   '/',
   '/manifest.json',
@@ -32,6 +32,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname.startsWith('/api/')) return;
+  if (url.pathname === '/sw.js' || url.pathname === '/version.json') return;
 
   const cacheFirst =
     url.pathname.startsWith('/_expo/') ||
@@ -55,7 +56,7 @@ self.addEventListener('fetch', (event) => {
 
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request)
+      fetch(request, { cache: 'no-store' })
         .then((response) => {
           const copy = response.clone();
           caches.open(CACHE).then((cache) => cache.put(request, copy));

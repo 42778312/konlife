@@ -1,5 +1,6 @@
 import { ScrollViewStyleReset } from 'expo-router/html';
 import type { ReactNode } from 'react';
+import { REGISTER_SW_SCRIPT, SW_BUILD_META } from '../lib/pwa/registerSw';
 
 export default function Root({ children }: { children: ReactNode }) {
   return (
@@ -24,6 +25,7 @@ export default function Root({ children }: { children: ReactNode }) {
           name="description"
           content="Discover clubs, student nights, bars, and live music in Konstanz this week."
         />
+        <meta name={SW_BUILD_META} content="__SW_BUILD__" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" type="image/png" href="/favicon.png" />
@@ -44,7 +46,7 @@ export default function Root({ children }: { children: ReactNode }) {
             media={splash.media}
           />
         ))}
-        <script dangerouslySetInnerHTML={{ __html: registerServiceWorker }} />
+        <script dangerouslySetInnerHTML={{ __html: REGISTER_SW_SCRIPT }} />
         <ScrollViewStyleReset />
         <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css" />
         <style dangerouslySetInnerHTML={{ __html: nativeWebCss }} />
@@ -106,16 +108,6 @@ const appleSplash = [
       '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)',
   },
 ] as const;
-
-const registerServiceWorker = `
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', function () {
-    var host = location.hostname;
-    if (host === 'localhost' || host === '127.0.0.1') return;
-    navigator.serviceWorker.register('/sw.js', { scope: '/' });
-  });
-}
-`;
 
 const nativeWebCss = `
 html, body, #root {

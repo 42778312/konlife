@@ -23,7 +23,7 @@ ENV EXPO_PUBLIC_API_URL=$EXPO_PUBLIC_API_URL \
     NODE_ENV=production \
     NODE_OPTIONS=--max-old-space-size=4096
 
-RUN npx expo export --platform web --output-dir dist
+RUN npm run export:web
 
 FROM python:3.12-slim
 

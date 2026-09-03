@@ -9,7 +9,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-COPY client/package.json client/package-lock.json ./
+COPY client/package.json client/package-lock.json client/.npmrc ./
 RUN npm ci
 
 COPY client/ ./

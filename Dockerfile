@@ -21,9 +21,9 @@ ENV EXPO_PUBLIC_API_URL=$EXPO_PUBLIC_API_URL \
     CI=1 \
     EXPO_NO_TELEMETRY=1 \
     NODE_ENV=production \
-    NODE_OPTIONS=--max-old-space-size=4096
+    NODE_OPTIONS=--max-old-space-size=2048
 
-RUN npm run export:web
+RUN chmod +x scripts/export-web.sh && npm run export:web
 
 FROM python:3.12-slim
 

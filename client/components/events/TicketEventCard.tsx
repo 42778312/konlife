@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { Check, Share2 } from 'lucide-react-native';
@@ -117,22 +117,29 @@ export function TicketEventCard({ event, expanded = false, onPress }: TicketEven
   }));
 
   const notchX = width > 0 ? width - STUB_WIDTH : 0;
-  const path =
-    width > 0
-      ? ticketPath(
-          width,
-          CARD_HEIGHT,
-          notchX,
-          NOTCH_RADIUS,
-          {
-            topLeft: CORNER_RADIUS,
-            topRight: CORNER_RADIUS,
-            bottomLeft: expanded ? 0 : CORNER_RADIUS,
-            bottomRight: expanded ? 0 : CORNER_RADIUS,
-          },
-          !expanded,
-        )
-      : null;
+  // Building the scalloped outline loops over dozens of small arcs — expensive enough that
+  // recomputing it for every card on every unrelated re-render (e.g. saving one event
+  // re-renders the whole list via SavedEventsProvider's context) visibly freezes the list.
+  // Only recompute when this card's own measured width or expanded state actually changes.
+  const path = useMemo(
+    () =>
+      width > 0
+        ? ticketPath(
+            width,
+            CARD_HEIGHT,
+            notchX,
+            NOTCH_RADIUS,
+            {
+              topLeft: CORNER_RADIUS,
+              topRight: CORNER_RADIUS,
+              bottomLeft: expanded ? 0 : CORNER_RADIUS,
+              bottomRight: expanded ? 0 : CORNER_RADIUS,
+            },
+            !expanded,
+          )
+        : null,
+    [width, notchX, expanded],
+  );
 
   return (
     <View style={styles.outer}>
@@ -143,7 +150,7 @@ export function TicketEventCard({ event, expanded = false, onPress }: TicketEven
         <Text style={styles.revealText}>Going!</Text>
       </Animated.View>
 
-      <GestureDetector gesture={composed}>
+      <GestureDetector gesture={composed} touchAction="pan-y">
         <Animated.View
           style={[styles.floating, cardStyle]}
           onLayout={onLayoutCard}

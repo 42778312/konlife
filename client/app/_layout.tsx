@@ -1,3 +1,4 @@
+import '@/lib/patchPointerCapture';
 import 'react-native-gesture-handler';
 import { DarkTheme, ThemeProvider, Stack } from 'expo-router';
 import { useFonts } from 'expo-font';

@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import type { EventItem } from '../data/mockEvents.ts';
 
 export type VenuePin = {
@@ -22,6 +23,13 @@ export const KONSTANZ_REGION: MapRegion = {
   latitudeDelta: 0.04,
   longitudeDelta: 0.04,
 };
+
+export function mapsDirectionsUrl(lat: number, lng: number, label: string): string {
+  const q = encodeURIComponent(label);
+  if (Platform.OS === 'ios') return `maps://?ll=${lat},${lng}&q=${q}`;
+  if (Platform.OS === 'android') return `geo:${lat},${lng}?q=${lat},${lng}(${q})`;
+  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+}
 
 export function hasCoords(event: EventItem): event is EventItem & { lat: number; lng: number } {
   const lat = Number(event.lat);

@@ -1,8 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Linking, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, StyleSheet, View } from 'react-native';
 import type { EventItem } from '@/data/mockEvents';
 import { colors, radius, webCursor } from '@/constants/theme';
-import { groupEventsByVenue } from '@/lib/mapVenues';
+import { groupEventsByVenue, mapsDirectionsUrl } from '@/lib/mapVenues';
 import { MapCanvas } from '@/components/events/MapCanvas';
 import { VenueSelectPlate } from '@/components/events/VenueSelectPlate';
 import { selectionTick } from '@/lib/haptics';
@@ -13,13 +13,6 @@ type MapWidgetProps = {
   compact?: boolean;
   onSelectEvent?: (event: EventItem) => void;
 };
-
-function mapsDirectionsUrl(lat: number, lng: number, label: string): string {
-  const q = encodeURIComponent(label);
-  if (Platform.OS === 'ios') return `maps://?ll=${lat},${lng}&q=${q}`;
-  if (Platform.OS === 'android') return `geo:${lat},${lng}?q=${lat},${lng}(${q})`;
-  return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-}
 
 export function MapWidget({
   events,

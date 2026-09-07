@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { List, Map, Search, WifiOff } from 'lucide-react-native';
 import { type DayKey } from '@/data/mockEvents';
 import { groupEventsByDate, matchesDayChip } from '@/lib/partyInsider/dates';
@@ -9,6 +10,7 @@ import { selectionTick } from '@/lib/haptics';
 import { useEvents } from '@/context/EventsProvider';
 import { Screen } from '@/components/layout/Screen';
 import { EventCard } from '@/components/events/EventCard';
+import { EventDetailBody } from '@/components/events/EventDetailBody';
 import { MapWidget } from '@/components/events/MapWidget';
 import { useEventExpand } from '@/context/EventExpandContext';
 import { SearchInput } from '@/components/ui/SearchInput';
@@ -26,6 +28,7 @@ export default function ExploreScreen() {
   const [selectedVenues, setSelectedVenues] = useState<string[]>([]);
   const [price, setPrice] = useState<PriceFilter>('all');
   const [refreshing, setRefreshing] = useState(false);
+  const [expandedKey, setExpandedKey] = useState<string | null>(null);
 
   const venues = useMemo(() => {
     return [...new Set(events.map((event) => event.venue))].sort((a, b) => a.localeCompare(b));
@@ -138,9 +141,33 @@ export default function ExploreScreen() {
               grouped.map((group) => (
                 <View key={group.ymd} style={styles.dayGroup}>
                   <Text style={styles.dayLabel}>{group.label}</Text>
-                  {group.items.map((event) => (
-                    <EventCard key={`${event.id}-${event.startDate}`} event={event} variant="list" instanceId="explore" />
-                  ))}
+                  {group.items.map((event) => {
+                    const key = `${event.id}-${event.startDate}`;
+                    const isExpanded = expandedKey === key;
+                    return (
+                      <View key={key}>
+                        <EventCard
+                          event={event}
+                          variant="list"
+                          instanceId="explore"
+                          expanded={isExpanded}
+                          onPress={() => {
+                            selectionTick();
+                            setExpandedKey((current) => (current === key ? null : key));
+                          }}
+                        />
+                        {isExpanded ? (
+                          <Animated.View
+                            entering={FadeIn.duration(160)}
+                            exiting={FadeOut.duration(120)}
+                            style={styles.detailPanel}
+                          >
+                            <EventDetailBody event={event} surface="panel" />
+                          </Animated.View>
+                        ) : null}
+                      </View>
+                    );
+                  })}
                 </View>
               ))
             )}
@@ -189,6 +216,12 @@ const styles = StyleSheet.create({
   toggleOn: { backgroundColor: colors.highlighter },
   list: { gap: 20, marginTop: 8 },
   dayGroup: { gap: 12 },
+  detailPanel: {
+    backgroundColor: colors.card,
+    borderBottomLeftRadius: radius.lg,
+    borderBottomRightRadius: radius.lg,
+    overflow: 'hidden',
+  },
   dayLabel: { ...type.section },
   mapScreen: { flex: 1, paddingTop: space.lg },
   mapBlock: { flex: 1, gap: 8, minHeight: 280 },

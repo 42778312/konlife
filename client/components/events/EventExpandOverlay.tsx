@@ -11,7 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useEvents } from '@/context/EventsProvider';
 import { EventDetailView } from '@/components/events/EventDetailView';
-import { colors } from '@/constants/theme';
+import { colors, radius } from '@/constants/theme';
 import {
   EVENT_EXPAND_SPRING,
   EVENT_OVERLAY_FADE_MS,
@@ -81,14 +81,18 @@ export function EventExpandOverlay({ eventId, rect, onClose }: EventExpandOverla
     return { opacity: backdrop.value * swipeFade };
   });
 
+  const topGap = Math.min(Math.max(sh * 0.1, 48), 120);
+  const expandedRadius = radius.xl;
+
   const panelStyle = useAnimatedStyle(() => {
     const r = rect;
     const p = progress.value;
     const left = hasRect && r ? interpolate(p, [0, 1], [r.x, 0]) : 0;
-    const top = hasRect && r ? interpolate(p, [0, 1], [r.y, 0]) : 0;
+    const top = hasRect && r ? interpolate(p, [0, 1], [r.y, topGap]) : topGap;
     const width = hasRect && r ? interpolate(p, [0, 1], [r.width, sw]) : sw;
-    const height = hasRect && r ? interpolate(p, [0, 1], [r.height, sh]) : sh;
-    const radius = hasRect && r ? interpolate(p, [0, 1], [r.radius, 0]) : 0;
+    const height = hasRect && r ? interpolate(p, [0, 1], [r.height, sh - topGap]) : sh - topGap;
+    const topRadius = hasRect && r ? interpolate(p, [0, 1], [r.radius, expandedRadius]) : expandedRadius;
+    const bottomRadius = hasRect && r ? interpolate(p, [0, 1], [r.radius, 0]) : 0;
     const amount = Math.min(translateX.value / 24, 1);
 
     return {
@@ -97,7 +101,10 @@ export function EventExpandOverlay({ eventId, rect, onClose }: EventExpandOverla
       top,
       width,
       height,
-      borderRadius: radius,
+      borderTopLeftRadius: topRadius,
+      borderTopRightRadius: topRadius,
+      borderBottomLeftRadius: bottomRadius,
+      borderBottomRightRadius: bottomRadius,
       overflow: 'hidden' as const,
       backgroundColor: colors.bg,
       transform: [{ translateX: translateX.value }],

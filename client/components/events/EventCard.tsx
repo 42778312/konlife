@@ -15,9 +15,19 @@ type EventCardProps = {
   event: EventItem;
   variant?: 'featured' | 'standard' | 'compact' | 'horizontal' | 'list' | 'recommended';
   instanceId?: string;
+  /** Overrides the default "open the full-screen detail" behavior, e.g. for an inline accordion. Only honored by the 'list' variant. */
+  onPress?: () => void;
+  /** Marks a 'list' card as the currently expanded one (flattens its bottom corners so an inline panel can attach seamlessly). */
+  expanded?: boolean;
 };
 
-export function EventCard({ event, variant = 'list', instanceId: instanceIdProp }: EventCardProps) {
+export function EventCard({
+  event,
+  variant = 'list',
+  instanceId: instanceIdProp,
+  onPress,
+  expanded = false,
+}: EventCardProps) {
   const instanceId = instanceIdProp ?? `card-${variant}`;
   const covered = useCardCovered(event.id, instanceId);
   const { openEvent } = useEventExpand();
@@ -26,6 +36,10 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
   const ref = useRef<View>(null);
 
   const onOpen = async () => {
+    if (onPress) {
+      onPress();
+      return;
+    }
     const rect = await measureView(ref, radius.lg);
     openEvent(event.id, instanceId, rect);
   };
@@ -138,7 +152,12 @@ export function EventCard({ event, variant = 'list', instanceId: instanceIdProp 
 
   return (
     <View ref={ref} collapsable={false} style={[styles.listOuter, covered && styles.covered]}>
-      <PressableScale onPress={onOpen} contentStyle={styles.listInner} accessibilityLabel={event.title}>
+      <PressableScale
+        onPress={onOpen}
+        contentStyle={[styles.listInner, expanded && styles.listInnerExpanded]}
+        accessibilityLabel={event.title}
+        accessibilityState={{ expanded }}
+      >
         <RemoteImage uri={event.image} alt={event.title} containerStyle={styles.listImage} />
           <View style={styles.listBody}>
             {event.date ? <Text style={styles.hDate}>{event.date}</Text> : null}
@@ -239,6 +258,10 @@ const styles = StyleSheet.create({
     borderRadius: radius.lg,
     overflow: 'hidden',
     minHeight: 108,
+  },
+  listInnerExpanded: {
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
   },
   listImage: { width: 108, alignSelf: 'stretch', minHeight: 108 },
   listBody: { flex: 1, padding: 12, minWidth: 0 },

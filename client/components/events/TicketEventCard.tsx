@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
+import { LayoutChangeEvent, Platform, StyleSheet, Text, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 import { Check, Share2 } from 'lucide-react-native';
 import Animated, {
@@ -144,7 +144,11 @@ export function TicketEventCard({ event, expanded = false, onPress }: TicketEven
       </Animated.View>
 
       <GestureDetector gesture={composed}>
-        <Animated.View style={cardStyle} onLayout={onLayoutCard} accessibilityLabel={event.title}>
+        <Animated.View
+          style={[styles.floating, cardStyle]}
+          onLayout={onLayoutCard}
+          accessibilityLabel={event.title}
+        >
           <View style={styles.base}>
             {path ? (
               <Svg width={width} height={CARD_HEIGHT} style={StyleSheet.absoluteFill}>
@@ -187,6 +191,18 @@ export function TicketEventCard({ event, expanded = false, onPress }: TicketEven
 const styles = StyleSheet.create({
   outer: { position: 'relative' },
   noPointerEvents: { pointerEvents: 'none' },
+  floating: Platform.select({
+    web: {
+      boxShadow: '0 18px 32px rgba(0,0,0,0.6)',
+    },
+    default: {
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 14 },
+      shadowOpacity: 0.5,
+      shadowRadius: 20,
+      elevation: 14,
+    },
+  }),
   reveal: {
     position: 'absolute',
     top: 0,

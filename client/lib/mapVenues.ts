@@ -1,4 +1,3 @@
-import { Platform } from 'react-native';
 import type { EventItem } from '../data/mockEvents.ts';
 
 export type VenuePin = {
@@ -24,10 +23,11 @@ export const KONSTANZ_REGION: MapRegion = {
   longitudeDelta: 0.04,
 };
 
-export function mapsDirectionsUrl(lat: number, lng: number, label: string): string {
+/** os: pass React Native's `Platform.OS` in from the caller so this stays framework-free and testable under plain Node. */
+export function mapsDirectionsUrl(lat: number, lng: number, label: string, os: string): string {
   const q = encodeURIComponent(label);
-  if (Platform.OS === 'ios') return `maps://?ll=${lat},${lng}&q=${q}`;
-  if (Platform.OS === 'android') return `geo:${lat},${lng}?q=${lat},${lng}(${q})`;
+  if (os === 'ios') return `maps://?ll=${lat},${lng}&q=${q}`;
+  if (os === 'android') return `geo:${lat},${lng}?q=${lat},${lng}(${q})`;
   return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 }
 

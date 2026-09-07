@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Linking, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Linking, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import { ExternalLink, MapPin, Share2 } from 'lucide-react-native';
 import { EventItem } from '@/data/mockEvents';
 import { colors, radius, space, type, webCursor } from '@/constants/theme';
@@ -50,7 +50,7 @@ export function EventDetailBody({ event, surface = 'page' }: EventDetailBodyProp
 
   const onOpenAddress = () => {
     if (hasCoords(event)) {
-      void Linking.openURL(mapsDirectionsUrl(event.lat, event.lng, event.venue));
+      void Linking.openURL(mapsDirectionsUrl(event.lat, event.lng, event.venue, Platform.OS));
     } else if (moreUrl) {
       void Linking.openURL(moreUrl);
     }

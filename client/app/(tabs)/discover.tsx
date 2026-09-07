@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
-import { List, Map, Search, WifiOff } from 'lucide-react-native';
+import { CalendarDays, List, Search, WifiOff } from 'lucide-react-native';
 import { type DayKey } from '@/data/mockEvents';
 import { groupEventsByDate, matchesDayChip } from '@/lib/partyInsider/dates';
 import { matchesVenueFilter, type PriceFilter } from '@/lib/exploreFilters';
@@ -9,10 +9,9 @@ import { colors, layout, MIN_TOUCH, radius, space, type, webCursor } from '@/con
 import { selectionTick } from '@/lib/haptics';
 import { useEvents } from '@/context/EventsProvider';
 import { Screen } from '@/components/layout/Screen';
-import { EventCard } from '@/components/events/EventCard';
+import { TicketEventCard } from '@/components/events/TicketEventCard';
 import { EventDetailBody } from '@/components/events/EventDetailBody';
-import { MapWidget } from '@/components/events/MapWidget';
-import { useEventExpand } from '@/context/EventExpandContext';
+import { WeekendCalendarView } from '@/components/events/WeekendCalendarView';
 import { SearchInput } from '@/components/ui/SearchInput';
 import { ExploreFilters } from '@/components/events/ExploreFilters';
 import { EmptyState } from '@/components/ui/EmptyState';
@@ -21,9 +20,8 @@ import { Skeleton } from '@/components/ui/Skeleton';
 
 export default function ExploreScreen() {
   const { events, loading, error, refresh } = useEvents();
-  const { openEvent } = useEventExpand();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeView, setActiveView] = useState<'list' | 'map'>('list');
+  const [activeView, setActiveView] = useState<'list' | 'weekend'>('list');
   const [day, setDay] = useState<DayKey | 'All'>('All');
   const [selectedVenues, setSelectedVenues] = useState<string[]>([]);
   const [price, setPrice] = useState<PriceFilter>('all');
@@ -74,13 +72,7 @@ export default function ExploreScreen() {
   );
 
   return (
-    <Screen
-      scroll={activeView !== 'map'}
-      onRefresh={activeView === 'map' ? undefined : onRefresh}
-      refreshing={refreshing}
-      keyboard={activeView !== 'map'}
-      contentStyle={activeView === 'map' ? styles.mapScreen : undefined}
-    >
+    <Screen onRefresh={onRefresh} refreshing={refreshing}>
       <View style={styles.page}>
         <View style={styles.headRow}>
           <Text style={styles.title} accessibilityRole="header">
@@ -102,40 +94,50 @@ export default function ExploreScreen() {
             <Pressable
               onPress={() => {
                 selectionTick();
-                setActiveView('map');
+                setActiveView('weekend');
               }}
-              style={[styles.toggleBtn, activeView === 'map' && styles.toggleOn, webCursor]}
+              style={[styles.toggleBtn, activeView === 'weekend' && styles.toggleOn, webCursor]}
               accessibilityRole="button"
-              accessibilityLabel="Map view"
-              accessibilityState={{ selected: activeView === 'map' }}
+              accessibilityLabel="Weekend view"
+              accessibilityState={{ selected: activeView === 'weekend' }}
             >
-              <Map size={18} color={activeView === 'map' ? colors.accentFg : colors.muted} strokeWidth={2.2} />
+              <CalendarDays
+                size={18}
+                color={activeView === 'weekend' ? colors.accentFg : colors.muted}
+                strokeWidth={2.2}
+              />
             </Pressable>
           </View>
         </View>
-        <SearchInput value={searchQuery} onChangeText={setSearchQuery} />
-        <ExploreFilters
-          day={day}
-          onDayChange={setDay}
-          venues={venues}
-          selectedVenues={selectedVenues}
-          onVenuesChange={setSelectedVenues}
-          price={price}
-          onPriceChange={setPrice}
-        />
-        {error ? (
+        {activeView === 'list' ? (
+          <>
+            <SearchInput value={searchQuery} onChangeText={setSearchQuery} />
+            <ExploreFilters
+              day={day}
+              onDayChange={setDay}
+              venues={venues}
+              selectedVenues={selectedVenues}
+              onVenuesChange={setSelectedVenues}
+              price={price}
+              onPriceChange={setPrice}
+            />
+          </>
+        ) : null}
+        {error && activeView === 'list' ? (
           <View style={styles.fail}>
             <EmptyState icon={WifiOff} title="Couldn’t load nights" message={error} />
             <Button label="Try again" onPress={() => void refresh()} />
           </View>
         ) : null}
-        {loading && events.length === 0 ? (
+        {activeView === 'weekend' ? (
+          <WeekendCalendarView />
+        ) : loading && events.length === 0 ? (
           <View style={styles.list}>
             <Skeleton style={styles.sk} />
             <Skeleton style={styles.sk} />
             <Skeleton style={styles.sk} />
           </View>
-        ) : activeView === 'list' ? (
+        ) : (
           <View style={styles.list}>
             {filtered.length === 0 ? empty : (
               grouped.map((group) => (
@@ -146,10 +148,8 @@ export default function ExploreScreen() {
                     const isExpanded = expandedKey === key;
                     return (
                       <View key={key}>
-                        <EventCard
+                        <TicketEventCard
                           event={event}
-                          variant="list"
-                          instanceId="explore"
                           expanded={isExpanded}
                           onPress={() => {
                             selectionTick();
@@ -171,17 +171,6 @@ export default function ExploreScreen() {
                 </View>
               ))
             )}
-          </View>
-        ) : (
-          <View style={styles.mapBlock}>
-            {filtered.length === 0 ? empty : null}
-            <View style={styles.map}>
-              <MapWidget
-                events={filtered}
-                interactive
-                onSelectEvent={(event) => openEvent(event.id, 'explore-map')}
-              />
-            </View>
           </View>
         )}
       </View>
@@ -223,9 +212,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   dayLabel: { ...type.section },
-  mapScreen: { flex: 1, paddingTop: space.lg },
-  mapBlock: { flex: 1, gap: 8, minHeight: 280 },
-  map: { flex: 1, minHeight: 280, borderRadius: radius.xl, overflow: 'hidden' },
   fail: { gap: 12 },
   sk: { height: 88, borderRadius: 12 },
 });

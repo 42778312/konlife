@@ -29,8 +29,7 @@ export default function TabLayout() {
             sceneStyle: { backgroundColor: colors.bg },
           }}
         >
-          <Tabs.Screen name="index" options={{ title: 'Discover' }} />
-          <Tabs.Screen name="discover" options={{ title: 'Explore' }} />
+          <Tabs.Screen name="index" options={{ title: 'Home' }} />
           <Tabs.Screen name="weekend" options={{ title: 'Weekend' }} />
           <Tabs.Screen name="ride" options={{ title: 'Ride' }} />
           <Tabs.Screen name="saved" options={{ title: 'Saved' }} />

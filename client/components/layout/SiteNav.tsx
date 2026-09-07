@@ -7,8 +7,7 @@ import { selectionTick } from '@/lib/haptics';
 import { useBreakpoint } from '@/hooks/useBreakpoint';
 
 const LINKS = [
-  { href: '/', label: 'Discover', match: (p: string) => p === '/' || p === '/index' },
-  { href: '/discover', label: 'Explore', match: (p: string) => p.startsWith('/discover') },
+  { href: '/', label: 'Home', match: (p: string) => p === '/' || p === '/index' },
   { href: '/weekend', label: 'Weekend', match: (p: string) => p.startsWith('/weekend') },
   { href: '/ride', label: 'Ride', match: (p: string) => p.startsWith('/ride') },
   { href: '/saved', label: 'Saved', match: (p: string) => p.startsWith('/saved') },

@@ -1,13 +1,12 @@
 import React from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Bookmark, Calendar, Car, Compass, Home } from 'lucide-react-native';
+import { Bookmark, Calendar, Car, Home } from 'lucide-react-native';
 import { colors, fonts, MIN_TOUCH, radius, space, webCursor } from '@/constants/theme';
 import { selectionTick } from '@/lib/haptics';
 
 const ICONS = {
   index: Home,
-  discover: Compass,
   weekend: Calendar,
   ride: Car,
   saved: Bookmark,
@@ -15,7 +14,6 @@ const ICONS = {
 
 const LABELS = {
   index: 'Home',
-  discover: 'Explore',
   weekend: 'Weekend',
   ride: 'Ride',
   saved: 'Saved',
